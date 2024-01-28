@@ -9,6 +9,7 @@ export const TodoAppProvider = ({ children, userSettings }) => {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [updateItem, setUpdateItem] = useState({}); //for patch route update content
+  const [countdownItems, setCountdownItems] = useState([]);
 
   // working for both
   const removeItem = async (item) => {
@@ -81,6 +82,8 @@ export const TodoAppProvider = ({ children, userSettings }) => {
         updateContent,
         updateItem,
         setUpdateItem,
+        countdownItems,
+        setCountdownItems,
       }}
     >
       {children}

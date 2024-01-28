@@ -28,10 +28,12 @@ const Day = ({ day, rowIdx }) => {
   };
 
   return (
-    <div className="border border-gray-200 flex flex-col">
+    <div className="border border-gray-200 flex flex-col max-h-40 overflow-scroll">
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
-          <p className="text-sm mt-1">{day.format('ddd').toUpperCase()}</p>
+          <p className="text-sm font-bold mt-1">
+            {day.format('ddd').toUpperCase()}
+          </p>
         )}
 
         <p className={`text-sm p-1 my-1 text-center ${getCurrentDayClass()}`}>
@@ -40,7 +42,7 @@ const Day = ({ day, rowIdx }) => {
       </header>
 
       <div
-        className="flex-1 cursor-pointer"
+        className="flex-1 cursor-pointer text-sm font-thiner tracking-tight"
         onClick={() => {
           setDaySelected(day); //responsible for showing the modal when day is clicked
           setShowEventModal(true);
@@ -50,7 +52,7 @@ const Day = ({ day, rowIdx }) => {
           return (
             <div
               key={id}
-              className={`bg-${evt.label}-200 p-1 m-2 text-gray-600 text-sm rounded mb-1 truncate`}
+              className={`bg-${evt.label}-200 p-1 m-2 text-gray-600 text-sm rounded mb-1 truncate `}
               onClick={() => setSelectedEvent(evt)}
             >
               {evt.title}

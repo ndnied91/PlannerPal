@@ -1,14 +1,20 @@
-import Form from './Form';
-
 import { useGlobalContext } from './todoContext';
-
 import SingleItem from './SingleItem';
 import { useEffect, useState } from 'react';
-
 import Select from 'react-dropdown-select';
-import { FaSortAmountDown } from 'react-icons/fa';
+import Form from './Form';
 import CompletedTodos from '../CompletedTodos/container.jsx';
 import customFetch from '../../utils/customFetch.js';
+import { TbSortDescending } from 'react-icons/tb';
+import { FcNumericalSorting12 } from 'react-icons/fc';
+import { FaArchive } from 'react-icons/fa';
+import { LuListTodo } from 'react-icons/lu';
+import { GoPin } from 'react-icons/go';
+
+import {
+  FcAlphabeticalSortingAz,
+  FcAlphabeticalSortingZa,
+} from 'react-icons/fc';
 
 const Container = ({ userContext, userSettings }) => {
   const { items, setItems } = useGlobalContext();
@@ -18,7 +24,7 @@ const Container = ({ userContext, userSettings }) => {
 
   useEffect(() => {
     setSortOptions(userSettings.sortBy);
-  }, [userSettings, items]);
+  }, [userSettings]);
 
   const renderTitle = () => {
     const even = (element) => element.isPriority === true;
@@ -46,7 +52,9 @@ const Container = ({ userContext, userSettings }) => {
         options={options}
         onChange={(e) => updateSortFilter(e[0].label)}
         value={sortOptions}
-        placeholder="Select "
+        placeholder="Select"
+        onDropdownClose={() => setShowSortModal(false)}
+        closeOnClickInput={true}
       />
     );
   };
@@ -73,7 +81,12 @@ const Container = ({ userContext, userSettings }) => {
   const renderSortedArray = (text) => {
     if (text === 'normal') {
       return items.map((item) => {
-        if (!item.isPriority && !item.isCompleted) {
+        if (
+          !item.isPriority &&
+          !item.isCompleted &&
+          !item.isCountDown &&
+          !item.isPinned
+        ) {
           return (
             <div className="pt-4 " key={item._id}>
               <SingleItem
@@ -86,7 +99,12 @@ const Container = ({ userContext, userSettings }) => {
       });
     } else {
       return items.map((item) => {
-        if (item.isPriority && !item.isCompleted) {
+        if (
+          item.isPriority &&
+          !item.isCompleted &&
+          !item.isCountDown &&
+          !item.isPinned
+        ) {
           return (
             <div className="pt-4" key={item._id}>
               <SingleItem
@@ -100,56 +118,104 @@ const Container = ({ userContext, userSettings }) => {
     }
   };
 
-  return (
-    <section className="">
-      <div className="flex gap-2 justify-around w-full">
-        <section className="flex gap-2 items-center">
-          <div
-            className="bg-black text-white p-3 cursor-pointer w-fit h-fit rounded-md"
-            onClick={() => setShowSortModal(!showSortModal)}
-          >
-            <FaSortAmountDown />
-          </div>
+  const renderCountdown = () => {
+    const filter = items
+      .filter((item) => item.isCountDown && !item.isPinned)
+      .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
 
-          <div
-            className={`w-48 duration-300 ${
-              showSortModal ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {showDropdown()}
+    return filter.map((item) => {
+      return (
+        <div className="pt-4" key={item._id}>
+          <SingleItem
+            item={item}
+            style={'flex items-center p-5 bg-white rounded-md shadow-2xl '}
+            type={'countdown'}
+          />
+        </div>
+      );
+    });
+  };
+
+  const renderIcon = () => {
+    if (sortOptions === 'Z-A') {
+      return (
+        <FcAlphabeticalSortingZa className="transform text-2xl cursor-pointer" />
+      );
+    } else if (sortOptions === 'A-Z') {
+      return (
+        <FcAlphabeticalSortingAz className="transform text-2xl cursor-pointer" />
+      );
+    } else if (sortOptions === 'Due date') {
+      return (
+        <FcNumericalSorting12 className="transform text-2xl cursor-pointer" />
+      );
+    } else {
+      <TbSortDescending className="transform scale-x-[-1] text-2xl cursor-pointer" />;
+    }
+  };
+
+  const renderPinned = (filter) => {
+    let filtered = [];
+
+    if (filter === 'countdown') {
+      filtered = items.filter((item) => item.isPinned && item.isCountDown);
+    } else {
+      filtered = items.filter(
+        (item) =>
+          item.isPinned &&
+          !item.isCountDown &&
+          (filter === 'normal' ? !item.isPriority : item.isPriority)
+      );
+    }
+    if (filtered.length > 0) {
+      return filtered.map((result) => {
+        return (
+          <div className="pt-4" key={result._id}>
+            <SingleItem
+              item={result}
+              style={
+                'flex items-center p-5 bg-white rounded-md shadow-2xl bg-red-100'
+              }
+            />
           </div>
-        </section>
+        );
+      });
+    }
+  };
+
+  return (
+    <section className="pr-2">
+      <div className="flex w-full justify-end">
+        <p className="w-screen text-center font-bold text-2xl tracking-wider">
+          {showCompleted ? 'Archived Items' : 'Current Items'}
+        </p>
         <div
           className="bg-black text-white tracking-wider rounded-lg self-center	p-3 cursor-pointer"
           onClick={() => setShowCompleted(!showCompleted)}
         >
-          {showCompleted ? 'View Current Todos' : 'Show Completed'}
+          {showCompleted ? <LuListTodo /> : <FaArchive />}
         </div>
       </div>
 
       {showCompleted ? (
-        <CompletedTodos
-          // className="bg-red-400"
-          items={items}
-          userSettings={userSettings}
-        />
+        <CompletedTodos items={items} userSettings={userSettings} />
       ) : (
         <>
-          <div className="text-center font-bold mb-2">
-            Sorted by: {sortOptions}
-          </div>
           {/*  */}
-          <div className="flex justify-center gap-20">
+          <div className="flex justify-center gap-20 mt-2">
             <section className="pb-10 flex justify-center flex-col items-center ">
               <div className="flex gap-4">
                 <div className="bg-zinc-100 rounded-xl pt-3">
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
                     {renderTitle() ? 'High Priority List' : null}
-                    {/* <span className="text-sm font-normal tracking-normal bg-black text-white p-1 w-7 text-center rounded-md cursor-pointer ">
-                      <FaSortAmountDown />
-                    </span> */}
                   </div>
                   <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
+                    <div className="mb-6">
+                      <div>
+                        <span> Pinned </span>
+                        {renderPinned()}
+                      </div>
+                    </div>
                     <div>{renderSortedArray()}</div>
                   </div>
                 </div>
@@ -157,44 +223,62 @@ const Container = ({ userContext, userSettings }) => {
 
                 <div className="bg-zinc-100 rounded-xl pt-3">
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
-                    <span>Normal List</span>
-                    {/* <span className="text-sm font-normal tracking-normal bg-black text-white p-1 w-7 text-center rounded-md cursor-pointer">
-                      <FaSortAmountDown />
-                    </span> */}
+                    <div className="">Normal List</div>
+
+                    {/* sort by */}
+                    <section className="flex gap-2 items-center">
+                      <div
+                        className={`duration-300 ${
+                          showSortModal ? 'opacity-100' : 'opacity-0 '
+                        }`}
+                      >
+                        {showDropdown()}
+                      </div>
+                      <div onClick={() => setShowSortModal(!showSortModal)}>
+                        <div />
+                        {renderIcon()}
+                      </div>
+                    </section>
                   </div>
-                  <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
+
+                  <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem]">
+                    <div className="mb-6">
+                      <div>
+                        <span> Pinned </span>
+                        {renderPinned('normal')}
+                      </div>
+                    </div>
                     {sortOptions ? renderSortedArray('normal') : null}
                   </div>
                 </div>
               </div>
-              <div>
-                <Form
-                  style={`cursor-pointer text-center mt-6 text-lg bg-black tracking-wider text-white p-4 w-[32rem] rounded-lg`}
-                  text={'Add item'}
-                />
-              </div>
-              {/* </div> */}
             </section>
 
             <section>
               <div className="bg-zinc-100 rounded-xl pt-3 h-fit">
                 <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
                   <span>Background Countdowns</span>
-                  {/* <span className="text-sm font-normal tracking-normal bg-black text-white p-1 w-7 text-center rounded-md cursor-pointer">
-                    <FaSortAmountDown />
-                  </span> */}
+                  <span className="w-max flex items-center">
+                    <FcNumericalSorting12 className="text-2xl mb-3" />
+                  </span>
                 </div>
                 <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
-                  <div className="">
-                    {sortOptions ? renderSortedArray('normal') : null}
+                  <div className="mb-6">
+                    <div>
+                      <span> Pinned </span>
+                      {renderPinned('countdown')}
+                    </div>
                   </div>
+                  {renderCountdown()}
                 </div>
               </div>
-              <Form
-                style={`cursor-pointer text-center mt-6 text-lg bg-black tracking-wider text-white p-4 w-[20rem] rounded-lg `}
-                text={'Add to countdowns'}
-              />
             </section>
+          </div>
+          <div>
+            <Form
+              style={`cursor-pointer text-center text-xl bg-black tracking-wider text-white p-4 w-[24rem] rounded-lg hover:text-red-300 duration-300`}
+              text={'Add item'}
+            />
           </div>
         </>
       )}

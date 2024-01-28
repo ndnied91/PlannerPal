@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/auth', authRouter); //creating and logging in
 app.use('/api/users', authenticateUser, userRoutes); // checking for user on page load
 app.use('/api/items', authenticateUser, itemsRouter); //for todos
-app.use('/api/cal', authenticateUser, calendarRouter); //for todos
+app.use('/api/cal', authenticateUser, calendarRouter); //for cal
 //
 app.use('/api/notes', authenticateUser, notesRouter); //for notes
 

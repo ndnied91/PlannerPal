@@ -9,6 +9,8 @@ const ItemsSchema = new mongoose.Schema({
   title: String,
   description: String,
   dueDate: String,
+  isCountDown: Boolean,
+  isPinned: Boolean,
   calCode: String, //for making to calendar event
 });
 

@@ -58,7 +58,7 @@ const UrgentTodoOverview = ({ items, userSettings }) => {
   const day = userSettings.urgency / 24;
 
   return (
-    <section className="p-5">
+    <section className="p-5 h-fit">
       <div className="font-bold text-lg  w-[30rem]">Urgent Tasks</div>
       <span className="text-sm">Tasks ending in </span>
 
@@ -66,7 +66,7 @@ const UrgentTodoOverview = ({ items, userSettings }) => {
         {' '}
         {day} {day < 2 ? 'day' : 'days'}{' '}
       </span>
-      <div className="overflow-scroll h-96">{renderItems()}</div>
+      <div className="overflow-scroll ">{renderItems()}</div>
     </section>
   );
 };

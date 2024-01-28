@@ -21,11 +21,11 @@ const PriorityTodoOverview = ({ items }) => {
   };
 
   return (
-    <section className="p-5">
+    <section className="p-5 h-96">
       <div className="font-bold text-lg  w-[30rem]">
         Priority Items at a Glance
       </div>
-      <div className="overflow-scroll h-96">{priorityItems()}</div>
+      <div className="">{priorityItems()}</div>
     </section>
   );
 };

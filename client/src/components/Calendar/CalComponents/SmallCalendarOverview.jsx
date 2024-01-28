@@ -38,9 +38,9 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
     const currDay = day.format(format);
     const slcDay = daySelected && daySelected.format(format);
     if (nowDay === currDay) {
-      return 'bg-blue-500 rounded-full text-white';
+      return 'font-extrabold text-blue-500 ';
     } else if (currDay === slcDay) {
-      return 'bg-blue-100 rounded-full text-blue-600 font-bold';
+      return 'text-red-600 font-bold';
     } else {
       return '';
     }
@@ -89,7 +89,7 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
       </header>
       <div className="grid grid-cols-7 grid-rows-6">
         {currentMonth[0].map((day, i) => (
-          <span key={i} className="text-sm py-1 text-center font-bold">
+          <span key={i} className="text-md py-1 text-center font-bold">
             {day.format('dd').charAt(0)}
           </span>
         ))}
@@ -98,14 +98,17 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
             {row.map((day, idx) => (
               <button
                 key={idx}
-                className={`py-1 w-full self-start ${getDayClass(day)}`}
+                className={`w-full self-start min-h-14 flex justify-center ${getDayClass(
+                  day
+                )}`}
               >
-                <div className="text-sm flex flex-col">
+                <div className="text-md flex flex-col">
                   {day.format('D')}
 
                   {renderDot(day) ? (
                     <div
-                      className="self-center"
+                      className="self-center translate-y-[-0.6rem]"
+                      id="sdfsfasdf"
                       onMouseEnter={(e) => previewEvents(e)}
                       onMouseLeave={(e) => setPreviewEvents([])}
                     >

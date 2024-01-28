@@ -12,8 +12,6 @@ const container = ({ userSettings, userContext }) => {
   const [popupPosition, setPopupPosition] = useState(''); //when hovering over small cal
   const { items, setItems } = useGlobalContext();
 
-  // console.log(items.dueDate);
-
   useEffect(() => {
     const setOrder = async () => {
       try {
@@ -40,13 +38,12 @@ const container = ({ userSettings, userContext }) => {
         <p className="text-3xl font-bold mb-6"> Welcome, {userContext.name}!</p>
         <section className="flex justify-between">
           <section className="flex">
-            <div className="bg-slate-100 rounded-lg shadow-md p-6 w-[40rem] h-">
+            <div className="bg-slate-100 rounded-lg shadow-md p-6 w-[32rem] h-min">
               <SmallCalendarOverview
                 setPreviewEvents={setPreviewEvents}
                 setPopupPosition={setPopupPosition}
               />
             </div>
-            {/* align-self: center; */}
             <div>
               <PreviewModal
                 previewEvents={previewEvents}
@@ -54,12 +51,12 @@ const container = ({ userSettings, userContext }) => {
               />
             </div>
             {/* countdown details  */}
-            <div className="ml-10 bg-slate-100 rounded-lg shadow-md">
+            <div className="ml-10 bg-slate-100 rounded-lg shadow-md h-96 overflow-scroll">
               {items !== undefined && items.length > 0 ? (
                 <UrgentTodoOverview items={items} userSettings={userSettings} />
               ) : null}
             </div>
-            <div className="ml-10 bg-slate-100 rounded-lg shadow-md">
+            <div className="ml-10 bg-slate-100 rounded-lg shadow-md h-96 overflow-scroll">
               {items !== undefined && items.length > 0 ? (
                 <PriorityTodoOverview
                   items={items}

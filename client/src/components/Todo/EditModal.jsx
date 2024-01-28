@@ -1,17 +1,11 @@
-import React from 'react';
 import { useState } from 'react';
 import { useGlobalContext } from './todoContext';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import {
-  toDate,
-  parseISO,
-  differenceInMilliseconds,
-  addMilliseconds,
-  addHours,
-} from 'date-fns';
+import { parseISO } from 'date-fns';
+import { ImCross } from 'react-icons/im';
 
 const EditModal = ({ setShowEditModal }) => {
   const { updateItem, updateContent } = useGlobalContext();
@@ -52,8 +46,24 @@ const EditModal = ({ setShowEditModal }) => {
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center">
-            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <div className="relative transform overflow-hidden rounded-lg bg-slate-100 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center">
+            <div className="font-bold text-4xl p-4 border-b border-x-slate-300 flex justify-between items-center">
+              {!updateItem.isCountDown ? (
+                <p>Edit Todo </p>
+              ) : (
+                <p>Edit Countdown </p>
+              )}
+
+              <button
+                className="text-red-700 max-w-fit rounded-md px-3 py-2 text-sm font-semibold hover:scale-110 duration-300"
+                onClick={() => setShowEditModal(false)}
+                type="button"
+              >
+                <ImCross className="text-2xl" />
+              </button>
+            </div>
+
+            <div className="bg-slate-200 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="modalClass">
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
                   <div className="mt-2">
@@ -105,12 +115,7 @@ const EditModal = ({ setShowEditModal }) => {
                           >
                             Due
                           </label>
-                          {/* <input
-                            className="bg-slate-200"
-                            type="date"
-                            value={date}
-                            onChange={onDateChange}
-                          /> */}
+
                           <DatePicker
                             showTimeSelect
                             selected={parseISO(date)}
@@ -119,28 +124,33 @@ const EditModal = ({ setShowEditModal }) => {
                           />
                         </div>
 
-                        {/* cal */}
-                        <div className="mb-4">
-                          <label
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                            htmlFor="isAddedToCal"
-                          >
-                            Update Calendar event?
-                          </label>
-                          <input
-                            className="bg-slate-200"
-                            type="checkbox"
-                            checked={currentItem.updateCalEvent}
-                            onChange={handleCheckboxChange}
-                          />
-                        </div>
+                        {updateItem.calCode ? (
+                          <div className="mb-4">
+                            <label
+                              className="block text-gray-700 text-sm font-bold mb-2"
+                              htmlFor="isAddedToCal"
+                            >
+                              Update Calendar event?
+                            </label>
+                            <input
+                              className="bg-slate-200"
+                              type="checkbox"
+                              checked={currentItem.updateCalEvent}
+                              onChange={handleCheckboxChange}
+                            />
+                          </div>
+                        ) : null}
 
                         <div className="flex justify-center">
                           <button
                             className="block w-96 text-blue-500 text-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 "
                             type="submit"
                           >
-                            Update Todo
+                            {!updateItem.isCountDown ? (
+                              <p>Update Todo </p>
+                            ) : (
+                              <p>Update Countdown </p>
+                            )}
                           </button>
                         </div>
                       </form>
@@ -148,16 +158,6 @@ const EditModal = ({ setShowEditModal }) => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6 flex justify-between text-sm">
-              <div className="flex place-items-center" id="tessst"></div>
-              <button
-                onClick={() => setShowEditModal(false)}
-                type="button"
-                className="inline-flex  text-red-700 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>

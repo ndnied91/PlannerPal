@@ -60,12 +60,12 @@ const App = () => {
   };
 
   return (
-    <section className="relative">
-      <Navbar
+    <section className="relative mt-8">
+      {/* <Navbar
         setShowSettingsModal={setShowSettingsModal}
         userContext={userContext}
         setContextUser={setContextUser}
-      />
+      /> */}
       <div className="pl-12">
         <Sidebar setShowSettingsModal={setShowSettingsModal} />
         {userSettings?.selectedPane !== undefined ? renderPane() : null}

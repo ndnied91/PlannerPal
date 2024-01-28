@@ -5,18 +5,21 @@ import { validateIdParam } from '../middleware/validationMiddleware.js'; //middl
 import {
   createItem,
   getAllItems,
-  deleteJob,
-  updateJob,
+  deleteItem,
+  updateItem,
+  updatePinnedItem,
   updateTodoEventFromCal,
 } from '../controllers/itemsController.js';
 
 router.route('/').post(createItem); //creates all items
 router.route('/').get(getAllItems); //get all items
 
+router.route('/pinned/:id').patch(validateIdParam, updatePinnedItem);
+
 router
   .route('/:id')
-  .patch(validateIdParam, updateJob)
-  .delete(validateIdParam, deleteJob);
+  .patch(validateIdParam, updateItem)
+  .delete(validateIdParam, deleteItem);
 
 router.route('/update/:calCode').patch(updateTodoEventFromCal);
 
