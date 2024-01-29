@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaFolderOpen, FaCalendarAlt, FaWpforms, FaHome } from 'react-icons/fa';
 import { FaPersonRunning } from 'react-icons/fa6';
 
@@ -7,13 +7,13 @@ import customFetch from '../utils/customFetch';
 import { FaGear } from 'react-icons/fa6';
 import { CiLogin } from 'react-icons/ci';
 import LoginModal from './LoginModal';
-import RegisterModal from './LoginModal';
+import RegisterModal from './RegisterModal';
 
 const Options = ({ setShowSettingsModal }) => {
   const { userSettings, userContext, setUserSettings, setContextUser } =
     useGlobalContext();
   const [hoveredOver, setHoveredOver] = useState(false);
-  const [showRegModal, setShowRegModal] = useState(false);
+  const [showRegModal, setShowRegModal] = useState();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const links = [
@@ -69,8 +69,8 @@ const Options = ({ setShowSettingsModal }) => {
   };
 
   const renderRegister = () => {
-    setShowRegModal(true);
     setShowLoginModal(false);
+    setShowRegModal(true);
   };
 
   return (
@@ -162,6 +162,7 @@ const Options = ({ setShowSettingsModal }) => {
           </div>
         </div>
       </ul>
+      {/*  */}
       {/* modals, leave these be */}
       {showRegModal ? (
         <RegisterModal

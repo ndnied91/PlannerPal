@@ -158,12 +158,15 @@ const Container = ({ userContext, userSettings }) => {
     let filtered = [];
 
     if (filter === 'countdown') {
-      filtered = items.filter((item) => item.isPinned && item.isCountDown);
+      filtered = items.filter(
+        (item) => item.isPinned && item.isCountDown && !item.isCompleted
+      );
     } else {
       filtered = items.filter(
         (item) =>
           item.isPinned &&
           !item.isCountDown &&
+          !item.isCompleted &&
           (filter === 'normal' ? !item.isPriority : item.isPriority)
       );
     }
@@ -174,7 +177,7 @@ const Container = ({ userContext, userSettings }) => {
             <SingleItem
               item={result}
               style={
-                'flex items-center p-5 bg-white rounded-md shadow-2xl bg-red-100'
+                'flex items-center p-5 bg-white rounded-md shadow-2xl !bg-orange-200 '
               }
             />
           </div>
@@ -184,7 +187,7 @@ const Container = ({ userContext, userSettings }) => {
   };
 
   return (
-    <section className="pr-2">
+    <section className="pr-2 pt-5">
       <div className="flex w-full justify-end">
         <p className="w-screen text-center font-bold text-2xl tracking-wider">
           {showCompleted ? 'Archived Items' : 'Current Items'}
@@ -255,14 +258,14 @@ const Container = ({ userContext, userSettings }) => {
             </section>
 
             <section>
-              <div className="bg-zinc-100 rounded-xl pt-3 h-fit">
+              <div className="bg-slate-200 rounded-xl pt-3 h-fit">
                 <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
                   <span>Background Countdowns</span>
                   <span className="w-max flex items-center">
                     <FcNumericalSorting12 className="text-2xl mb-3" />
                   </span>
                 </div>
-                <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
+                <div className="pb-10 bg-slate-200 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
                   <div className="mb-6">
                     <div>
                       <span> Pinned </span>

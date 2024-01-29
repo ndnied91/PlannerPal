@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import customFetch from './utils/customFetch';
 import { useGlobalContext } from './context';
 
-import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import { TodoAppProvider } from './components/Todo/todoContext';
 
@@ -13,18 +12,26 @@ import Notes from './components/Notes/container';
 import Overview from './components/Overview/Container';
 import ContextWrapper from './components/Calendar/context/ContextWrapper';
 import AppSettings from './components/AppSettings';
+import Example from './Example';
 
 const App = () => {
   const { setContextUser, userSettings, userContext, setUserSettings } =
     useGlobalContext();
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [caughtComponent, setCaughtComponent] = useState(null);
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const { data } = await customFetch.get('/users/current-user');
-        setContextUser(data.user);
-      } catch (e) {}
+        if (data) {
+          setContextUser(data.user);
+        }
+      } catch (e) {
+        console.log(e);
+        // setCaughtComponent(() => <Example />);
+        setCaughtComponent(true);
+      }
     };
     getUser();
   }, []);
@@ -58,29 +65,35 @@ const App = () => {
         );
     }
   };
-
+  //
   return (
-    <section className="relative mt-8">
-      {/* <Navbar
-        setShowSettingsModal={setShowSettingsModal}
-        userContext={userContext}
-        setContextUser={setContextUser}
-      /> */}
-      <div className="pl-12">
-        <Sidebar setShowSettingsModal={setShowSettingsModal} />
-        {userSettings?.selectedPane !== undefined ? renderPane() : null}
+    <main>
+      <div
+        className={`${
+          caughtComponent
+            ? 'opacity-100 duration-500'
+            : 'opacity-0 duration-500'
+        }`}
+      >
+        <Example />
       </div>
+      <section className="relative ">
+        <div className="pl-12">
+          <Sidebar setShowSettingsModal={setShowSettingsModal} />
+          {userSettings?.selectedPane !== undefined ? renderPane() : null}
+        </div>
 
-      {showSettingsModal ? (
-        <TodoAppProvider>
-          <AppSettings
-            setUserSettings={setUserSettings}
-            setShowSettingsModal={setShowSettingsModal}
-            userContext={userContext}
-          />
-        </TodoAppProvider>
-      ) : null}
-    </section>
+        {showSettingsModal ? (
+          <TodoAppProvider>
+            <AppSettings
+              setUserSettings={setUserSettings}
+              setShowSettingsModal={setShowSettingsModal}
+              userContext={userContext}
+            />
+          </TodoAppProvider>
+        ) : null}
+      </section>
+    </main>
   );
 };
 

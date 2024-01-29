@@ -7,11 +7,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const FormModal = ({ sendToServer, setShowModal }) => {
-  const [date, setDate] = useState();
-
-  useEffect(() => {
-    setDate(new Date(Date.now()));
-  }, []);
+  const [date, setDate] = useState('');
 
   const [currentItem, setCurrentItem] = useState({
     currentTitle: 'Title testing',

@@ -16,7 +16,7 @@ const container = ({ userContext }) => {
   }, [monthIndex]);
 
   return (
-    <div className="ml-12 h-[85vh] flex flex-col mr-5">
+    <div className="ml-12 h-[85vh] flex flex-col mr-5 pt-5">
       {showEventModal ? <EventModal userContext={userContext} /> : null}
 
       <CalendarHeader />

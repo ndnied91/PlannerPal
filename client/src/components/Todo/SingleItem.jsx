@@ -134,7 +134,7 @@ export const SingleItem = ({ item, archivedList, style, type }) => {
             <>
               {item.isPinned ? (
                 <RiUnpinLine
-                  className="cursor-pointer scale-x-[-1] text-black w-5 h-5 mt-0.5 mr-2"
+                  className="cursor-pointer scale-x-[-1] text-black w-5 h-5 mt-0.5 mr-2 "
                   onClick={() => setPinnedItem(item)}
                 />
               ) : (

@@ -2,7 +2,9 @@ import React from 'react';
 
 const PriorityTodoOverview = ({ items }) => {
   const priorityItems = () => {
-    const priority = items.filter((item) => item.isPriority === true);
+    const priority = items.filter(
+      (item) => item.isPriority === true && !item.isCompleted
+    );
     if (priority.length < 1) {
       return 'No priority tasks exist at the minute';
     } else {

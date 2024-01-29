@@ -46,7 +46,7 @@ const container = ({ userContext }) => {
   };
 
   return (
-    <div className="pl-20">
+    <div className="pl-20 pt-5">
       <aside className="flex">
         <NoteAside
           notes={notes}

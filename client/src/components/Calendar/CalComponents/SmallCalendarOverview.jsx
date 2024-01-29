@@ -48,11 +48,11 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
   const renderDot = (day) => {
     return tempArr.some((i) => {
       let savedEventDate = new Date(i.day);
-
       if (day.$d.toString() == savedEventDate.toString()) {
-        tempArr = tempArr.filter(
-          (item) => new Date(item.day).toString() !== savedEventDate.toString()
-        );
+        tempArr = tempArr.filter((item) => {
+          return new Date(item.day).toString() !== savedEventDate.toString();
+        });
+
         return true;
       }
     });
@@ -102,13 +102,12 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
                   day
                 )}`}
               >
-                <div className="text-md flex flex-col">
+                <div className="text-md flex flex-col pb-1 absolute">
                   {day.format('D')}
 
                   {renderDot(day) ? (
                     <div
                       className="self-center translate-y-[-0.6rem]"
-                      id="sdfsfasdf"
                       onMouseEnter={(e) => previewEvents(e)}
                       onMouseLeave={(e) => setPreviewEvents([])}
                     >

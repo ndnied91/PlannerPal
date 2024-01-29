@@ -27,6 +27,7 @@ export const TodoAppProvider = ({ children, userSettings }) => {
 
   // working for both
   const updateStatus = async (item) => {
+    console.log(item);
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isCompleted: !item.isCompleted,
     });

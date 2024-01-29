@@ -1,0 +1,100 @@
+
+.hero-section {
+  background-image: linear-gradient(to bottom, rgba(145, 246, 252, 0), rgba(100, 99, 93, 1)), url('https://wallpaperaccess.com/full/2040033.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 9999999 !important;
+  
+}
+
+.container {
+  margin: 0 auto;
+}
+
+.hero-text {
+  width: 450px;
+  bottom: 40px;
+  right: 40px;
+  
+}
+
+.hero-welcome-text {
+  margin: 0;
+  padding: 0;
+  font-size: 34px;
+  margin-bottom: -10px;
+}
+
+.explore-btn {
+  box-shadow: 0 4px 30px #ffc500;
+  background: #eec500;
+  padding: 12px 30px;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.explore-btn:hover {
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 4px 40px #ffd900;
+  background: #ffd900;
+  transform: scale(1.05)
+}
+
+
+
+
+.testacc-btn {
+  box-shadow: 0 4px 30px #0b5394;
+  background: #0b5394;
+  padding: 12px 30px;
+  border-radius: 4px;
+  width: 200px;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.testacc-btn:hover {
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 4px 40px #0b5394;
+  background: #0b5394;
+  transform: scale(1.05)
+}
+
+
+
+.carousel-status, .control-dots{
+  display:none;
+}
+
+.view{
+  width: 200px;
+  border: 1px solid #2d2d2d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+/* 
+body{
+  margin: 0;
+}
+
+.test {
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.center {
+  width:80%;
+  min-height:80vh;
+  margin:auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+} */

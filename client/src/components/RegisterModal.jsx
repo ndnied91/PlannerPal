@@ -3,7 +3,7 @@ import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useGlobalContext } from '../context';
 
-const Modal = ({ setShowRegModal, renderSignIn }) => {
+const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
   const { setContextUser } = useGlobalContext();
 
   const [user, setUser] = useState({
@@ -138,4 +138,4 @@ const Modal = ({ setShowRegModal, renderSignIn }) => {
   );
 };
 
-export default Modal;
+export default RegisterModal;
