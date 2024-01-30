@@ -28,11 +28,11 @@ const Options = ({ setShowSettingsModal }) => {
       text: 'todo',
       icon: <FaPersonRunning />,
     },
-    {
-      id: 3,
-      text: 'projects',
-      icon: <FaFolderOpen />,
-    },
+    // {
+    //   id: 3,
+    //   text: 'projects',
+    //   icon: <FaFolderOpen />,
+    // },
     {
       id: 4,
       text: 'calendar',

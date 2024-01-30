@@ -9,7 +9,6 @@ import { TbSortDescending } from 'react-icons/tb';
 import { FcNumericalSorting12 } from 'react-icons/fc';
 import { FaArchive } from 'react-icons/fa';
 import { LuListTodo } from 'react-icons/lu';
-import { GoPin } from 'react-icons/go';
 
 import {
   FcAlphabeticalSortingAz,
@@ -17,7 +16,8 @@ import {
 } from 'react-icons/fc';
 
 const Container = ({ userContext, userSettings }) => {
-  const { items, setItems } = useGlobalContext();
+  const { items, setItems, filterOptions, filteredBy, setFilteredBy } =
+    useGlobalContext();
   const [showCompleted, setShowCompleted] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
   const [sortOptions, setSortOptions] = useState();
@@ -55,6 +55,7 @@ const Container = ({ userContext, userSettings }) => {
         placeholder="Select"
         onDropdownClose={() => setShowSortModal(false)}
         closeOnClickInput={true}
+        className="bg-red-300"
       />
     );
   };
@@ -186,12 +187,38 @@ const Container = ({ userContext, userSettings }) => {
     }
   };
 
+  const filterItems = async (e) => {
+    const value = e[0].value;
+    setFilteredBy(value);
+    console.log(value);
+    console.log('starting..');
+    try {
+      const { data } = await customFetch.get(`/items/filter/${value}`, {
+        filter: value,
+      });
+      setItems(data.items);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <section className="pr-2 pt-5">
       <div className="flex w-full justify-end">
-        <p className="w-screen text-center font-bold text-2xl tracking-wider">
+        <div className="w-screen text-center font-bold text-2xl tracking-wider">
           {showCompleted ? 'Archived Items' : 'Current Items'}
-        </p>
+          <span className="ml-10"> Filtered by: {filteredBy} </span>
+          <div className="flex justify-center">
+            <Select
+              className="text-xs bg-white mt-2 mb-2 flex justify-center w-fit "
+              options={filterOptions}
+              multi={false}
+              name="select"
+              placeholder="Select a category"
+              onChange={(e) => filterItems(e)}
+            />
+          </div>
+        </div>
+
         <div
           className="bg-black text-white tracking-wider rounded-lg self-center	p-3 cursor-pointer"
           onClick={() => setShowCompleted(!showCompleted)}

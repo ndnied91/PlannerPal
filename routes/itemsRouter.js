@@ -5,6 +5,7 @@ import { validateIdParam } from '../middleware/validationMiddleware.js'; //middl
 import {
   createItem,
   getAllItems,
+  getFilteredItems, //for filtering
   deleteItem,
   updateItem,
   updatePinnedItem,
@@ -13,6 +14,7 @@ import {
 
 router.route('/').post(createItem); //creates all items
 router.route('/').get(getAllItems); //get all items
+router.route('/filter/:filteredBy').get(getFilteredItems); //get all items
 
 router.route('/pinned/:id').patch(validateIdParam, updatePinnedItem);
 

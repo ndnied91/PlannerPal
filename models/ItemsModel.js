@@ -12,6 +12,7 @@ const ItemsSchema = new mongoose.Schema({
   isCountDown: Boolean,
   isPinned: Boolean,
   calCode: String, //for making to calendar event
+  category: String,
 });
 
 export default mongoose.model('Item', ItemsSchema);

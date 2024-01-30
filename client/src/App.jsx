@@ -29,7 +29,6 @@ const App = () => {
         }
       } catch (e) {
         console.log(e);
-        // setCaughtComponent(() => <Example />);
         setCaughtComponent(true);
       }
     };

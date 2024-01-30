@@ -6,13 +6,22 @@ import { ImCross } from 'react-icons/im';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import Select from 'react-dropdown-select';
+import { useGlobalContext } from './todoContext';
+
 const FormModal = ({ sendToServer, setShowModal }) => {
+  const { filterOptions, filteredBy } = useGlobalContext();
   const [date, setDate] = useState('');
+  const [category, setCategory] = useState([
+    { label: filteredBy, value: filteredBy },
+  ]);
+
+  const defaultValue = [{ value: filteredBy, label: filteredBy }];
 
   const [currentItem, setCurrentItem] = useState({
-    currentTitle: 'Title testing',
-    description: 'desc',
-    isAddedToCal: true,
+    currentTitle: 'Default title',
+    description: 'placeholder desc',
+    isAddedToCal: false,
     isPriority: false,
   });
 
@@ -36,9 +45,16 @@ const FormModal = ({ sendToServer, setShowModal }) => {
     }
     currentItem['dueDate'] = date;
 
+    if (category) {
+      currentItem['category'] = category[0].value;
+    } else {
+      currentItem['category'] = 'all';
+    }
+
     if (currentItem.isAddedToCal && date.length === 0) {
       toast.error('Date must be selected!');
     } else {
+      console.log(date.length);
       sendToServer(currentItem, currentPane);
     }
   };
@@ -136,19 +152,32 @@ const FormModal = ({ sendToServer, setShowModal }) => {
                           />
                         </div>
                         {/* time */}
-                        <label className="block text-gray-700 text-md tracking-wide font-bold mb-2 ">
-                          Due date
-                        </label>
 
-                        <DatePicker
-                          showTimeSelect
-                          selected={date}
-                          placeholderText="Select a date.."
-                          className="cursor-pointer mb-3"
-                          onChange={(date) => setDate(date)}
-                          dateFormat="MMMM d, yyyy h:mmaa"
-                        />
-
+                        <div className="dropdowns ">
+                          <label className="block text-gray-700 text-md tracking-wide font-bold mb-2 ">
+                            Due date
+                          </label>
+                          <DatePicker
+                            showTimeSelect
+                            selected={date}
+                            required
+                            placeholderText="Select a date.."
+                            className="cursor-pointer mb-3 bg-red-300"
+                            onChange={(date) => setDate(date)}
+                            dateFormat="MMMM d, yyyy h:mmaa"
+                          />
+                          {/* here */}
+                          <p className="text-sm"> Select a category</p>
+                          <Select
+                            className="text-xs bg-white mt-2 mb-2"
+                            options={filterOptions}
+                            values={defaultValue}
+                            multi={false}
+                            name="form-dept-select"
+                            placeholder="Select a category"
+                            onChange={(e) => setCategory(e)}
+                          />
+                        </div>
                         {/* cal */}
                         {currentPane === 'todo' ? (
                           <div className="pb-5 items-baseline block">

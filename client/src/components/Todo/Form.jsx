@@ -5,7 +5,7 @@ import { useGlobalContext } from './todoContext';
 import FormModal from './FormModal';
 
 const Form = ({ style, text, type }) => {
-  const { showModal, setShowModal, setItems } = useGlobalContext();
+  const { showModal, setShowModal, setItems, filteredBy } = useGlobalContext();
 
   const sendToServer = async (e, pane) => {
     let newItemName = {};
@@ -17,6 +17,7 @@ const Form = ({ style, text, type }) => {
         dueDate: e.dueDate,
         day: e.day,
         isCountDown: true,
+        category: e.category,
       };
     } else {
       newItemName = {
@@ -27,6 +28,7 @@ const Form = ({ style, text, type }) => {
         day: e.day,
         label: e.label,
         calCode: e.calCode,
+        category: e.category,
       };
     }
 
@@ -41,6 +43,7 @@ const Form = ({ style, text, type }) => {
 
         const { data } = await customFetch.post('/items', {
           todo: newItemName,
+          filteredBy,
         });
 
         setItems(data.items);

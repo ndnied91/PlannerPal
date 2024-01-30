@@ -10,6 +10,26 @@ export const TodoAppProvider = ({ children, userSettings }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [updateItem, setUpdateItem] = useState({}); //for patch route update content
   const [countdownItems, setCountdownItems] = useState([]);
+  const [filteredBy, setFilteredBy] = useState('default');
+
+  const filterOptions = [
+    {
+      value: 'all',
+      label: 'all',
+    },
+    {
+      value: 'chores',
+      label: 'chores',
+    },
+    {
+      value: 'work',
+      label: 'work',
+    },
+    {
+      value: 'life',
+      label: 'life',
+    },
+  ];
 
   // working for both
   const removeItem = async (item) => {
@@ -27,9 +47,9 @@ export const TodoAppProvider = ({ children, userSettings }) => {
 
   // working for both
   const updateStatus = async (item) => {
-    console.log(item);
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isCompleted: !item.isCompleted,
+      filteredBy,
     });
 
     setItems(data.items);
@@ -38,6 +58,7 @@ export const TodoAppProvider = ({ children, userSettings }) => {
   const addtoPriority = async (item) => {
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isPriority: !item.isPriority,
+      filteredBy,
     });
 
     setItems(data.items);
@@ -46,6 +67,7 @@ export const TodoAppProvider = ({ children, userSettings }) => {
   const updateContent = async (item) => {
     const response = await customFetch.patch(`/items/${item._id}`, {
       ...item,
+      filteredBy,
     });
 
     if (item.calCode) {
@@ -85,6 +107,9 @@ export const TodoAppProvider = ({ children, userSettings }) => {
         setUpdateItem,
         countdownItems,
         setCountdownItems,
+        filterOptions,
+        filteredBy,
+        setFilteredBy,
       }}
     >
       {children}

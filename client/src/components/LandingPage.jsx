@@ -7,11 +7,16 @@ export const LandingPage = ({ setShowLoginModal, setShowRegModal }) => {
     <main className="hero-section w-screen h-full text-white">
       <section className="container">
         <div className="w-2/4 rounded-lg flex flex-col absolute bottom-20 left-10">
-          <LandingCarousel />
+          {/* <LandingCarousel /> */}
         </div>
         <div className="">
           <nav className="navbar flex justify-between items-center">
-            <h1 className="nav-logo">LOGO</h1>
+            <h1 className="bg-white p-1 border-black border-2 scale-110 mt-6 rounded-md">
+              <span className="bg-black tracking-wide p-1 font-normal">
+                PLANNER
+              </span>{' '}
+              <span className="text-black font-bold">PAL</span>{' '}
+            </h1>
             <ul className="flex gap-10 items-center pt-6">
               <li className="bg-blue-500 p-2 rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-110 duration-400">
                 TEST ME!

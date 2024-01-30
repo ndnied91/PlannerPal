@@ -25,6 +25,8 @@ export const SingleItem = ({ item, archivedList, style, type }) => {
     setShowEditModal,
     setUpdateItem,
     setItems,
+    filteredBy,
+    setFilteredBy,
   } = useGlobalContext();
 
   const itemToUpdate = (item) => {
@@ -70,6 +72,7 @@ export const SingleItem = ({ item, archivedList, style, type }) => {
   const setPinnedItem = async (item) => {
     const { data } = await customFetch.patch(`/items/pinned/${item._id}`, {
       isPinned: !item.isPinned,
+      filteredBy,
     });
     setItems(data.items);
     // /items/pinned/id
@@ -95,6 +98,7 @@ export const SingleItem = ({ item, archivedList, style, type }) => {
             ) : null}
           </p>
 
+          {item?.category}
           {!type === 'trash' ? null : (
             <div>
               <div className="font-light pt-4 capitalize text-xs">

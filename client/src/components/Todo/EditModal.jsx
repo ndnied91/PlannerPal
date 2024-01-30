@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useGlobalContext } from './todoContext';
-
+import Select from 'react-dropdown-select';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -8,7 +8,8 @@ import { parseISO } from 'date-fns';
 import { ImCross } from 'react-icons/im';
 
 const EditModal = ({ setShowEditModal }) => {
-  const { updateItem, updateContent } = useGlobalContext();
+  const { updateItem, updateContent, filterOptions, filteredBy } =
+    useGlobalContext();
 
   const [currentItem, setCurrentItem] = useState({
     currentTitle: updateItem.title,
@@ -18,6 +19,14 @@ const EditModal = ({ setShowEditModal }) => {
   });
 
   const [date, setDate] = useState(updateItem.dueDate);
+
+  const [category, setCategory] = useState([
+    { label: updateItem.category, value: updateItem.category },
+  ]);
+
+  const defaultValue = [
+    { value: updateItem.category, label: updateItem.category },
+  ];
 
   const handleChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value });
@@ -35,7 +44,10 @@ const EditModal = ({ setShowEditModal }) => {
       title: currentItem.currentTitle,
       description: currentItem.description,
       dueDate: date,
+      category: category[0].value,
     };
+
+    console.log(obj);
 
     currentItem.updateCalEvent ? (obj['calCode'] = updateItem.calCode) : null;
     updateContent(obj);
@@ -121,6 +133,16 @@ const EditModal = ({ setShowEditModal }) => {
                             selected={parseISO(date)}
                             onChange={(date) => setDate(date.toISOString())}
                             dateFormat="MMMM d, yyyy h:mmaa"
+                          />
+                          <p className="text-sm"> Select a category</p>
+                          <Select
+                            className="text-xs bg-white mt-2 mb-2"
+                            options={filterOptions}
+                            values={defaultValue}
+                            multi={false}
+                            name="form-dept-select"
+                            placeholder="Select a category"
+                            onChange={(e) => setCategory(e)}
                           />
                         </div>
 

@@ -5,7 +5,10 @@ import { StatusCodes } from 'http-status-codes';
 export const createItem = async (req, res) => {
   let text = Object.values(req.body)[0].text;
   let type = Object.keys(req.body)[0];
-  // req.body.createdBy = req.user.userId;
+
+  console.log(req.body.filteredBy);
+  const { filteredBy } = req.body;
+  console.log('here here');
 
   const obj = {
     type: type,
@@ -18,18 +21,46 @@ export const createItem = async (req, res) => {
     dueDate: req.body.todo.dueDate || -1,
     calCode: req.body.todo.calCode,
     isPinned: false,
+    category: req.body.todo.category,
   };
 
   await Item.create(obj);
 
-  const items = await Item.find({ createdBy: req.user.userId });
-  res.status(StatusCodes.CREATED).json({ items });
+  if (filteredBy === 'default') {
+    const items = await Item.find({ createdBy: req.user.userId });
+    res.status(StatusCodes.CREATED).json({ items });
+  } else {
+    const items = await Item.find({
+      createdBy: req.user.userId,
+      category: filteredBy,
+    });
+    console.log(items);
+    res.status(StatusCodes.CREATED).json({ items });
+  }
+
   //sending back ALL items by specific user
 };
 
 export const getAllItems = async (req, res) => {
   const items = await Item.find({ createdBy: req.user.userId });
   res.status(StatusCodes.CREATED).json({ items });
+};
+
+export const getFilteredItems = async (req, res) => {
+  if (req.params.filteredBy !== 'all') {
+    const items = await Item.find({
+      createdBy: req.user.userId,
+      category: req.params.filteredBy,
+    });
+    console.log(items);
+    res.status(StatusCodes.CREATED).json({ items });
+  } else {
+    const items = await Item.find({
+      createdBy: req.user.userId,
+    });
+    console.log(items);
+    res.status(StatusCodes.CREATED).json({ items });
+  }
 };
 
 export const deleteItem = async (req, res) => {
@@ -44,14 +75,24 @@ export const updateItem = async (req, res) => {
     },
     req.body
   );
+  console.log(req.body.filteredBy);
 
-  const items = await Item.find({ createdBy: req.user.userId });
-  res.status(StatusCodes.CREATED).json({ items });
+  if (req.body.filteredBy === 'default') {
+    const items = await Item.find({ createdBy: req.user.userId });
+    res.status(StatusCodes.CREATED).json({ items });
+  } else {
+    console.log('else fired!');
+    const items = await Item.find({
+      createdBy: req.user.userId,
+      category: req.body.filteredBy,
+    });
+    res.status(StatusCodes.CREATED).json({ items });
+  }
 };
 
 export const updatePinnedItem = async (req, res) => {
   const { id } = req.params;
-  const { isPinned } = req.body;
+  const { isPinned, filteredBy } = req.body;
 
   const result = await Item.findByIdAndUpdate(
     {
@@ -60,8 +101,22 @@ export const updatePinnedItem = async (req, res) => {
     { isPinned: isPinned }
   );
 
-  const items = await Item.find({ createdBy: req.user.userId });
-  res.status(StatusCodes.OK).json({ items });
+  // const items = await Item.find({ createdBy: req.user.userId });
+  // res.status(StatusCodes.OK).json({ items });
+
+  console.log(filteredBy);
+
+  if (filteredBy === 'default') {
+    const items = await Item.find({ createdBy: req.user.userId });
+    res.status(StatusCodes.CREATED).json({ items });
+  } else {
+    console.log('else fired!');
+    const items = await Item.find({
+      createdBy: req.user.userId,
+      category: req.body.filteredBy,
+    });
+    res.status(StatusCodes.CREATED).json({ items });
+  }
 };
 
 export const updateTodoEventFromCal = async (req, res) => {
