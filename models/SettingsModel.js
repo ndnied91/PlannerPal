@@ -6,6 +6,7 @@ const SettingsSchema = new mongoose.Schema({
   urgency: { type: Number, default: 1 }, //1 day
   sortBy: { type: String, default: 'A-Z' },
   deleteTime: { type: Number, default: 7 }, //7 days
+  filterOptions: { type: Array }, //default is an empty array
 });
 
 export default mongoose.model('Settings', SettingsSchema);

@@ -14,7 +14,13 @@ import Countdown from 'react-countdown';
 import { useState } from 'react';
 import customFetch from '../../utils/customFetch';
 
-export const SingleItem = ({ item, archivedList, style, type }) => {
+export const SingleItem = ({
+  item,
+  archivedList,
+  style,
+  type,
+  userSettings,
+}) => {
   const [readMore, setReadMore] = useState(false);
 
   const {
@@ -169,8 +175,11 @@ export const SingleItem = ({ item, archivedList, style, type }) => {
             </>
           ) : null}
 
-          {showEditModal ? (
-            <EditModal setShowEditModal={setShowEditModal} />
+          {showEditModal && userSettings ? (
+            <EditModal
+              setShowEditModal={setShowEditModal}
+              userSettings={userSettings}
+            />
           ) : null}
 
           {!archivedList ? (

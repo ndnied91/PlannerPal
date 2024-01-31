@@ -40,7 +40,11 @@ const App = () => {
       case 'todo':
         return (
           <TodoAppProvider>
-            <Todo userContext={userContext} userSettings={userSettings} />
+            <Todo
+              userContext={userContext}
+              userSettings={userSettings}
+              setUserSettings={setUserSettings}
+            />
           </TodoAppProvider>
         );
       case 'projects':

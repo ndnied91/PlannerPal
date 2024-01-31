@@ -20,6 +20,7 @@ const AppSettings = ({
       deleteTime: deleteTime[0] !== undefined ? deleteTime[0].value : undefined,
     };
     const res = await customFetch.post(`/settings/${userContext._id}`, options);
+    console.log(res.data);
     setUserSettings(res.data.settings);
 
     if (res.status === 201) {

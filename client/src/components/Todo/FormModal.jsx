@@ -9,14 +9,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-dropdown-select';
 import { useGlobalContext } from './todoContext';
 
-const FormModal = ({ sendToServer, setShowModal }) => {
+const FormModal = ({ sendToServer, setShowModal, userSettings }) => {
   const { filterOptions, filteredBy } = useGlobalContext();
   const [date, setDate] = useState('');
   const [category, setCategory] = useState([
     { label: filteredBy, value: filteredBy },
   ]);
-
-  const defaultValue = [{ value: filteredBy, label: filteredBy }];
 
   const [currentItem, setCurrentItem] = useState({
     currentTitle: 'Default title',
@@ -162,16 +160,16 @@ const FormModal = ({ sendToServer, setShowModal }) => {
                             selected={date}
                             required
                             placeholderText="Select a date.."
-                            className="cursor-pointer mb-3 bg-red-300"
+                            className="cursor-pointer mb-3"
                             onChange={(date) => setDate(date)}
                             dateFormat="MMMM d, yyyy h:mmaa"
                           />
                           {/* here */}
                           <p className="text-sm"> Select a category</p>
+                          {console.log(userSettings.userSettings)}
                           <Select
                             className="text-xs bg-white mt-2 mb-2"
-                            options={filterOptions}
-                            values={defaultValue}
+                            options={userSettings.filterOptions}
                             multi={false}
                             name="form-dept-select"
                             placeholder="Select a category"

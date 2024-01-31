@@ -7,9 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 import { ImCross } from 'react-icons/im';
 
-const EditModal = ({ setShowEditModal }) => {
-  const { updateItem, updateContent, filterOptions, filteredBy } =
-    useGlobalContext();
+const EditModal = ({ setShowEditModal, userSettings }) => {
+  const { updateItem, updateContent } = useGlobalContext();
 
   const [currentItem, setCurrentItem] = useState({
     currentTitle: updateItem.title,
@@ -52,6 +51,7 @@ const EditModal = ({ setShowEditModal }) => {
     currentItem.updateCalEvent ? (obj['calCode'] = updateItem.calCode) : null;
     updateContent(obj);
   };
+
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
@@ -137,9 +137,9 @@ const EditModal = ({ setShowEditModal }) => {
                           <p className="text-sm"> Select a category</p>
                           <Select
                             className="text-xs bg-white mt-2 mb-2"
-                            options={filterOptions}
+                            options={userSettings.filterOptions}
                             values={defaultValue}
-                            multi={false}
+                            // multi={false}
                             name="form-dept-select"
                             placeholder="Select a category"
                             onChange={(e) => setCategory(e)}

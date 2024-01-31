@@ -4,7 +4,7 @@ import customFetch from '../../utils/customFetch';
 import { useGlobalContext } from './todoContext';
 import FormModal from './FormModal';
 
-const Form = ({ style, text, type }) => {
+const Form = ({ style, text, type, userSettings }) => {
   const { showModal, setShowModal, setItems, filteredBy } = useGlobalContext();
 
   const sendToServer = async (e, pane) => {
@@ -60,7 +60,7 @@ const Form = ({ style, text, type }) => {
       }
     }
   };
-
+  console.log(userSettings);
   return (
     <div className="text-center">
       <button
@@ -77,6 +77,7 @@ const Form = ({ style, text, type }) => {
           sendToServer={sendToServer}
           setShowModal={setShowModal}
           type={type}
+          userSettings={userSettings}
         />
       ) : null}
     </div>

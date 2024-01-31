@@ -317,3 +317,13 @@ form h4 {
   display: none;
 }
 
+
+
+.css-z2hyoe-ItemComponent.evc32pp0:nth-child(1){
+  background: lightgray;
+}
+
+
+.react-dropdown-select-item.css-z2hyoe-ItemComponent.evc32pp0{
+  text-transform: capitalize;
+}

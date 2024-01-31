@@ -4,32 +4,13 @@ import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 
-export const TodoAppProvider = ({ children, userSettings }) => {
+export const TodoAppProvider = ({ children }) => {
   const [items, setItems] = useState([]); //main todos
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [updateItem, setUpdateItem] = useState({}); //for patch route update content
   const [countdownItems, setCountdownItems] = useState([]);
   const [filteredBy, setFilteredBy] = useState('default');
-
-  const filterOptions = [
-    {
-      value: 'all',
-      label: 'all',
-    },
-    {
-      value: 'chores',
-      label: 'chores',
-    },
-    {
-      value: 'work',
-      label: 'work',
-    },
-    {
-      value: 'life',
-      label: 'life',
-    },
-  ];
 
   // working for both
   const removeItem = async (item) => {
@@ -107,7 +88,6 @@ export const TodoAppProvider = ({ children, userSettings }) => {
         setUpdateItem,
         countdownItems,
         setCountdownItems,
-        filterOptions,
         filteredBy,
         setFilteredBy,
       }}
