@@ -6,9 +6,9 @@ export const createItem = async (req, res) => {
   let text = Object.values(req.body)[0].text;
   let type = Object.keys(req.body)[0];
 
-  console.log(req.body.filteredBy);
   const { filteredBy } = req.body;
-  console.log('here here');
+  console.log(filteredBy);
+  console.log('create item');
 
   const obj = {
     type: type,
@@ -26,7 +26,8 @@ export const createItem = async (req, res) => {
 
   await Item.create(obj);
 
-  if (filteredBy === 'default') {
+  if (filteredBy === 'all') {
+    console.log('here');
     const items = await Item.find({ createdBy: req.user.userId });
     res.status(StatusCodes.CREATED).json({ items });
   } else {
@@ -34,7 +35,7 @@ export const createItem = async (req, res) => {
       createdBy: req.user.userId,
       category: filteredBy,
     });
-    console.log(items);
+
     res.status(StatusCodes.CREATED).json({ items });
   }
 
@@ -52,13 +53,13 @@ export const getFilteredItems = async (req, res) => {
       createdBy: req.user.userId,
       category: req.params.filteredBy,
     });
-    console.log(items);
+
     res.status(StatusCodes.CREATED).json({ items });
   } else {
     const items = await Item.find({
       createdBy: req.user.userId,
     });
-    console.log(items);
+
     res.status(StatusCodes.CREATED).json({ items });
   }
 };
@@ -75,13 +76,11 @@ export const updateItem = async (req, res) => {
     },
     req.body
   );
-  console.log(req.body.filteredBy);
 
-  if (req.body.filteredBy === 'default') {
+  if (req.body.filteredBy === 'all') {
     const items = await Item.find({ createdBy: req.user.userId });
     res.status(StatusCodes.CREATED).json({ items });
   } else {
-    console.log('else fired!');
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.body.filteredBy,
@@ -104,13 +103,10 @@ export const updatePinnedItem = async (req, res) => {
   // const items = await Item.find({ createdBy: req.user.userId });
   // res.status(StatusCodes.OK).json({ items });
 
-  console.log(filteredBy);
-
-  if (filteredBy === 'default') {
+  if (filteredBy === 'all') {
     const items = await Item.find({ createdBy: req.user.userId });
     res.status(StatusCodes.CREATED).json({ items });
   } else {
-    console.log('else fired!');
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.body.filteredBy,

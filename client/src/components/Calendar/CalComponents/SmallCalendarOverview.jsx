@@ -71,7 +71,7 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
   return (
     <div className="">
       <header className="flex justify-between">
-        <p className="text-gray-500 font-bold pb-8">
+        <p className="text-gray-500 font-bold pb-2">
           {dayjs(new Date(dayjs().year(), currentMonthIdx)).format('MMMM YYYY')}
         </p>
         <div>
@@ -98,11 +98,11 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
             {row.map((day, idx) => (
               <button
                 key={idx}
-                className={`w-full self-start min-h-14 flex justify-center ${getDayClass(
+                className={`w-full self-start min-h-10 flex justify-center ${getDayClass(
                   day
                 )}`}
               >
-                <div className="text-md flex flex-col pb-1 absolute">
+                <div className="text-sm flex flex-col absolute">
                   {day.format('D')}
 
                   {renderDot(day) ? (

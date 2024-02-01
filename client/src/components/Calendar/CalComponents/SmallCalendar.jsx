@@ -20,7 +20,6 @@ export default function SmallCalendar() {
   } = useContext(GlobalContext);
 
   let tempArr = savedEvents;
-  console.log(savedEvents);
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);

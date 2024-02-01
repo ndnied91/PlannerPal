@@ -17,7 +17,7 @@ const FilterPopover = ({
 
   const handleSubmit = async () => {
     let updatedFilter = [...userSettings.filterOptions];
-    let newItem = { value: filter.toLowerCase(), label: filter.toLowerCase() };
+    let newItem = filter.toLowerCase();
 
     if (arrayContainsObject(updatedFilter, newItem)) {
       toast.error('Category already exists');

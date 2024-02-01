@@ -6,6 +6,7 @@ import SmallCalendarOverview from '../Calendar/CalComponents/SmallCalendarOvervi
 import PreviewModal from '../Calendar/CalComponents/PreviewModal';
 import customFetch from '../../utils/customFetch';
 import { useGlobalContext } from '../Todo/todoContext';
+import PinnedOverview from './PinnedOverview';
 
 const container = ({ userSettings, userContext }) => {
   const [previewEvents, setPreviewEvents] = useState([]); //events set for preview
@@ -34,11 +35,14 @@ const container = ({ userSettings, userContext }) => {
 
   if (items.length > 0) {
     return (
-      <div className="ml-20 pt-5">
-        <p className="text-3xl font-bold mb-6"> Welcome, {userContext.name}!</p>
-        <section className="flex justify-between">
-          <section className="flex">
-            <div className="bg-slate-100 rounded-lg shadow-md p-6 w-[32rem] h-min">
+      <div className="pt-5 ml-20 flex flex-wrap max-w-screen">
+        <div className="mb-6">
+          <p className="text-3xl font-bold"> Welcome, {userContext.name}!</p>
+          <p> Manage your tasks and deadlines in one place</p>
+        </div>
+        <section className="flex justify-between flex-wrap">
+          <section className="flex flex-wrap gap-5">
+            <div className="bg-slate-50 rounded-lg shadow-sm p-6 w-[24rem] h-min">
               <SmallCalendarOverview
                 setPreviewEvents={setPreviewEvents}
                 setPopupPosition={setPopupPosition}
@@ -51,17 +55,22 @@ const container = ({ userSettings, userContext }) => {
               />
             </div>
             {/* countdown details  */}
-            <div className="ml-10 bg-slate-100 rounded-lg shadow-md h-96 overflow-scroll">
+            <div className="ml-2 bg-slate-50 rounded-lg shadow-sm h-80 overflow-scroll">
               {items !== undefined && items.length > 0 ? (
                 <UrgentTodoOverview items={items} userSettings={userSettings} />
               ) : null}
             </div>
-            <div className="ml-10 bg-slate-100 rounded-lg shadow-md h-96 overflow-scroll">
+            <div className="ml-2 mr-2 bg-slate-50 rounded-lg shadow-sm h-80 overflow-scroll">
               {items !== undefined && items.length > 0 ? (
                 <PriorityTodoOverview
                   items={items}
                   userSettings={userSettings}
                 />
+              ) : null}
+            </div>
+            <div className="bg-slate-50 rounded-lg shadow-sm h-80 overflow-scroll">
+              {items !== undefined && items.length > 0 ? (
+                <PinnedOverview items={items} userSettings={userSettings} />
               ) : null}
             </div>
           </section>

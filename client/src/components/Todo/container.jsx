@@ -1,6 +1,6 @@
 import { useGlobalContext } from './todoContext';
 import SingleItem from './SingleItem';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Select from 'react-dropdown-select';
 import Form from './Form';
 import CompletedTodos from '../CompletedTodos/container.jsx';
@@ -15,6 +15,7 @@ import {
   FcAlphabeticalSortingAz,
   FcAlphabeticalSortingZa,
 } from 'react-icons/fc';
+import FilterSelect from './FilterSelect.jsx';
 
 const Container = ({ userContext, userSettings, setUserSettings }) => {
   const { items, setItems, filteredBy, setFilteredBy } = useGlobalContext();
@@ -95,6 +96,8 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
                 item={item}
                 style={'flex items-center p-5 bg-white rounded-md shadow-2xl'}
                 userSettings={userSettings}
+                userContext={userContext}
+                setUserSettings={setUserSettings}
               />
             </div>
           );
@@ -189,9 +192,9 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
     }
   };
 
-  const filterItems = async (e) => {
-    const value = e[0].value;
-    if (value === 'add') {
+  const filterItems = async (value) => {
+    console.log('triggered', value);
+    if (value === 'add +') {
       setAddNewFilter(true);
     } else {
       setFilteredBy(value);
@@ -213,14 +216,14 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
         <div className="w-screen text-center font-bold text-2xl tracking-wider">
           {showCompleted ? 'Archived Items' : 'Current Items'}
           <span className="ml-10"> Filtered by: {filteredBy} </span>
-          <div className="flex ml-40">
-            <Select
-              className="text-xs bg-white mt-2 mb-2 !w-40 !border-slate-300 capitalize"
-              options={userSettings.filterOptions}
-              multi={false}
-              name="select"
-              placeholder="Select a category"
-              onChange={(e) => filterItems(e)}
+          <div className="flex ml-40 items-end">
+            <FilterSelect
+              updatable={true}
+              userSettings={userSettings}
+              filterItems={filterItems}
+              setUserSettings={setUserSettings}
+              userContext={userContext}
+              setFilteredBy={setFilteredBy}
             />
             <div
               className={`pl-2 ${
@@ -327,6 +330,7 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
               style={`cursor-pointer text-center text-xl bg-black tracking-wider text-white p-4 w-[24rem] rounded-lg hover:text-red-300 duration-300`}
               text={'Add item'}
               userSettings={userSettings}
+              setUserSettings={setUserSettings}
             />
           </div>
         </>

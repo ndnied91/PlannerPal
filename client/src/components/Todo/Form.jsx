@@ -8,6 +8,7 @@ const Form = ({ style, text, type, userSettings }) => {
   const { showModal, setShowModal, setItems, filteredBy } = useGlobalContext();
 
   const sendToServer = async (e, pane) => {
+    console.log(e);
     let newItemName = {};
 
     if (pane === 'countdown') {
@@ -31,13 +32,15 @@ const Form = ({ style, text, type, userSettings }) => {
         category: e.category,
       };
     }
+    console.log(e);
 
     if (!newItemName) {
       toast.error('Please enter a valid todo');
       return;
     } else {
       try {
-        if (pane !== 'countdown') {
+        if (pane !== 'countdown' && e.isAddedToCal) {
+          console.log('sending to cal...', newItemName);
           await customFetch.post('/cal', newItemName);
         }
 
@@ -60,7 +63,7 @@ const Form = ({ style, text, type, userSettings }) => {
       }
     }
   };
-  console.log(userSettings);
+
   return (
     <div className="text-center">
       <button

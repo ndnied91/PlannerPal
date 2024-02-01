@@ -9,12 +9,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-dropdown-select';
 import { useGlobalContext } from './todoContext';
 
-const FormModal = ({ sendToServer, setShowModal, userSettings }) => {
-  const { filterOptions, filteredBy } = useGlobalContext();
+import FilterSelect from './FilterSelect';
+
+const FormModal = ({
+  sendToServer,
+  setShowModal,
+  userSettings,
+  userContext,
+  setUserSettings,
+}) => {
+  const { filteredBy } = useGlobalContext();
   const [date, setDate] = useState('');
-  const [category, setCategory] = useState([
-    { label: filteredBy, value: filteredBy },
-  ]);
+  const [category, setCategory] = useState(filteredBy);
 
   const [currentItem, setCurrentItem] = useState({
     currentTitle: 'Default title',
@@ -44,7 +50,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings }) => {
     currentItem['dueDate'] = date;
 
     if (category) {
-      currentItem['category'] = category[0].value;
+      currentItem['category'] = category;
     } else {
       currentItem['category'] = 'all';
     }
@@ -52,9 +58,12 @@ const FormModal = ({ sendToServer, setShowModal, userSettings }) => {
     if (currentItem.isAddedToCal && date.length === 0) {
       toast.error('Date must be selected!');
     } else {
-      console.log(date.length);
       sendToServer(currentItem, currentPane);
     }
+  };
+
+  const updateCategory = (e) => {
+    setCategory(e);
   };
 
   return (
@@ -63,7 +72,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings }) => {
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div className="relative transform overflow-hidden rounded-lg bg-slate-100 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center">
+          <div className="relative transform overflow-visible rounded-lg bg-slate-100 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center">
             <div className="font-bold text-4xl p-4 border-b border-x-slate-300 flex justify-between items-center">
               {currentPane === 'todo' ? (
                 <p>Add Todo </p>
@@ -166,16 +175,28 @@ const FormModal = ({ sendToServer, setShowModal, userSettings }) => {
                           />
                           {/* here */}
                           <p className="text-sm"> Select a category</p>
-                          {console.log(userSettings.userSettings)}
-                          <Select
+                          {/*  */}
+                          {/*  */}
+                          {/* <Select
                             className="text-xs bg-white mt-2 mb-2"
                             options={userSettings.filterOptions}
                             multi={false}
                             name="form-dept-select"
                             placeholder="Select a category"
                             onChange={(e) => setCategory(e)}
+                          /> */}
+                          <FilterSelect
+                            userSettings={userSettings}
+                            userContext={userContext}
+                            setUserSettings={setUserSettings}
+                            updatable={false}
+                            updateCategory={updateCategory}
                           />
                         </div>
+
+                        {/*  */}
+                        {/*  */}
+
                         {/* cal */}
                         {currentPane === 'todo' ? (
                           <div className="pb-5 items-baseline block">

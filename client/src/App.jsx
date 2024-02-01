@@ -80,7 +80,7 @@ const App = () => {
       >
         <Example />
       </div>
-      <section className="relative ">
+      <section className="relative">
         <div className="pl-12">
           <Sidebar setShowSettingsModal={setShowSettingsModal} />
           {userSettings?.selectedPane !== undefined ? renderPane() : null}

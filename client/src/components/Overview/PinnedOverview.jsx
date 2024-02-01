@@ -1,10 +1,11 @@
 import React from 'react';
 
-const PriorityTodoOverview = ({ items }) => {
-  const priorityItems = () => {
+const PinnedOverview = ({ items }) => {
+  const pinnedItems = () => {
     const priority = items.filter(
-      (item) => item.isPriority === true && !item.isCompleted
+      (item) => item.isPinned === true && !item.isCompleted
     );
+
     if (priority.length < 1) {
       return 'No priority tasks exist at the minute';
     } else {
@@ -24,12 +25,11 @@ const PriorityTodoOverview = ({ items }) => {
 
   return (
     <section className="p-5 h-96 ">
-      <div className="font-bold text-lg w-[20rem]">
-        Priority Items at a Glance
-      </div>
-      <div className="">{priorityItems()}</div>
+      <div className="font-bold text-lg w-[20rem]">Pinned Items</div>
+      <div className="">{pinnedItems()}</div>
+      {}
     </section>
   );
 };
 
-export default PriorityTodoOverview;
+export default PinnedOverview;

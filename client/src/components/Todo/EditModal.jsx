@@ -7,7 +7,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 import { ImCross } from 'react-icons/im';
 
-const EditModal = ({ setShowEditModal, userSettings }) => {
+import FilterSelect from './FilterSelect';
+const EditModal = ({
+  setShowEditModal,
+  userSettings,
+  userContext,
+  setUserSettings,
+}) => {
   const { updateItem, updateContent } = useGlobalContext();
 
   const [currentItem, setCurrentItem] = useState({
@@ -18,14 +24,11 @@ const EditModal = ({ setShowEditModal, userSettings }) => {
   });
 
   const [date, setDate] = useState(updateItem.dueDate);
+  const [category, setCategory] = useState(updateItem.category);
 
-  const [category, setCategory] = useState([
-    { label: updateItem.category, value: updateItem.category },
-  ]);
-
-  const defaultValue = [
-    { value: updateItem.category, label: updateItem.category },
-  ];
+  const updateCategory = (e) => {
+    setCategory(e);
+  };
 
   const handleChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value });
@@ -43,23 +46,20 @@ const EditModal = ({ setShowEditModal, userSettings }) => {
       title: currentItem.currentTitle,
       description: currentItem.description,
       dueDate: date,
-      category: category[0].value,
+      category: category,
     };
-
-    console.log(obj);
 
     currentItem.updateCalEvent ? (obj['calCode'] = updateItem.calCode) : null;
     updateContent(obj);
   };
 
   return (
-    <div className="relative z-10" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
-
+    <div className="relative z-50 " role="dialog" aria-modal="true">
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10 "></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div className="relative transform overflow-hidden rounded-lg bg-slate-100 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center">
-            <div className="font-bold text-4xl p-4 border-b border-x-slate-300 flex justify-between items-center">
+        <div className="flex items-end justify-center p-4 text-center sm:items-center sm:p-0 ">
+          <div className="relative transform rounded-lg bg-slate-100 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center overflow-visible">
+            <div className="font-bold text-4xl p-4 border-b border-x-slate-300 flex justify-between items-center ">
               {!updateItem.isCountDown ? (
                 <p>Edit Todo </p>
               ) : (
@@ -75,7 +75,7 @@ const EditModal = ({ setShowEditModal, userSettings }) => {
               </button>
             </div>
 
-            <div className="bg-slate-200 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div className="bg-slate-200 px-4 pb-4 pt-5 sm:p-6 sm:pb-4 h-fit">
               <div className="modalClass">
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
                   <div className="mt-2">
@@ -127,22 +127,20 @@ const EditModal = ({ setShowEditModal, userSettings }) => {
                           >
                             Due
                           </label>
-
                           <DatePicker
                             showTimeSelect
                             selected={parseISO(date)}
                             onChange={(date) => setDate(date.toISOString())}
                             dateFormat="MMMM d, yyyy h:mmaa"
+                            className="mb-3"
                           />
-                          <p className="text-sm"> Select a category</p>
-                          <Select
-                            className="text-xs bg-white mt-2 mb-2"
-                            options={userSettings.filterOptions}
-                            values={defaultValue}
-                            // multi={false}
-                            name="form-dept-select"
-                            placeholder="Select a category"
-                            onChange={(e) => setCategory(e)}
+                          <FilterSelect
+                            userSettings={userSettings}
+                            userContext={userContext}
+                            setUserSettings={setUserSettings}
+                            updatable={false}
+                            updateCategory={updateCategory}
+                            category={category}
                           />
                         </div>
 

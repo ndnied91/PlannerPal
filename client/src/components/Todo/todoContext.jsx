@@ -10,7 +10,7 @@ export const TodoAppProvider = ({ children }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [updateItem, setUpdateItem] = useState({}); //for patch route update content
   const [countdownItems, setCountdownItems] = useState([]);
-  const [filteredBy, setFilteredBy] = useState('default');
+  const [filteredBy, setFilteredBy] = useState('all');
 
   // working for both
   const removeItem = async (item) => {

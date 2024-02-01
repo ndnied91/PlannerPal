@@ -20,6 +20,8 @@ export const SingleItem = ({
   style,
   type,
   userSettings,
+  userContext,
+  setUserSettings,
 }) => {
   const [readMore, setReadMore] = useState(false);
 
@@ -179,6 +181,8 @@ export const SingleItem = ({
             <EditModal
               setShowEditModal={setShowEditModal}
               userSettings={userSettings}
+              userContext={userContext}
+              setUserSettings={setUserSettings}
             />
           ) : null}
 
