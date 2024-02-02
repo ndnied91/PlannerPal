@@ -19,12 +19,14 @@ export const createNote = async (req, res) => {
           body,
           title,
           createdBy,
+          createdAt: Date.now(), //for updating notes
         },
       }
     );
     //update note
   } else {
-    await Note.create({ createdBy, title, body });
+    const newNote = await Note.create({ createdBy, title, body });
+    console.log(newNote);
   }
 
   const items = await Note.find({ createdBy: req.body.createdBy });

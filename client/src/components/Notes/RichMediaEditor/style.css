@@ -4,12 +4,11 @@
 
   #title_ifr{    
     margin: 0 !important;
-    padding-left: 5px;
+    padding-left: 2px;
     height: 55px !important;
   }
 
 
-
-#root > section > div.pl-12 > div.pl-6 > aside > div.m-4.w-148.p-4 > div > form > div.block > div:nth-child(2){
+form > div.block > div:nth-child(2){
   height: 55px !important;
 }

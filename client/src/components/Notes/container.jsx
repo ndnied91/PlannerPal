@@ -6,6 +6,9 @@ import customFetch from '../../utils/customFetch';
 const container = ({ userContext }) => {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState();
+  const [isDisabled, setIsDisabled] = useState(false); //plus button
+  const [noteTitle, setNoteTitle] = useState(''); //note editor
+  const [content, setContent] = useState(''); //note editor
 
   useEffect(() => {
     const getData = async () => {
@@ -42,20 +45,34 @@ const container = ({ userContext }) => {
   };
 
   const updatePosition = (notes) => {
-    setSelectedNote(notes[notes.length - 1]);
+    //determine if this is a new note or this is an updated note
+    setSelectedNote('');
   };
 
   return (
     <div className="pl-20 pt-5">
       <aside className="flex">
         <NoteAside
-          notes={notes}
+          notes={notes.sort((a, b) => b.createdAt.localeCompare(a.createdAt))}
           setSelectedNote={setSelectedNote}
           setNotes={setNotes}
           updatePosition={updatePosition}
           selectedNote={selectedNote}
+          isDisabled={isDisabled}
+          setIsDisabled={setIsDisabled}
+          setContent={setContent}
+          setNoteTitle={setNoteTitle}
         />
-        <NoteEditor updateNotesArr={updateNotesArr} {...selectedNote} />
+        <NoteEditor
+          updateNotesArr={updateNotesArr}
+          {...selectedNote}
+          setIsDisabled={setIsDisabled}
+          setSelectedNote={setSelectedNote}
+          noteTitle={noteTitle}
+          setNoteTitle={setNoteTitle}
+          content={content}
+          setContent={setContent}
+        />
       </aside>
     </div>
   );

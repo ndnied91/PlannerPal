@@ -4,9 +4,17 @@ import { Editor } from '@tinymce/tinymce-react';
 import './style.css';
 import { Spinner } from '../../../utils/Spinner';
 
-const container = ({ _id, body, title, updateNotesArr }) => {
-  const [content, setContent] = useState('');
-  const [noteTitle, setNoteTitle] = useState('');
+const container = ({
+  _id,
+  body,
+  title,
+  updateNotesArr,
+  setIsDisabled,
+  noteTitle,
+  setNoteTitle,
+  content,
+  setContent,
+}) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,17 +35,26 @@ const container = ({ _id, body, title, updateNotesArr }) => {
       toast.error('Body can not be empty');
     } else {
       updateNotesArr({ _id, title: noteTitle, content });
+      setIsDisabled(false);
+
+      if (_id === undefined) {
+        //this id is still undefined for NEW notes so the text should reset
+        //if this is NOT undefined, this is an existing note and we should keep focus where it's at
+        setNoteTitle('');
+        setContent('');
+      }
     }
   };
 
   return (
-    <div>
+    <section>
       {loading && <Spinner />}
+
       <form
         className={`${setLoading ? 'opacity-100 duration-300' : 'opacity-0'}`}
       >
         {/* title */}
-        <div className={`${!loading ? 'block' : 'hidden'}`}>
+        <div className={` ${!loading ? 'block' : 'hidden'}`}>
           <Editor
             apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
             value={noteTitle}
@@ -77,7 +94,7 @@ const container = ({ _id, body, title, updateNotesArr }) => {
           Submit
         </div>
       </form>
-    </div>
+    </section>
   );
 };
 
