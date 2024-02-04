@@ -11,8 +11,8 @@ import Calendar from './components/Calendar';
 import Notes from './components/Notes/container';
 import Overview from './components/Overview/Container';
 import ContextWrapper from './components/Calendar/context/ContextWrapper';
-import AppSettings from './components/AppSettings';
-import Example from './Example';
+import AppSettings from './components/Settings/AppSettings';
+import Global from './Global';
 
 const App = () => {
   const { setContextUser, userSettings, userContext, setUserSettings } =
@@ -78,7 +78,7 @@ const App = () => {
             : 'opacity-0 duration-500'
         }`}
       >
-        <Example />
+        <Global />
       </div>
       <section className="relative">
         <div className="pl-12">
@@ -92,6 +92,7 @@ const App = () => {
               setUserSettings={setUserSettings}
               setShowSettingsModal={setShowSettingsModal}
               userContext={userContext}
+              userSettings={userSettings}
             />
           </TodoAppProvider>
         ) : null}

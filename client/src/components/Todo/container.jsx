@@ -1,7 +1,7 @@
 import { useGlobalContext } from './todoContext';
 import SingleItem from './SingleItem';
 import { useEffect, useRef, useState } from 'react';
-import Select from 'react-dropdown-select';
+// import Select from 'react-dropdown-select';
 import Form from './Form';
 import CompletedTodos from '../CompletedTodos/container.jsx';
 import customFetch from '../../utils/customFetch.js';
@@ -17,7 +17,9 @@ import {
 } from 'react-icons/fc';
 import FilterSelect from './FilterSelect.jsx';
 
-const Container = ({ userContext, userSettings, setUserSettings }) => {
+import Container from './Select/Container.jsx';
+
+const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
   const { items, setItems, filteredBy, setFilteredBy } = useGlobalContext();
   const [showCompleted, setShowCompleted] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
@@ -34,29 +36,14 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
   };
 
   const showDropdown = () => {
-    const options = [
-      {
-        value: 1,
-        label: 'Due date',
-      },
-      {
-        value: 2,
-        label: 'A-Z',
-      },
-      {
-        value: 3,
-        label: 'Z-A',
-      },
-    ];
+    const options = ['Due date', 'A-Z', 'Z-A'];
 
     return (
-      <Select
-        options={options}
-        onChange={(e) => updateSortFilter(e[0].label)}
-        value={sortOptions}
-        placeholder="Select"
-        onDropdownClose={() => setShowSortModal(false)}
-        closeOnClickInput={true}
+      <Container
+        placeholderText={'Select an urgency'}
+        list={options}
+        setValue={updateSortFilter}
+        defaultValue={sortOptions}
         className="text-sm font-normal"
       />
     );
@@ -176,15 +163,15 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
           (filter === 'normal' ? !item.isPriority : item.isPriority)
       );
     }
+
     if (filtered.length > 0) {
       return filtered.map((result) => {
         return (
           <div className="pt-4" key={result._id}>
             <SingleItem
               item={result}
-              style={
-                'flex items-center p-5 bg-white rounded-md shadow-2xl !bg-orange-200 '
-              }
+              style={`flex items-center p-5 bg-white rounded-md shadow-2xl`}
+              userSettings={userSettings}
             />
           </div>
         );
@@ -193,7 +180,6 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
   };
 
   const filterItems = async (value) => {
-    console.log('triggered', value);
     if (value === 'add +') {
       setAddNewFilter(true);
     } else {
@@ -260,13 +246,8 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
                     {renderTitle() ? 'High Priority List' : null}
                   </div>
-                  <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
-                    <div className="mb-6">
-                      <div>
-                        <span> Pinned </span>
-                        {renderPinned()}
-                      </div>
-                    </div>
+                  <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem]">
+                    <div className="mb-6">{renderPinned()}</div>
                     <div>{renderSortedArray()}</div>
                   </div>
                 </div>
@@ -286,19 +267,13 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
                         {showDropdown()}
                       </div>
                       <div onClick={() => setShowSortModal(!showSortModal)}>
-                        <div />
                         {renderIcon()}
                       </div>
                     </section>
                   </div>
 
                   <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem]">
-                    <div className="mb-6">
-                      <div>
-                        <span> Pinned </span>
-                        {renderPinned('normal')}
-                      </div>
-                    </div>
+                    <div className="mb-6">{renderPinned('normal')}</div>
                     {sortOptions ? renderSortedArray('normal') : null}
                   </div>
                 </div>
@@ -314,29 +289,23 @@ const Container = ({ userContext, userSettings, setUserSettings }) => {
                   </span>
                 </div>
                 <div className="pb-10 bg-slate-200 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
-                  <div className="mb-6">
-                    <div>
-                      <span> Pinned </span>
-                      {renderPinned('countdown')}
-                    </div>
-                  </div>
+                  <div className="mb-6">{renderPinned('countdown')}</div>
                   {renderCountdown()}
                 </div>
               </div>
             </section>
           </div>
-          <div>
-            <Form
-              style={`cursor-pointer text-center text-xl bg-black tracking-wider text-white p-4 w-[24rem] rounded-lg hover:text-red-300 duration-300`}
-              text={'Add item'}
-              userSettings={userSettings}
-              setUserSettings={setUserSettings}
-            />
-          </div>
+
+          <Form
+            style={`cursor-pointer text-center text-xl bg-black tracking-wider text-white p-4 w-[24rem] rounded-lg hover:text-red-300 duration-300`}
+            text={'Add item'}
+            userSettings={userSettings}
+            setUserSettings={setUserSettings}
+          />
         </>
       )}
     </section>
   );
 };
 
-export default Container;
+export default MainContainer;

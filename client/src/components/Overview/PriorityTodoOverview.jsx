@@ -27,7 +27,7 @@ const PriorityTodoOverview = ({ items }) => {
       <div className="font-bold text-lg w-[20rem]">
         Priority Items at a Glance
       </div>
-      <div className="">{priorityItems()}</div>
+      {priorityItems()}
     </section>
   );
 };

@@ -26,8 +26,7 @@ const PinnedOverview = ({ items }) => {
   return (
     <section className="p-5 h-96 ">
       <div className="font-bold text-lg w-[20rem]">Pinned Items</div>
-      <div className="">{pinnedItems()}</div>
-      {}
+      {pinnedItems()}
     </section>
   );
 };

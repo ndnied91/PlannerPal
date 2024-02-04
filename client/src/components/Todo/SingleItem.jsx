@@ -89,10 +89,15 @@ export const SingleItem = ({
     //return new list and update UI with pinned item
   };
 
+  const dynamicStyle = {
+    color: item.isPriority ? 'maroon' : null,
+    backgroundColor: item.isPinned ? userSettings?.pinnedColor : null,
+  };
+
   return (
-    <div className={style} style={item.isPriority ? { color: 'maroon' } : null}>
+    <div className={style} style={dynamicStyle}>
       <section className="todoInfo">
-        <div className="pb-2 ">
+        <div className="pb-2">
           <p className="font-bold capitalize">{item.title}</p>
 
           <p className="font-light text-sm">
@@ -108,19 +113,17 @@ export const SingleItem = ({
 
           {item?.category}
           {!type === 'trash' ? null : (
-            <div>
-              <div className="font-light pt-4 capitalize text-xs">
-                {renderDesc(item.description)}
+            <div className="font-light pt-4 capitalize text-xs">
+              {renderDesc(item.description)}
 
-                <button
-                  className="info-btn"
-                  onClick={() => setReadMore(!readMore)}
-                >
-                  <p className="font-bold">
-                    {renderDescExpand(item.description)}
-                  </p>
-                </button>
-              </div>
+              <button
+                className="info-btn"
+                onClick={() => setReadMore(!readMore)}
+              >
+                <p className="font-bold">
+                  {renderDescExpand(item.description)}
+                </p>
+              </button>
             </div>
           )}
         </div>
@@ -134,9 +137,9 @@ export const SingleItem = ({
         } `}
       >
         {!archivedList ? (
-          <div className="">
+          <>
             <Countdown date={item.dueDate} renderer={renderer} />
-          </div>
+          </>
         ) : null}
 
         <div

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
 import { ImCross } from 'react-icons/im';
@@ -6,7 +6,6 @@ import { ImCross } from 'react-icons/im';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import Select from 'react-dropdown-select';
 import { useGlobalContext } from './todoContext';
 
 import FilterSelect from './FilterSelect';
@@ -25,11 +24,13 @@ const FormModal = ({
   const [currentItem, setCurrentItem] = useState({
     currentTitle: 'Default title',
     description: 'placeholder desc',
-    isAddedToCal: false,
+    isAddedToCal: userSettings?.isAddToCal,
     isPriority: false,
   });
 
   const [currentPane, setCurrentPane] = useState('todo');
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handleChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value });
@@ -66,10 +67,13 @@ const FormModal = ({
     setCategory(e);
   };
 
+  const handleMouseLeave = () => {
+    setIsDatePickerOpen(false);
+  };
+
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
-
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div className="relative transform overflow-visible rounded-lg bg-slate-100 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center">
@@ -115,147 +119,137 @@ const FormModal = ({
             </section>
 
             <div className="bg-slate-200 100 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <div className="">
-                <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                  <div className="mt-2">
-                    <div className="align-center ">
-                      <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                          <label
-                            className="block text-gray-700 text-md tracking-wide font-bold mb-2 "
-                            htmlFor="currentTitle"
-                          >
-                            Title
-                          </label>
-                          <input
-                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
-                            id="currentTitle"
-                            type="text"
-                            name="currentTitle"
-                            maxLength="20"
-                            value={currentItem.currentTitle}
-                            placeholder="Title"
-                            required
-                            onChange={(e) => handleChange(e)}
-                          />
-                        </div>
-                        {/* description */}
-                        <div className="mb-4">
-                          <label
-                            className="block text-gray-700 text-md tracking-wide font-bold mb-2 "
-                            htmlFor=""
-                          >
-                            Description
-                          </label>
-                          <textarea
-                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="description"
-                            type="textarea"
-                            name="description"
-                            placeholder="Description"
-                            required
-                            value={currentItem.description}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        {/* time */}
-
-                        <div className="dropdowns ">
-                          <label className="block text-gray-700 text-md tracking-wide font-bold mb-2 ">
-                            Due date
-                          </label>
-                          <DatePicker
-                            showTimeSelect
-                            selected={date}
-                            required
-                            placeholderText="Select a date.."
-                            className="cursor-pointer mb-3"
-                            onChange={(date) => setDate(date)}
-                            dateFormat="MMMM d, yyyy h:mmaa"
-                          />
-                          {/* here */}
-                          <p className="text-sm"> Select a category</p>
-                          {/*  */}
-                          {/*  */}
-                          {/* <Select
-                            className="text-xs bg-white mt-2 mb-2"
-                            options={userSettings.filterOptions}
-                            multi={false}
-                            name="form-dept-select"
-                            placeholder="Select a category"
-                            onChange={(e) => setCategory(e)}
-                          /> */}
-                          <FilterSelect
-                            userSettings={userSettings}
-                            userContext={userContext}
-                            setUserSettings={setUserSettings}
-                            updatable={false}
-                            updateCategory={updateCategory}
-                          />
-                        </div>
-
-                        {/*  */}
-                        {/*  */}
-
-                        {/* cal */}
-                        {currentPane === 'todo' ? (
-                          <div className="pb-5 items-baseline block">
-                            <label
-                              className=" text-gray-700 text-sm font-bold pr-2 "
-                              htmlFor="isAddedToCal"
-                            >
-                              Add to Cal?
-                            </label>
-                            <input
-                              className="bg-white"
-                              type="checkbox"
-                              name="isAddedToCal"
-                              checked={currentItem.isAddedToCal}
-                              onChange={handleCheckboxChange}
-                            />
-                          </div>
-                        ) : (
-                          <div className="pb-5">
-                            <input className="invisible" type="checkbox" />
-                          </div>
-                        )}
-
-                        {currentPane === 'todo' ? (
-                          <div className="pb-2">
-                            <label
-                              className=" text-gray-700 text-sm font-bold pr-2 "
-                              htmlFor="isAddedToCal"
-                            >
-                              Add to Priority?
-                            </label>
-                            <input
-                              className=""
-                              type="checkbox"
-                              name="isPriority"
-                              checked={currentItem.isPriority}
-                              onChange={handleCheckboxChange}
-                            />
-                          </div>
-                        ) : (
-                          <div className="pb-2">
-                            <input className="invisible" type="checkbox" />
-                          </div>
-                        )}
-
-                        <div className="flex justify-center">
-                          <button
-                            className="block w-96 text-blue-500 text-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 "
-                            type="submit"
-                          >
-                            {currentPane === 'todo'
-                              ? 'Create Todo'
-                              : 'Create Countdown'}
-                          </button>
-                        </div>
-                      </form>
-                    </div>
+              <div className="align-center mb-4">
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label
+                      className="block text-gray-700 text-md tracking-wide font-bold mb-2"
+                      htmlFor="currentTitle"
+                    >
+                      Title
+                    </label>
+                    <input
+                      className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+                      id="currentTitle"
+                      type="text"
+                      name="currentTitle"
+                      maxLength="20"
+                      value={currentItem.currentTitle}
+                      placeholder="Title"
+                      required
+                      onChange={(e) => handleChange(e)}
+                    />
                   </div>
-                </div>
+                  {/* description */}
+                  <div className="mb-4">
+                    <label
+                      className="block text-gray-700 text-md tracking-wide font-bold mb-2 "
+                      htmlFor=""
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="description"
+                      type="textarea"
+                      name="description"
+                      placeholder="Description"
+                      required
+                      value={currentItem.description}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {/* time */}
+
+                  <div className="dropdowns">
+                    <label className="block text-gray-700 text-md tracking-wide font-bold mb-2 ">
+                      Due date
+                    </label>
+                    <div
+                      onMouseLeave={handleMouseLeave}
+                      className="flex flex-col max-w-fit"
+                    >
+                      <DatePicker
+                        showTimeSelect
+                        selected={date}
+                        required
+                        placeholderText="Select a date.."
+                        className="cursor-pointer mb-3 !w-60"
+                        onChange={(date) => setDate(date)}
+                        dateFormat="MMMM d, yyyy h:mmaa"
+                        open={isDatePickerOpen}
+                        onFocus={() => setIsDatePickerOpen(true)}
+                        onClose={() => setIsDatePickerOpen(false)}
+                      />
+                    </div>
+                    {/* here */}
+                    <p className="text-sm"> Select a category</p>
+
+                    <FilterSelect
+                      userSettings={userSettings}
+                      userContext={userContext}
+                      setUserSettings={setUserSettings}
+                      updatable={false}
+                      updateCategory={updateCategory}
+                    />
+                  </div>
+
+                  {/* cal */}
+                  {currentPane === 'todo' ? (
+                    <div className="pb-5 items-baseline block">
+                      <label
+                        className=" text-gray-700 text-sm font-bold pr-2 "
+                        htmlFor="isAddedToCal"
+                      >
+                        Add to Cal?
+                      </label>
+                      <input
+                        className="bg-white"
+                        type="checkbox"
+                        name="isAddedToCal"
+                        checked={currentItem.isAddedToCal}
+                        onChange={handleCheckboxChange}
+                      />
+                    </div>
+                  ) : (
+                    <div className="pb-5">
+                      <input className="invisible" type="checkbox" />
+                    </div>
+                  )}
+
+                  {currentPane === 'todo' ? (
+                    <div className="pb-2">
+                      <label
+                        className=" text-gray-700 text-sm font-bold pr-2 "
+                        htmlFor="isAddedToCal"
+                      >
+                        Add to Priority?
+                      </label>
+                      <input
+                        className=""
+                        type="checkbox"
+                        name="isPriority"
+                        checked={currentItem.isPriority}
+                        onChange={handleCheckboxChange}
+                      />
+                    </div>
+                  ) : (
+                    <div className="pb-2">
+                      <input className="invisible" type="checkbox" />
+                    </div>
+                  )}
+
+                  <div className="flex justify-center">
+                    <button
+                      className="block w-96 text-blue-500 text-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 "
+                      type="submit"
+                    >
+                      {currentPane === 'todo'
+                        ? 'Create Todo'
+                        : 'Create Countdown'}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

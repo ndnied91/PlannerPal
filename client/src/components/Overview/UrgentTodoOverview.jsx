@@ -66,7 +66,7 @@ const UrgentTodoOverview = ({ items, userSettings }) => {
         {' '}
         {day} {day < 2 ? 'day' : 'days'}{' '}
       </span>
-      <div className="overflow-scroll ">{renderItems()}</div>
+      <div className="overflow-scroll">{renderItems()}</div>
     </section>
   );
 };

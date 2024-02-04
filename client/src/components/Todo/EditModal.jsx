@@ -83,10 +83,7 @@ const EditModal = ({
                       <form onSubmit={handleSubmit}>
                         {/* title */}
                         <div className="mb-4">
-                          <label
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                            htmlFor=""
-                          >
+                          <label className="block text-gray-700 text-sm font-bold mb-2">
                             Title
                           </label>
                           <input
@@ -102,10 +99,7 @@ const EditModal = ({
                         </div>
                         {/* description */}
                         <div className="mb-4">
-                          <label
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                            htmlFor=""
-                          >
+                          <label className="block text-gray-700 text-sm font-bold mb-2">
                             Description
                           </label>
                           <textarea
@@ -121,10 +115,7 @@ const EditModal = ({
                         </div>
                         {/* time */}
                         <div className="mb-4">
-                          <label
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                            htmlFor="Description"
-                          >
+                          <label className="block text-gray-700 text-sm font-bold mb-2">
                             Due
                           </label>
                           <DatePicker
@@ -146,10 +137,7 @@ const EditModal = ({
 
                         {updateItem.calCode ? (
                           <div className="mb-4">
-                            <label
-                              className="block text-gray-700 text-sm font-bold mb-2"
-                              htmlFor="isAddedToCal"
-                            >
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
                               Update Calendar event?
                             </label>
                             <input
