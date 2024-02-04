@@ -201,28 +201,28 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
       <div className="flex w-full justify-end">
         <div className="w-screen text-center font-bold text-2xl tracking-wider">
           {showCompleted ? 'Archived Items' : 'Current Items'}
-          <span className="ml-10"> Filtered by: {filteredBy} </span>
-          <div className="flex ml-40 items-end">
-            <FilterSelect
-              updatable={true}
+        </div>
+
+        <div className="flex ml-40 items-end ">
+          <FilterSelect
+            updatable={true}
+            userSettings={userSettings}
+            filterItems={filterItems}
+            setUserSettings={setUserSettings}
+            userContext={userContext}
+            setFilteredBy={setFilteredBy}
+          />
+          <div
+            className={`pl-2 ${
+              addNewFilter ? 'opacity-100' : 'opacity-0 hidden'
+            }`}
+          >
+            <FilterPopover
+              setAddNewFilter={setAddNewFilter}
               userSettings={userSettings}
-              filterItems={filterItems}
-              setUserSettings={setUserSettings}
               userContext={userContext}
-              setFilteredBy={setFilteredBy}
+              setUserSettings={setUserSettings}
             />
-            <div
-              className={`pl-2 ${
-                addNewFilter ? 'opacity-100' : 'opacity-0 hidden'
-              }`}
-            >
-              <FilterPopover
-                setAddNewFilter={setAddNewFilter}
-                userSettings={userSettings}
-                userContext={userContext}
-                setUserSettings={setUserSettings}
-              />
-            </div>
           </div>
         </div>
 
@@ -235,7 +235,11 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
       </div>
 
       {showCompleted ? (
-        <CompletedTodos items={items} userSettings={userSettings} />
+        <CompletedTodos
+          items={items}
+          setItems={setItems}
+          userSettings={userSettings}
+        />
       ) : (
         <>
           {/*  */}
@@ -255,7 +259,14 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
 
                 <div className="bg-zinc-100 rounded-xl pt-3">
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
-                    <div className="">Normal List</div>
+                    <div>
+                      <span>Normal List</span>
+                      <p className="text-xs text-gray-500">
+                        {' '}
+                        Filtered by:{' '}
+                        <span className="capitalize">{filteredBy}</span>
+                      </p>
+                    </div>
 
                     {/* sort by */}
                     <section className="flex gap-2 items-center">

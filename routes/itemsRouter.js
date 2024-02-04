@@ -10,11 +10,14 @@ import {
   updateItem,
   updatePinnedItem,
   updateTodoEventFromCal,
+  deleteItems,
 } from '../controllers/itemsController.js';
 
 router.route('/').post(createItem); //creates all items
 router.route('/').get(getAllItems); //get all items
 router.route('/filter/:filteredBy').get(getFilteredItems); //get all items
+
+router.route('/deleteMany/delete').post(deleteItems); //this is deleting from the archives page
 
 router.route('/pinned/:id').patch(validateIdParam, updatePinnedItem);
 

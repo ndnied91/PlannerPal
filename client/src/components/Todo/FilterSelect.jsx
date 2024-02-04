@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
+import { FaFilter } from 'react-icons/fa';
 const FilterSelect = ({
   userSettings,
   userContext,
@@ -85,14 +86,22 @@ const FilterSelect = ({
     <div className="custom-dropdown-container font-normal text-sm tracking-normal w-36">
       {/* UPDATE THIS ROUTE SO CALLS ARE SEPERATED OUT TODO */}
       <div
-        className="relative border p-2 cursor-pointer bg-white "
+        className="relative  p-2 cursor-pointer bg-white"
         // className=" absolute z-50 w-48 h-40 overflow-y-auto"
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         ref={dropdownRef}
       >
-        <div className="flex justify-between self-end">
-          <p className="capitalize">{selectedOption || 'Select a filter'}</p>
-          <span className="arrow-icon">{isDropdownOpen ? '↑' : '↓'}</span>
+        <div className="flex justify-end">
+          <p className="capitalize text-md">
+            {selectedOption || (
+              <span className="text-3xl">
+                <FaFilter />
+              </span>
+            )}
+          </p>
+          <span className="arrow-icon text-gray-600">
+            {isDropdownOpen ? '↑' : '↓'}
+          </span>
         </div>
 
         {isDropdownOpen && (

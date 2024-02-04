@@ -2,6 +2,8 @@ import 'express-async-errors';
 import Item from '../models/ItemsModel.js';
 import { StatusCodes } from 'http-status-codes';
 
+import { ObjectId } from 'mongodb';
+
 export const createItem = async (req, res) => {
   let text = Object.values(req.body)[0].text;
   let type = Object.keys(req.body)[0];
@@ -27,7 +29,6 @@ export const createItem = async (req, res) => {
   await Item.create(obj);
 
   if (filteredBy === 'all') {
-    console.log('here');
     const items = await Item.find({ createdBy: req.user.userId });
     res.status(StatusCodes.CREATED).json({ items });
   } else {
@@ -127,4 +128,28 @@ export const updateTodoEventFromCal = async (req, res) => {
   );
 
   res.status(StatusCodes.CREATED).sendStatus(200);
+};
+
+export const deleteItems = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    // Convert ids to an array of ObjectId
+    const objectIdArray = ids.map((id) => new ObjectId(id.trim()));
+
+    const result = await Item.deleteMany({ _id: { $in: objectIdArray } });
+    console.log('Documents deleted:', result.deletedCount);
+
+    const items = await Item.find({ createdBy: req.user.userId });
+    res
+      .status(StatusCodes.OK)
+      .json({
+        items,
+        message: 'Items deleted successfully',
+        deletedCount: result.deletedCount,
+      });
+  } catch (error) {
+    console.error('Error deleting documents:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
