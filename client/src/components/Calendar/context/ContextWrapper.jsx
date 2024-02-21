@@ -30,7 +30,9 @@ export default function ContextWrapper(props) {
         const response = await customFetch.get('/cal');
         data = response.data.items;
         setSavedEvents(response.data.items);
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     getData();

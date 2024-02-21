@@ -7,9 +7,10 @@ import {
 } from '../errors/customErrors.js';
 
 import Item from '../models/ItemsModel.js';
-
 import { hashPassword, comparePassword } from '../utils/passwordUtils.js';
 import { createJWT } from '../utils/tokenUtils.js';
+
+import Settings from '../models/SettingsModel.js';
 
 export const register = async (req, res) => {
   const isFirstAccount = (await User.countDocuments()) === 0;
@@ -18,6 +19,17 @@ export const register = async (req, res) => {
   req.body.password = await hashPassword(req.body.password);
 
   const user = await User.create(req.body);
+
+  await Settings.create({
+    createdBy: user._id,
+    selectedPane: 'overview',
+    deleteTime: 720,
+    sortBy: 'dueDate',
+    urgency: 48,
+    filterOptions: ['all'],
+    pinnedColor: '#21de5c',
+    isAddToCal: false,
+  });
 
   const token = createJWT({ userId: user._id, role: user.role });
 
@@ -30,6 +42,7 @@ export const register = async (req, res) => {
     secure: process.env.NODE_ENV === 'production', //if in Prod, secure and only https
   });
   //
+
   res.status(200).json({ user });
 };
 

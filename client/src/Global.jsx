@@ -5,7 +5,7 @@ import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
 
 const Example = () => {
-  const [showRegModal, setShowRegModal] = useState();
+  const [showRegModal, setShowRegModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const renderSignIn = () => {
@@ -18,6 +18,7 @@ const Example = () => {
     setShowRegModal(true);
   };
 
+  console.log(showRegModal);
   return (
     <div className="w-screen h-screen z-10 absolute">
       {showRegModal ? (

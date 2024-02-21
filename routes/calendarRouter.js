@@ -11,14 +11,18 @@ import {
 
 import { validateCalIdParam } from '../middleware/validationMiddleware.js'; //middleware
 
-router.route('/').post(createCalEvent); //creates all items
+import { checkForTestUser } from '../middleware/authMiddleware.js';
+
+router.route('/').post(checkForTestUser, createCalEvent); //creates all items
 router.route('/').get(getAllCalEvents); //get all items
 
 router
   .route('/:_id')
-  .patch(validateCalIdParam, updateCalEvent)
-  .delete(validateCalIdParam, deleteCalJob);
+  .patch(validateCalIdParam, checkForTestUser, updateCalEvent)
+  .delete(validateCalIdParam, checkForTestUser, deleteCalJob);
 
-router.route('/update/:calCode').patch(updateCalEventFromTodo);
+router
+  .route('/update/:calCode')
+  .patch(checkForTestUser, updateCalEventFromTodo);
 
 export default router;

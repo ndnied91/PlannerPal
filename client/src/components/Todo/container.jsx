@@ -20,6 +20,7 @@ import FilterSelect from './FilterSelect.jsx';
 import Container from './Select/Container.jsx';
 
 const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
+  console.log('notes container loaded..');
   const { items, setItems, filteredBy, setFilteredBy } = useGlobalContext();
   const [showCompleted, setShowCompleted] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);

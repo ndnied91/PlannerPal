@@ -1,53 +1,51 @@
 import React from 'react';
-import LandingCarousel from './LandingCarousel';
 import './landingPage.css';
+import { FaArrowRight } from 'react-icons/fa';
+import planner from '../assets/planner.svg';
 
 export const LandingPage = ({ setShowLoginModal, setShowRegModal }) => {
   return (
-    <main className="hero-section w-screen h-full text-white">
-      <section className="container">
-        <div className="w-2/4 rounded-lg flex flex-col absolute bottom-20 left-10">
-          {/* <LandingCarousel /> */}
-        </div>
-        <div className="">
-          <nav className="navbar flex justify-between items-center">
-            <h1 className="bg-white p-1 border-black border-2 scale-110 mt-6 rounded-md">
-              <span className="bg-black tracking-wide p-1 font-normal">
-                PLANNER
-              </span>{' '}
-              <span className="text-black font-bold">PAL</span>{' '}
-            </h1>
-            <ul className="flex gap-10 items-center pt-6">
-              <li className="bg-blue-500 p-2 rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-110 duration-400">
-                TEST ME!
-              </li>
-              <li
-                onClick={() => setShowLoginModal(true)}
-                className="bg-red-500 p-2 rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-400"
-              >
-                Sign in
-              </li>
-            </ul>
-          </nav>
-
-          <div className="hero-text absolute text text-right">
-            <h2 className="text-6xl tracking-wide">Welcome To</h2>
-            <h1 className="text-8xl tracking-wide">PlannerPal</h1>
-            <p className="tracking-wide pb-10">
-              PlannerPal is a robust and intuitive React web application
-              designed to supercharge your productivity and organization. With a
-              sleek and user-friendly interface
-            </p>
-
-            <button
-              className="explore-btn tracking-widest font-bold text-gray-800 uppercase"
-              onClick={() => setShowRegModal(true)}
-            >
-              Get started
-            </button>
+    <section className="h-full text-gray-600 bg-slate-200 flex justify-center">
+      <span className="h-12 mt-10 ">
+        <section>
+          <div class="content">
+            <a href="http://www.danielniedzwiedzki.com" target="_blank">
+              PlannerPal
+            </a>
           </div>
+        </section>
+      </span>
+      <section className="flex items-center pt-20">
+        <div className="">
+          <h1 className="text-9xl tracking-wide">PlannerPal</h1>
+          <p className="tracking-wide pb-10 text-md mt-4 w-96">
+            PlannerPal is a robust and intuitive React web application designed
+            to supercharge your productivity and organization. With a sleek and
+            user-friendly interface
+          </p>
+
+          <button
+            className="test-btn tracking-widest font-bold text-slate-100 uppercase flex items-center"
+            onClick={() => setShowRegModal(true)}
+          >
+            Get started
+            <FaArrowRight className="ml-3" />
+          </button>
         </div>
+
+        <p className="ml-10">
+          <img src={planner} height={500} width={500}></img>{' '}
+        </p>
       </section>
-    </main>
+
+      <div className="flex gap-10 h-12 mt-10 text-slate-100" id="sds">
+        <span
+          onClick={() => setShowLoginModal(true)}
+          className="bg-red-500 relative p-2 rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-400"
+        >
+          Sign in
+        </span>
+      </div>
+    </section>
   );
 };

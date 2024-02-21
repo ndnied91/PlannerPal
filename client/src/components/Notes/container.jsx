@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NoteAside from './NoteAside';
 import NoteEditor from './NoteEditor';
 import customFetch from '../../utils/customFetch';
+import { toast } from 'react-toastify';
 
 const container = ({ userContext }) => {
   const [notes, setNotes] = useState([]);
@@ -35,13 +36,17 @@ const container = ({ userContext }) => {
       })
     );
 
-    const { data } = await customFetch.post('/notes', {
-      _id,
-      body: content,
-      title,
-      createdBy: userContext._id,
-    });
-    setNotes(data.items);
+    try {
+      const { data } = await customFetch.post('/notes', {
+        _id,
+        body: content,
+        title,
+        createdBy: userContext._id,
+      });
+      setNotes(data.items);
+    } catch (e) {
+      toast.error(e.response.data.msg || 'Demo Only!');
+    }
   };
 
   const updatePosition = (notes) => {

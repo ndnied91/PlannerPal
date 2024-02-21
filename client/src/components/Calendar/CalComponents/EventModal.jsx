@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import GlobalContext from '../context/GlobalContext';
 import customFetch from '../../../utils/customFetch';
+import { toast } from 'react-toastify';
 
 const labelsClasses = ['indigo', 'gray', 'green', 'blue', 'red', 'purple'];
 
@@ -68,9 +69,13 @@ const EventModal = ({ userContext }) => {
     } else {
       //create
       // if its a new event
-      const { data } = await customFetch.post('cal', calendarEvent);
-      setSavedEvents([...data.items]);
-      setShowEventModal(false);
+      try {
+        const { data } = await customFetch.post('cal', calendarEvent);
+        setSavedEvents([...data.items]);
+        setShowEventModal(false);
+      } catch (e) {
+        toast.error(e.response.data.msg || 'Demo Only!');
+      }
     }
   };
 

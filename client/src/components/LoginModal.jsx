@@ -2,6 +2,7 @@ import { useState } from 'react';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useGlobalContext } from '../context';
+import { MdOutlineClose } from 'react-icons/md';
 
 const Modal = ({ setShowLoginModal, renderRegister }) => {
   const { setContextUser } = useGlobalContext();
@@ -35,6 +36,11 @@ const Modal = ({ setShowLoginModal, renderRegister }) => {
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0">
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg self-center">
+            <div className=" px-4 py-3 flex justify-end !pb-0">
+              <button onClick={() => setShowLoginModal(false)} type="button">
+                <MdOutlineClose className="text-2xl text-red-700" />
+              </button>
+            </div>
             <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
               <div className="">
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
@@ -82,19 +88,13 @@ const Modal = ({ setShowLoginModal, renderRegister }) => {
                           />
                         </div>
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-center">
                           <button
-                            className="inline-flex  text-blue-500 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
+                            className="inline-flex  text-blue-500 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-64"
                             type="submit"
                           >
                             Sign In
                           </button>
-                          <a
-                            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                            href="#"
-                          >
-                            Forgot Password?
-                          </a>
                         </div>
                       </form>
                       {/* </Form> */}
@@ -103,8 +103,8 @@ const Modal = ({ setShowLoginModal, renderRegister }) => {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6 flex justify-between text-sm">
-              <div className="flex place-items-center">
+            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6 flex justify-center text-sm">
+              <div className="flex place-items-center font-bold tracking-wider pb-2 pt-2">
                 Not a member yet?
                 <span
                   className=" text-blue-500 hover:text-blue-800 pl-2 cursor-pointer"
@@ -114,13 +114,6 @@ const Modal = ({ setShowLoginModal, renderRegister }) => {
                   Register
                 </span>
               </div>
-              <button
-                onClick={() => setShowLoginModal(false)}
-                type="button"
-                className="inline-flex text-red-700 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>

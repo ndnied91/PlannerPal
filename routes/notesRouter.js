@@ -11,13 +11,12 @@ import {
   deleteNote,
 } from '../controllers/notesController.js';
 
-router.route('/').post(createNote); //creates all items
+import { checkForTestUser } from '../middleware/authMiddleware.js';
+
+router.route('/').post(checkForTestUser, createNote); //creates all items
 router.route('/').get(getAllNotes); //get all items
 
-router
-  .route('/:id')
-  //   .patch(validateIdParam, updateJob)
-  .delete(validateNotesIdParam, deleteNote);
+router.route('/:id').delete(checkForTestUser, validateNotesIdParam, deleteNote);
 
 // router.route('/:_id').delete(validateNotesIdParam, deleteNote);
 

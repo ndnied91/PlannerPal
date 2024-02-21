@@ -2,6 +2,7 @@ import { useState } from 'react';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useGlobalContext } from '../context';
+import { MdOutlineClose } from 'react-icons/md';
 
 const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
   const { setContextUser } = useGlobalContext();
@@ -29,14 +30,39 @@ const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
     }
   };
 
-  return (
-    <div className="relative z-10 " role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
+  const handleTestLogin = async () => {
+    //handle guest login
 
+    const user = {
+      email: 'guest@plannerpal.com',
+      password: 'Guest1234',
+    };
+
+    try {
+      const { data } = await customFetch.post('/auth/login', user);
+
+      setContextUser(data.user);
+      window.location.reload();
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.msg || 'Unable to login, please try again!'
+      );
+      return error;
+    }
+  };
+
+  return (
+    <div className="relative z-10" role="dialog" aria-modal="true">
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10 "></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg self-center">
-            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div className=" px-4 py-3 flex justify-end !pb-0">
+              <button onClick={() => setShowRegModal(false)} type="button">
+                <MdOutlineClose className="text-2xl text-red-700" />
+              </button>
+            </div>
+            <div className="bg-white px-4 pb-4 !pt-0 sm:p-6 sm:pb-4">
               <div className="">
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
                   <div className="mt-2">
@@ -98,22 +124,33 @@ const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
                           />
                         </div>
 
-                        <div className="flex items-center justify-center">
-                          <button
-                            className="inline-flex  text-blue-500  rounded-md bg-white px-20 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
-                            type="submit"
-                          >
-                            Register
-                          </button>
-                        </div>
+                        <section className="flex justify-center gap-5">
+                          <div className="flex items-center justify-center">
+                            <button
+                              className="inline-flex  text-blue-500  rounded-md bg-white px-20 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
+                              type="submit"
+                            >
+                              Register
+                            </button>
+                          </div>
+
+                          <div className="flex items-center justify-center">
+                            <div
+                              className="inline-flex text-red-500 cursor-pointer rounded-md bg-white px-20 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
+                              onClick={handleTestLogin}
+                            >
+                              Test Drive
+                            </div>
+                          </div>
+                        </section>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6 flex justify-between text-sm">
-              <div className="flex place-items-center" id="tessst">
+            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6 flex justify-center text-sm">
+              <div className="flex place-items-center font-bold tracking-wider pb-2 pt-2">
                 Already a member?{' '}
                 <span
                   className=" text-blue-500 hover:text-blue-800 pl-2 cursor-pointer"
@@ -123,13 +160,6 @@ const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
                   Sign in
                 </span>
               </div>
-              <button
-                onClick={() => setShowRegModal(false)}
-                type="button"
-                className="inline-flex  text-red-700 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>

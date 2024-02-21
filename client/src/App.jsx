@@ -15,6 +15,7 @@ import AppSettings from './components/Settings/AppSettings';
 import Global from './Global';
 
 const App = () => {
+  console.log('app.jsx loads..');
   const { setContextUser, userSettings, userContext, setUserSettings } =
     useGlobalContext();
   const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -68,7 +69,7 @@ const App = () => {
         );
     }
   };
-  //
+
   return (
     <main>
       <div
@@ -82,7 +83,10 @@ const App = () => {
       </div>
       <section className="relative">
         <div className="pl-12">
-          <Sidebar setShowSettingsModal={setShowSettingsModal} />
+          {userContext && (
+            <Sidebar setShowSettingsModal={setShowSettingsModal} />
+          )}
+
           {userSettings?.selectedPane !== undefined ? renderPane() : null}
         </div>
 

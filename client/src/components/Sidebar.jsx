@@ -28,11 +28,6 @@ const Options = ({ setShowSettingsModal }) => {
       text: 'todo',
       icon: <FaPersonRunning />,
     },
-    // {
-    //   id: 3,
-    //   text: 'projects',
-    //   icon: <FaFolderOpen />,
-    // },
     {
       id: 4,
       text: 'calendar',
@@ -75,7 +70,7 @@ const Options = ({ setShowSettingsModal }) => {
 
   return (
     <div
-      className="sidebar fixed top-0 left-0 w-24 h-full bg-slate-300 flex justify-center flex-col hover:w-52 duration-500"
+      className="sidebar fixed top-0 left-0 w-24 h-full bg-slate-300 flex justify-center flex-col hover:w-52 hover:duration-500"
       onMouseOver={() => setHoveredOver(true)}
       onMouseOut={() => setHoveredOver(false)}
     >
