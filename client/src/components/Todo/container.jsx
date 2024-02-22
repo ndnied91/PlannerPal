@@ -10,6 +10,7 @@ import { FcNumericalSorting12 } from 'react-icons/fc';
 import { FaArchive } from 'react-icons/fa';
 import { LuListTodo } from 'react-icons/lu';
 import FilterPopover from './FilterPopover.jsx';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 import {
   FcAlphabeticalSortingAz,
@@ -20,12 +21,16 @@ import FilterSelect from './FilterSelect.jsx';
 import Container from './Select/Container.jsx';
 
 const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
-  console.log('notes container loaded..');
-  const { items, setItems, filteredBy, setFilteredBy } = useGlobalContext();
+  const { items, setItems, filteredBy, setFilteredBy, updateSortedItems } =
+    useGlobalContext();
   const [showCompleted, setShowCompleted] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
   const [sortOptions, setSortOptions] = useState();
   const [addNewFilter, setAddNewFilter] = useState(false);
+
+  const updateItemsAfterEditTodo = async () => {
+    updateSortedItems(userSettings.sortBy, userContext._id);
+  };
 
   useEffect(() => {
     setSortOptions(userSettings.sortBy);
@@ -46,6 +51,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
         setValue={updateSortFilter}
         defaultValue={sortOptions}
         className="text-sm font-normal"
+        setShowSortModal={setShowSortModal}
       />
     );
   };
@@ -59,6 +65,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
   };
 
   useEffect(() => {
+    console.log('triggered..');
     const setOrder = async () => {
       const { data } = await customFetch.post(`/settings/${userContext._id}`, {
         sortBy: userSettings.sortBy,
@@ -67,7 +74,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
     };
 
     setOrder();
-  }, []);
+  }, [userSettings, items.length]);
 
   const renderSortedArray = (text) => {
     if (text === 'normal') {
@@ -79,13 +86,14 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
           !item.isPinned
         ) {
           return (
-            <div className="pt-4 " key={item._id}>
+            <div className="pt-4" key={item._id}>
               <SingleItem
                 item={item}
                 style={'flex items-center p-5 bg-white rounded-md shadow-2xl'}
                 userSettings={userSettings}
                 userContext={userContext}
                 setUserSettings={setUserSettings}
+                updateItemsAfterEditTodo={updateItemsAfterEditTodo}
               />
             </div>
           );
@@ -104,6 +112,8 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
               <SingleItem
                 item={item}
                 style={'flex items-center p-5 bg-white rounded-md shadow-2xl'}
+                userSettings={userSettings}
+                updateItemsAfterEditTodo={updateItemsAfterEditTodo}
               />
             </div>
           );
@@ -124,6 +134,8 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
             item={item}
             style={'flex items-center p-5 bg-white rounded-md shadow-2xl '}
             type={'countdown'}
+            userSettings={userSettings}
+            updateItemsAfterEditTodo={updateItemsAfterEditTodo}
           />
         </div>
       );
@@ -173,6 +185,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
               item={result}
               style={`flex items-center p-5 bg-white rounded-md shadow-2xl`}
               userSettings={userSettings}
+              updateItemsAfterEditTodo={updateItemsAfterEditTodo}
             />
           </div>
         );
@@ -204,26 +217,36 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
           {showCompleted ? 'Archived Items' : 'Current Items'}
         </div>
 
-        <div className="flex ml-40 items-end ">
-          <FilterSelect
-            updatable={true}
-            userSettings={userSettings}
-            filterItems={filterItems}
-            setUserSettings={setUserSettings}
-            userContext={userContext}
-            setFilteredBy={setFilteredBy}
-          />
+        <div className="flex ml-40 items-end">
+          {!addNewFilter && (
+            <FilterSelect
+              showFilterIcon={true}
+              updatable={true}
+              userSettings={userSettings}
+              filterItems={filterItems}
+              setUserSettings={setUserSettings}
+              userContext={userContext}
+              setFilteredBy={setFilteredBy}
+            />
+          )}
+
           <div
             className={`pl-2 ${
               addNewFilter ? 'opacity-100' : 'opacity-0 hidden'
             }`}
           >
-            <FilterPopover
-              setAddNewFilter={setAddNewFilter}
-              userSettings={userSettings}
-              userContext={userContext}
-              setUserSettings={setUserSettings}
-            />
+            <OutsideClickHandler
+              onOutsideClick={() => {
+                setAddNewFilter(false);
+              }}
+            >
+              <FilterPopover
+                setAddNewFilter={setAddNewFilter}
+                userSettings={userSettings}
+                userContext={userContext}
+                setUserSettings={setUserSettings}
+              />
+            </OutsideClickHandler>
           </div>
         </div>
 

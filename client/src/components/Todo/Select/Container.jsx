@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-const Container = ({ placeholderText, list, setValue, defaultValue }) => {
+import OutsideClickHandler from 'react-outside-click-handler';
+const Container = ({
+  placeholderText,
+  list,
+  setValue,
+  defaultValue,
+  setShowSortModal,
+}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const dropdownRef = useRef(null);
@@ -27,34 +33,36 @@ const Container = ({ placeholderText, list, setValue, defaultValue }) => {
 
   return (
     <div className="custom-dropdown-container tracking-normal w-24 text-xs text-gray-500 bg-white mt-2">
-      <div
-        className="relative border p-2 cursor-pointer bg-white "
-        onClick={() => setDropdownOpen(!isDropdownOpen)}
-        ref={dropdownRef}
-      >
-        <div className="flex justify-between self-end">
-          <p className="capitalize text-sm">
-            {selectedOption || defaultValue || placeholderText}
-          </p>
-          <span className="arrow-icon flex items-center">
-            {isDropdownOpen ? '↑' : '↓'}
-          </span>
-        </div>
-
-        {isDropdownOpen && (
-          <div className="absolute top-full left-0 w-full border bg-white shadow z-50">
-            {list.map((option, idx) => (
-              <div
-                key={idx}
-                className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
-                onClick={() => handleSelectOption(option)}
-              >
-                {option}
-              </div>
-            ))}
+      <OutsideClickHandler onOutsideClick={() => setShowSortModal(false)}>
+        <div
+          className="relative border p-2 cursor-pointer bg-white "
+          onClick={() => setDropdownOpen(!isDropdownOpen)}
+          ref={dropdownRef}
+        >
+          <div className="flex justify-between self-end">
+            <p className="capitalize text-sm">
+              {selectedOption || defaultValue || placeholderText}
+            </p>
+            <span className="arrow-icon flex items-center">
+              {isDropdownOpen ? '↑' : '↓'}
+            </span>
           </div>
-        )}
-      </div>
+
+          {isDropdownOpen && (
+            <div className="absolute top-full left-0 w-full border bg-white shadow z-50">
+              {list.map((option, idx) => (
+                <div
+                  key={idx}
+                  className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
+                  onClick={() => handleSelectOption(option)}
+                >
+                  {option}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </OutsideClickHandler>
     </div>
   );
 };

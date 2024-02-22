@@ -186,6 +186,7 @@ const FormModal = ({
                     <p className="text-sm"> Select a category</p>
 
                     <FilterSelect
+                      showFilterIcon={false}
                       userSettings={userSettings}
                       userContext={userContext}
                       setUserSettings={setUserSettings}

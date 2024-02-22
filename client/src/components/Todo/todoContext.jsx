@@ -12,8 +12,16 @@ export const TodoAppProvider = ({ children }) => {
   const [countdownItems, setCountdownItems] = useState([]);
   const [filteredBy, setFilteredBy] = useState('all');
 
+  const updateSortedItems = async (sortBy, id) => {
+    const { data } = await customFetch.post(`/settings/${id}`, {
+      sortBy,
+    });
+    setItems(data.sortedOrder);
+  };
+
   // working for both
   const removeItem = async (item) => {
+    console.log('running removeItem');
     const itemId = item._id;
     const response = await customFetch.delete(`/items/${item._id}`);
 
@@ -28,6 +36,7 @@ export const TodoAppProvider = ({ children }) => {
 
   // working for both
   const updateStatus = async (item) => {
+    console.log('running updateStatus');
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isCompleted: !item.isCompleted,
       filteredBy,
@@ -37,6 +46,7 @@ export const TodoAppProvider = ({ children }) => {
   };
 
   const addtoPriority = async (item) => {
+    console.log('running addtoPriority');
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isPriority: !item.isPriority,
       filteredBy,
@@ -46,6 +56,7 @@ export const TodoAppProvider = ({ children }) => {
   };
 
   const updateContent = async (item) => {
+    console.log('running updateContent');
     const response = await customFetch.patch(`/items/${item._id}`, {
       ...item,
       filteredBy,
@@ -53,12 +64,9 @@ export const TodoAppProvider = ({ children }) => {
 
     if (item.calCode) {
       try {
-        const response = await customFetch.patch(
-          `/cal/update/${item.calCode}`,
-          {
-            ...item,
-          }
-        );
+        await customFetch.patch(`/cal/update/${item.calCode}`, {
+          ...item,
+        });
       } catch (e) {
         toast.error(e.response.data.error);
       }
@@ -68,7 +76,6 @@ export const TodoAppProvider = ({ children }) => {
       setShowEditModal(false);
       toast.success('Successful update to item');
     }
-    setItems(response.data.items);
   };
 
   return (
@@ -90,6 +97,7 @@ export const TodoAppProvider = ({ children }) => {
         setCountdownItems,
         filteredBy,
         setFilteredBy,
+        updateSortedItems,
       }}
     >
       {children}

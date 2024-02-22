@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useGlobalContext } from '../context';
 import { MdOutlineClose } from 'react-icons/md';
 
-const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
+const RegisterModal = ({ setShowRegModal, renderSignIn, showRegModal }) => {
   const { setContextUser } = useGlobalContext();
 
   const [user, setUser] = useState({
@@ -24,6 +24,7 @@ const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
       setContextUser(user);
       setShowRegModal(false);
       toast.success('Registration Successful!');
+      window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.msg || 'unable to complete signup!');
       return error;
@@ -56,28 +57,37 @@ const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10 "></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg self-center">
+          <div
+            className={`transition ease-in ${
+              showRegModal
+                ? 'opacity-100 translate-y-[0rem] duration-300'
+                : 'opacity-0 translate-y-[-5rem]'
+            } relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md self-center`}
+          >
             <div className=" px-4 py-3 flex justify-end !pb-0">
               <button onClick={() => setShowRegModal(false)} type="button">
-                <MdOutlineClose className="text-2xl text-red-700" />
+                <MdOutlineClose className="text-4xl text-red-700" />
               </button>
             </div>
             <div className="bg-white px-4 pb-4 !pt-0 sm:p-6 sm:pb-4">
               <div className="">
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                  <div className="mt-2">
+                  <div className="">
                     {/* forms starts here */}
                     <div className="align-center">
                       <form className="" onSubmit={handleSubmit}>
                         <div className="mb-4">
+                          <p className="text-center font-bold text-xl">
+                            Register
+                          </p>
                           <label
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="username"
                           >
-                            Name
+                            {/* Name */}
                           </label>
                           <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border h-14 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="name"
                             name="name"
                             type="text"
@@ -92,14 +102,14 @@ const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="username"
                           >
-                            Email
+                            {/* Email */}
                           </label>
                           <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border h-14 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="email"
                             name="email"
                             type="text"
-                            placeholder="Email"
+                            placeholder="Email Address"
                             required
                             value={user.email}
                             onChange={handleChange}
@@ -110,33 +120,34 @@ const RegisterModal = ({ setShowRegModal, renderSignIn }) => {
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="password"
                           >
-                            Password
+                            {/* Password */}
                           </label>
                           <input
-                            className="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border h-14 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             id="password"
                             type="password"
                             name="password"
-                            placeholder="******************"
+                            placeholder="Password"
                             required
                             value={user.password}
                             onChange={handleChange}
                           />
                         </div>
 
-                        <section className="flex justify-center gap-5">
-                          <div className="flex items-center justify-center">
+                        <section className="flex flex-col gap-5">
+                          <div className="flex" id="asda">
                             <button
-                              className="inline-flex  text-blue-500  rounded-md bg-white px-20 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
+                              id="ssss"
+                              className="flex justify-center items-center tracking-widest text-white rounded-md bg-[#2b5592] px-20 py-2 text-sm font-semibold shadow-sm  ring-gray-300 hover:opacity-90 sm:mt-0 w-full h-12"
                               type="submit"
                             >
                               Register
                             </button>
                           </div>
 
-                          <div className="flex items-center justify-center">
+                          <div className="flex">
                             <div
-                              className="inline-flex text-red-500 cursor-pointer rounded-md bg-white px-20 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-auto"
+                              className="flex justify-center items-center text-white tracking-widest cursor-pointer rounded-md bg-red-500 px-20 py-2 text-sm font-semibold shadow-sm  hover:bg-opacity-90 sm:mt-0 w-full h-12"
                               onClick={handleTestLogin}
                             >
                               Test Drive

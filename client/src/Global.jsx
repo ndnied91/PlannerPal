@@ -18,22 +18,29 @@ const Example = () => {
     setShowRegModal(true);
   };
 
-  console.log(showRegModal);
   return (
     <div className="w-screen h-screen z-10 absolute">
-      {showRegModal ? (
+      {/* {showRegModal ? (
         <RegisterModal
           setShowRegModal={setShowRegModal}
           renderSignIn={renderSignIn}
         />
-      ) : null}
+      ) : null} */}
+      <div className={`${showRegModal ? 'opacity-100' : 'opacity-0'}`}>
+        <RegisterModal
+          showRegModal={showRegModal}
+          setShowRegModal={setShowRegModal}
+          renderSignIn={renderSignIn}
+        />
+      </div>
 
-      {showLoginModal ? (
+      <div className={`${showLoginModal ? 'opacity-100' : 'opacity-0'}`}>
         <LoginModal
+          showLoginModal={showLoginModal}
           setShowLoginModal={setShowLoginModal}
           renderRegister={renderRegister}
         />
-      ) : null}
+      </div>
 
       <LandingPage
         setShowLoginModal={setShowLoginModal}

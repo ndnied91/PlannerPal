@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
 import ColorPicker from './ColorPicker/ColorPicker';
@@ -34,7 +34,6 @@ const AppSettings = ({
     };
 
     const res = await customFetch.post(`/settings/${userContext._id}`, options);
-    console.log(res.data);
     setUserSettings(res.data.settings);
 
     if (res.status === 201) {
@@ -45,6 +44,15 @@ const AppSettings = ({
       toast.error('Please try again!');
     }
   };
+
+  useEffect(() => {
+    const getSettings = async () => {
+      const { data } = await customFetch.get(`/settings/${userContext._id}`);
+      setUserSettings(data.userSettings[0]);
+    };
+
+    getSettings();
+  }, []);
 
   const timeOptions = ['1 day', '2 days ', '7 days ', '30 days'];
   const sortOptions = ['Due date', 'A-Z', 'Z-A'];
@@ -103,7 +111,7 @@ const AppSettings = ({
                           placeholderText={'Select an option'}
                           list={sortOptions}
                           setValue={setSortBy}
-                          defaultValue={sortBy}
+                          defaultValue={userSettings?.sortBy}
                         />
                       </div>
                     </section>

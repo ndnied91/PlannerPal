@@ -70,13 +70,13 @@ const Options = ({ setShowSettingsModal }) => {
 
   return (
     <div
-      className="sidebar fixed top-0 left-0 w-24 h-full bg-slate-300 flex justify-center flex-col hover:w-52 hover:duration-500"
+      className="sidebar fixed top-0 left-0 w-24 h-full bg-slate-300 flex justify-center flex-col transition-all ease-in-out hover:w-52 duration-500"
       onMouseOver={() => setHoveredOver(true)}
       onMouseOut={() => setHoveredOver(false)}
     >
       <div
-        className={`text-center font-bold h-12 duration-300 ${
-          hoveredOver ? ' tracking-widest text-xl' : 'text-sm text-center'
+        className={`text-center font-bold hover:scale-105 duration-300 transition-all ease-in-out ${
+          hoveredOver ? 'tracking-widest text-xl' : 'text-sm text-center'
         }`}
       >
         PlannerPal
@@ -91,25 +91,19 @@ const Options = ({ setShowSettingsModal }) => {
             <li key={id} className={`links`}>
               <button
                 onClick={() => updateSelectedPane(text)}
-                className={` ${
-                  hoveredOver ? 'duration-100 ' : 'duration-100 '
-                }`}
+                className={`${hoveredOver ? 'duration-100 ' : 'duration-100'}`}
               >
                 {icon}
                 <div
                   className={`pl-1 ${
-                    text === userSettings?.selectedPane ? 'text-red-100 ' : null
+                    text === userSettings?.selectedPane
+                      ? 'text-blue-700 '
+                      : null
                   } `}
                 >
-                  <div
-                    className={`${
-                      hoveredOver
-                        ? 'opacity-100 visible duration-100'
-                        : 'opacity-0 invisible duration-100'
-                    } `}
-                  >
+                  <div>
                     <p
-                      className={` hover:scale-105 duration-300 ${
+                      className={`hover:scale-105 duration-300 transition-all ease-in-out ${
                         hoveredOver
                           ? 'opacity-100 visible duration-100'
                           : 'opacity-0 invisible duration-100'
@@ -130,8 +124,10 @@ const Options = ({ setShowSettingsModal }) => {
           >
             <FaGear className="text-xl" />
             <p
-              className={` ${
-                hoveredOver ? 'opacity-100 visible' : 'opacity-0 hidden'
+              className={`hover:scale-105 duration-300 transition-all ease-in-out ${
+                hoveredOver
+                  ? 'opacity-100 visible duration-300'
+                  : 'opacity-0 invisible duration-300'
               } `}
             >
               <span className="text-xl pl-1">Settings</span>
@@ -141,8 +137,10 @@ const Options = ({ setShowSettingsModal }) => {
           <div className="flex w-fit items-center pl-5 h-10 cursor-pointer hover:scale-105 duration-300">
             <CiLogin className="text-xl" />
             <p
-              className={` ${
-                hoveredOver ? 'opacity-100 visible' : 'opacity-0 hidden'
+              className={`hover:scale-105 duration-300 transition-all ease-in-out ${
+                hoveredOver
+                  ? 'opacity-100 visible duration-300'
+                  : 'opacity-0 invisible duration-300'
               } `}
             >
               <span
@@ -157,8 +155,7 @@ const Options = ({ setShowSettingsModal }) => {
           </div>
         </div>
       </ul>
-      {/*  */}
-      {/* modals, leave these be */}
+
       {showRegModal ? (
         <RegisterModal
           setShowRegModal={setShowRegModal}

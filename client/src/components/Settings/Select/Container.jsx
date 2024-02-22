@@ -28,7 +28,7 @@ const Container = ({ placeholderText, list, setValue, defaultValue }) => {
   return (
     <div className="custom-dropdown-container tracking-normal w-48 text-xs text-gray-500 bg-white mt-2">
       <div
-        className="relative border p-2 cursor-pointer bg-white "
+        className="relative border p-2 cursor-pointer bg-white"
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         ref={dropdownRef}
       >

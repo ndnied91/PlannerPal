@@ -22,9 +22,9 @@ export const SingleItem = ({
   userSettings,
   userContext,
   setUserSettings,
+  updateItemsAfterEditTodo,
 }) => {
   const [readMore, setReadMore] = useState(false);
-
   const {
     removeItem,
     updateStatus,
@@ -34,7 +34,6 @@ export const SingleItem = ({
     setUpdateItem,
     setItems,
     filteredBy,
-    setFilteredBy,
   } = useGlobalContext();
 
   const itemToUpdate = (item) => {
@@ -186,6 +185,7 @@ export const SingleItem = ({
               userSettings={userSettings}
               userContext={userContext}
               setUserSettings={setUserSettings}
+              updateItemsAfterEditTodo={updateItemsAfterEditTodo}
             />
           ) : null}
 

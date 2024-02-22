@@ -171,6 +171,7 @@ form h4 {
   row-gap: 1rem;
   display: flex;
   justify-content: space-evenly;
+  z-index: 1
 }
 
 .logo {
@@ -345,3 +346,9 @@ form h4 {
 
 
 
+
+
+.absolute.top-full.left-0.w-full.border.bg-white.shadow > div:nth-child(1){
+  /* background: #F4F4F5; */
+  font-weight: bold;
+}

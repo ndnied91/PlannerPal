@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGlobalContext } from './todoContext';
 import Select from 'react-dropdown-select';
 import DatePicker from 'react-datepicker';
@@ -13,6 +13,7 @@ const EditModal = ({
   userSettings,
   userContext,
   setUserSettings,
+  updateItemsAfterEditTodo,
 }) => {
   const { updateItem, updateContent } = useGlobalContext();
 
@@ -51,6 +52,7 @@ const EditModal = ({
 
     currentItem.updateCalEvent ? (obj['calCode'] = updateItem.calCode) : null;
     updateContent(obj);
+    updateItemsAfterEditTodo(); //trigger update to items sort by
   };
 
   return (

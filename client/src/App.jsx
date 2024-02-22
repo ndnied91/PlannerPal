@@ -15,7 +15,6 @@ import AppSettings from './components/Settings/AppSettings';
 import Global from './Global';
 
 const App = () => {
-  console.log('app.jsx loads..');
   const { setContextUser, userSettings, userContext, setUserSettings } =
     useGlobalContext();
   const [showSettingsModal, setShowSettingsModal] = useState(false);

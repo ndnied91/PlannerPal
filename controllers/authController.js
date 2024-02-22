@@ -26,7 +26,7 @@ export const register = async (req, res) => {
     deleteTime: 720,
     sortBy: 'dueDate',
     urgency: 48,
-    filterOptions: ['all'],
+    filterOptions: ['all', 'add +'],
     pinnedColor: '#21de5c',
     isAddToCal: false,
   });

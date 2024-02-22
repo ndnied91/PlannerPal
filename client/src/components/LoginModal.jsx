@@ -2,9 +2,9 @@ import { useState } from 'react';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useGlobalContext } from '../context';
-import { MdOutlineClose } from 'react-icons/md';
+import { MdOutlineClose, MdPerson } from 'react-icons/md';
 
-const Modal = ({ setShowLoginModal, renderRegister }) => {
+const Modal = ({ setShowLoginModal, renderRegister, showLoginModal }) => {
   const { setContextUser } = useGlobalContext();
   const [user, setUser] = useState({
     email: 'testing@test.com',
@@ -35,35 +35,46 @@ const Modal = ({ setShowLoginModal, renderRegister }) => {
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0">
-          <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg self-center">
+          <div
+            className={`transition ease-in ${
+              showLoginModal
+                ? 'opacity-100 translate-y-[0rem] duration-300'
+                : 'opacity-0 translate-y-[-5rem]'
+            } relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl sm:my-8 sm:w-full sm:max-w-sm self-center`}
+          >
             <div className=" px-4 py-3 flex justify-end !pb-0">
               <button onClick={() => setShowLoginModal(false)} type="button">
-                <MdOutlineClose className="text-2xl text-red-700" />
+                <MdOutlineClose className="text-4xl text-red-700" />
               </button>
             </div>
-            <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
+            <div className="bg-white px-4 pb-4 !pt-0 sm:p-6 sm:pb-4">
               <div className="">
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                  <div className="mt-2">
+                  <div className="">
                     <div className="align-center">
                       <form
                         className="form"
                         method="post"
                         onSubmit={handleSubmit}
                       >
+                        <p className="text-center font-bold text-xl mb-3">
+                          {' '}
+                          Sign In
+                        </p>
+
                         <div className="mb-4">
                           <label
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="email"
                           >
-                            Email
+                            {/* Email */}
                           </label>
                           <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="email"
                             type="text"
                             name="email"
-                            placeholder="email"
+                            placeholder="Email Address"
                             required
                             value={user.email}
                             onChange={handleChange}
@@ -74,23 +85,22 @@ const Modal = ({ setShowLoginModal, renderRegister }) => {
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="password"
                           >
-                            Password
+                            {/* Password */}
                           </label>
                           <input
-                            className="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             id="password"
                             type="password"
                             name="password"
-                            placeholder="******************"
+                            placeholder="Password"
                             required
                             value={user.password}
                             onChange={handleChange}
                           />
                         </div>
-
                         <div className="flex items-center justify-center">
                           <button
-                            className="inline-flex  text-blue-500 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 w-64"
+                            className="inline-flex tracking-wider text-white justify-center rounded-md bg-red-700 px-3 py-4 text-sm font-semibold shadow-sm hover:bg-red-600 sm:mt-0 w-full"
                             type="submit"
                           >
                             Sign In

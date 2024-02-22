@@ -9,9 +9,6 @@ export const createItem = async (req, res) => {
   let type = Object.keys(req.body)[0];
 
   const { filteredBy } = req.body;
-  console.log(filteredBy);
-  console.log('create item');
-
   const obj = {
     type: type,
     title: text,
@@ -141,13 +138,11 @@ export const deleteItems = async (req, res) => {
     console.log('Documents deleted:', result.deletedCount);
 
     const items = await Item.find({ createdBy: req.user.userId });
-    res
-      .status(StatusCodes.OK)
-      .json({
-        items,
-        message: 'Items deleted successfully',
-        deletedCount: result.deletedCount,
-      });
+    res.status(StatusCodes.OK).json({
+      items,
+      message: 'Items deleted successfully',
+      deletedCount: result.deletedCount,
+    });
   } catch (error) {
     console.error('Error deleting documents:', error);
     res.status(500).json({ error: 'Internal server error' });

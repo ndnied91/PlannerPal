@@ -3,6 +3,7 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
 import { FaFilter } from 'react-icons/fa';
+import { BsFilterSquareFill } from 'react-icons/bs';
 const FilterSelect = ({
   userSettings,
   userContext,
@@ -12,6 +13,7 @@ const FilterSelect = ({
   updateCategory,
   category,
   setFilteredBy,
+  showFilterIcon,
 }) => {
   var labelArr = [];
 
@@ -25,7 +27,7 @@ const FilterSelect = ({
   }
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(category || '');
+  const [selectedOption, setSelectedOption] = useState(category || 'all');
   const dropdownRef = useRef(null);
 
   const handleSelectOption = (option) => {
@@ -41,7 +43,6 @@ const FilterSelect = ({
   };
 
   const handleDeleteClick = async (option) => {
-    console.log('clicked delete on ', option);
     const filtered = userSettings.filterOptions.filter(
       (item) => item !== option
     );
@@ -83,7 +84,7 @@ const FilterSelect = ({
   }, []); // Run this effect once, on component mount
 
   return (
-    <div className="custom-dropdown-container font-normal text-sm tracking-normal w-36">
+    <div className="custom-dropdown-container font-normal text-sm tracking-normal w-28">
       {/* UPDATE THIS ROUTE SO CALLS ARE SEPERATED OUT TODO */}
       <div
         className="relative  p-2 cursor-pointer bg-white"
@@ -92,18 +93,13 @@ const FilterSelect = ({
         ref={dropdownRef}
       >
         <div className="flex justify-end">
-          <p className="capitalize text-md">
-            {selectedOption || (
-              <span className="text-3xl">
-                <FaFilter />
-              </span>
-            )}
+          <p className="capitalize text-lg mr-1 tracking-wider">
+            {selectedOption}
           </p>
-          <span className="arrow-icon text-gray-600">
+          <span className="arrow-icon text-gray-600 text-lg">
             {isDropdownOpen ? '↑' : '↓'}
           </span>
         </div>
-
         {isDropdownOpen && (
           <div className="absolute top-full left-0 w-full border bg-white shadow">
             {labelArr.map((option) => (

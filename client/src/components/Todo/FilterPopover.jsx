@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
+import { AiOutlinePlus } from 'react-icons/ai';
 const arrayContainsObject = (array, object) => {
   return array.some((item) =>
     Object.keys(item).every((key) => item[key] === object[key])
@@ -35,19 +36,19 @@ const FilterPopover = ({
   };
 
   return (
-    <div className="text-xs font-normal flex flex-row justify-center mt-2">
+    <div className="text-xs font-normal flex flex-row justify-center mr-2">
       <input
-        className="h-9 rounded-sm  !border-gray-300"
+        className="rounded-sm  !border-gray-300"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         placeholder="Add new filter"
       />
       <button
-        className="bg-gray-300 rounded-md ml-2 p-1 shadow-md tracking-wide"
+        className="bg-black rounded-md ml-2 p-1 shadow-md tracking-wide text-white"
         onClick={handleSubmit}
       >
         {' '}
-        Submit
+        <AiOutlinePlus className="w-10 text-2xl" />
       </button>
     </div>
   );
