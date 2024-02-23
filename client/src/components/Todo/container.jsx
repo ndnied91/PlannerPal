@@ -23,10 +23,12 @@ import Container from './Select/Container.jsx';
 const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
   const { items, setItems, filteredBy, setFilteredBy, updateSortedItems } =
     useGlobalContext();
+
   const [showCompleted, setShowCompleted] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
   const [sortOptions, setSortOptions] = useState();
   const [addNewFilter, setAddNewFilter] = useState(false);
+  const [isCountdownItem, setIsCountdownItem] = useState(false);
 
   const updateItemsAfterEditTodo = async () => {
     updateSortedItems(userSettings.sortBy, userContext._id);
@@ -40,6 +42,13 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
     const even = (element) => element.isPriority === true;
     return items.some(even);
   };
+
+  const isCountDown = () => {
+    const countdown = (element) => element.isCountDown === true;
+    return items.some(countdown);
+  };
+
+  console.log(isCountDown());
 
   const showDropdown = () => {
     const options = ['Due date', 'A-Z', 'Z-A'];
@@ -212,12 +221,12 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
 
   return (
     <section className="pr-2 pt-5">
-      <div className="flex w-full justify-end">
-        <div className="w-screen text-center font-bold text-2xl tracking-wider">
+      <div className="flex mb-5">
+        <div className="w-[100%] flex justify-items-start pl-28 text-center font-bold text-3xl tracking-wider">
           {showCompleted ? 'Archived Items' : 'Current Items'}
         </div>
 
-        <div className="flex ml-40 items-end">
+        <div className="flex items-end">
           {!addNewFilter && (
             <FilterSelect
               showFilterIcon={true}
@@ -267,25 +276,15 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
       ) : (
         <>
           {/*  */}
-          <div className="flex justify-center gap-20 mt-2">
-            <section className="pb-10 flex justify-center flex-col items-center ">
-              <div className="flex gap-4">
-                <div className="bg-zinc-100 rounded-xl pt-3">
-                  <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
-                    {renderTitle() ? 'High Priority List' : null}
-                  </div>
-                  <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem]">
-                    <div className="mb-6">{renderPinned()}</div>
-                    <div>{renderSortedArray()}</div>
-                  </div>
-                </div>
+          <div className="flex justify-normal ml-28 gap-4 mr-10">
+            <section className="flex justify-center items-center flex-auto">
+              <div className="flex gap-4 grow lg:self-stretch">
                 {/* normal list */}
-
-                <div className="bg-zinc-100 rounded-xl pt-3">
-                  <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
+                <div className="pb-5 bg-zinc-100 rounded-xl pt-3 grow">
+                  <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-3 ">
                     <div>
                       <span>Normal List</span>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 pb-5">
                         {' '}
                         Filtered by:{' '}
                         <span className="capitalize">{filteredBy}</span>
@@ -306,33 +305,49 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
                       </div>
                     </section>
                   </div>
-
-                  <div className="pb-10 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem]">
-                    <div className="mb-6">{renderPinned('normal')}</div>
+                  <div className="pb-5 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
+                    <div>{renderPinned('normal')}</div>
                     {sortOptions ? renderSortedArray('normal') : null}
+                  </div>
+                </div>
+                <div className="bg-zinc-100 rounded-xl pt-3 h-full grow">
+                  <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5 mb-5">
+                    {renderTitle() ? (
+                      'High Priority List'
+                    ) : (
+                      <div className="flex justify-center w-full h-full items-center mt-80">
+                        No items currently in Priority{' '}
+                      </div>
+                    )}
+                  </div>
+                  <div className="pt-5 pb-5 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
+                    <div>{renderPinned()}</div>
+                    <div>{renderSortedArray()}</div>
                   </div>
                 </div>
               </div>
             </section>
 
-            <section>
-              <div className="bg-slate-200 rounded-xl pt-3 h-fit">
-                <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5">
-                  <span>Background Countdowns</span>
-                  <span className="w-max flex items-center">
-                    <FcNumericalSorting12 className="text-2xl mb-3" />
-                  </span>
+            {isCountDown() && (
+              <section>
+                <div className="bg-slate-200 rounded-xl pt-3 h-full min-w-[28rem]">
+                  <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-3">
+                    <span>Background Countdowns</span>
+                    <span className="w-max flex items-center">
+                      <FcNumericalSorting12 className="text-2xl mb-3" />
+                    </span>
+                  </div>
+                  <div className="pt-8 pb-5 bg-slate-200 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
+                    <div>{renderPinned('countdown')}</div>
+                    {renderCountdown()}
+                  </div>
                 </div>
-                <div className="pb-10 bg-slate-200 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl w-[28rem] ">
-                  <div className="mb-6">{renderPinned('countdown')}</div>
-                  {renderCountdown()}
-                </div>
-              </div>
-            </section>
+              </section>
+            )}
           </div>
 
           <Form
-            style={`cursor-pointer text-center text-xl bg-black tracking-wider text-white p-4 w-[24rem] rounded-lg hover:text-red-300 duration-300`}
+            style={`cursor-pointer text-xl bg-black tracking-widest text-white p-4 w-[24rem] rounded-lg hover:shadow-xl hover:bg-gray-950 duration-300`}
             text={'Add item'}
             userSettings={userSettings}
             setUserSettings={setUserSettings}

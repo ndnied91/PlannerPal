@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
-import { FaFilter } from 'react-icons/fa';
-import { BsFilterSquareFill } from 'react-icons/bs';
+
 const FilterSelect = ({
   userSettings,
   userContext,
@@ -13,7 +12,6 @@ const FilterSelect = ({
   updateCategory,
   category,
   setFilteredBy,
-  showFilterIcon,
 }) => {
   var labelArr = [];
 
@@ -26,8 +24,9 @@ const FilterSelect = ({
     labelArr = userSettings.filterOptions.map((item) => item);
   }
 
+  console.log(category);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(category || 'all');
+  const [selectedOption, setSelectedOption] = useState(category || '');
   const dropdownRef = useRef(null);
 
   const handleSelectOption = (option) => {
@@ -83,21 +82,32 @@ const FilterSelect = ({
     };
   }, []); // Run this effect once, on component mount
 
+  const renderIcon = () => {
+    if (isDropdownOpen) {
+      return '↑';
+    } else if (selectedOption !== '' && !isDropdownOpen) {
+      return '↓';
+    } else {
+      return 'Select ↓';
+    }
+  };
+
   return (
-    <div className="custom-dropdown-container font-normal text-sm tracking-normal w-28">
-      {/* UPDATE THIS ROUTE SO CALLS ARE SEPERATED OUT TODO */}
+    <div className="custom-dropdown-container tracking-wider w-28 text-sm font-normal">
       <div
-        className="relative  p-2 cursor-pointer bg-white"
-        // className=" absolute z-50 w-48 h-40 overflow-y-auto"
+        className="relative p-2 cursor-pointer bg-white"
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         ref={dropdownRef}
       >
-        <div className="flex justify-end">
-          <p className="capitalize text-lg mr-1 tracking-wider">
+        <div className="flex justify-between">
+          <p className="capitalize text-lg tracking-wider text-gray-700">
             {selectedOption}
           </p>
-          <span className="arrow-icon text-gray-600 text-lg">
-            {isDropdownOpen ? '↑' : '↓'}
+          <span
+            className="arrow-icon text-gray-600 text-md tracking-widest flex items-center"
+            id="icon"
+          >
+            {renderIcon()}
           </span>
         </div>
         {isDropdownOpen && (

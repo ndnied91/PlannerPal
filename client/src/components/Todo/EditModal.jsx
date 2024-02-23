@@ -56,10 +56,10 @@ const EditModal = ({
   };
 
   return (
-    <div className="relative z-50 " role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10 "></div>
+    <div className="relative z-50" role="dialog" aria-modal="true">
+      <div className="fixed inset-0 bg-gray-500 opacity-20 transition-opacity z-10"></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex items-end justify-center p-4 text-center sm:items-center sm:p-0 ">
+        <div className="flex items-center justify-center p-4 text-center sm:items-center sm:p-0 h-full">
           <div className="relative transform rounded-lg bg-slate-100 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center overflow-visible">
             <div className="font-bold text-4xl p-4 border-b border-x-slate-300 flex justify-between items-center ">
               {!updateItem.isCountDown ? (

@@ -63,7 +63,7 @@ const Form = ({ style, text, type, userSettings }) => {
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center mt-4">
       <button
         className={style}
         onClick={() => {
