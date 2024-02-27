@@ -13,53 +13,50 @@ export const TodoAppProvider = ({ children }) => {
   const [filteredBy, setFilteredBy] = useState('all');
 
   const updateSortedItems = async (sortBy, id) => {
+    console.log(sortBy, id);
+    console.log('inside update');
     const { data } = await customFetch.post(`/settings/${id}`, {
       sortBy,
     });
+
     setItems(data.sortedOrder);
   };
 
   // working for both
   const removeItem = async (item) => {
-    console.log('running removeItem');
-    const itemId = item._id;
-    const response = await customFetch.delete(`/items/${item._id}`);
-
-    if (response.status === 200) {
-      const newItems = items.filter((item) => item._id !== itemId);
-      newItems.map((i, index) => (i.id = index));
-      setItems(newItems);
-    }
-
+    const { data } = await customFetch.post(`/items/delete/${item._id}`, {
+      item,
+    });
+    setItems(data.sortedItems);
     toast.success(`Successfully remove item`);
   };
 
   // working for both
-  const updateStatus = async (item) => {
-    console.log('running updateStatus');
+  const updateStatus = async (item, sortBy) => {
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isCompleted: !item.isCompleted,
       filteredBy,
+      sortBy,
     });
 
     setItems(data.items);
   };
 
-  const addtoPriority = async (item) => {
-    console.log('running addtoPriority');
+  const addtoPriority = async (item, sortBy) => {
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isPriority: !item.isPriority,
       filteredBy,
+      sortBy,
     });
 
     setItems(data.items);
   };
 
-  const updateContent = async (item) => {
-    console.log('running updateContent');
+  const updateContent = async (item, sortBy) => {
     const response = await customFetch.patch(`/items/${item._id}`, {
       ...item,
       filteredBy,
+      sortBy,
     });
 
     if (item.calCode) {
@@ -75,7 +72,17 @@ export const TodoAppProvider = ({ children }) => {
     if (response.status === 201) {
       setShowEditModal(false);
       toast.success('Successful update to item');
+      setItems(response.data.items);
     }
+  };
+
+  const setPinnedItem = async (item, sortBy) => {
+    const { data } = await customFetch.patch(`/items/pinned/${item._id}`, {
+      isPinned: !item.isPinned,
+      filteredBy,
+      sortBy,
+    });
+    setItems(data.items);
   };
 
   return (
@@ -98,6 +105,7 @@ export const TodoAppProvider = ({ children }) => {
         filteredBy,
         setFilteredBy,
         updateSortedItems,
+        setPinnedItem,
       }}
     >
       {children}

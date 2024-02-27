@@ -24,6 +24,7 @@ export const setUserSettings = async (req, res) => {
 
   const sortKey = sortOptions[sortBy] || sortOptions.newest;
   const sortedOrder = await Item.find({ createdBy }).sort(sortKey);
+  // console.log(sortedOrder);
   res.status(StatusCodes.CREATED).json({ sortedOrder, settings });
 };
 

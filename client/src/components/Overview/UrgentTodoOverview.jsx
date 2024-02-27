@@ -1,61 +1,62 @@
-import React, { useEffect, useState } from 'react';
-
-const UrgentTodoOverview = ({ items, userSettings }) => {
-  const [approaching, setApproaching] = useState([]);
-
+const UrgentTodoOverview = ({
+  items,
+  userSettings,
+  setShowModal,
+  setEvent,
+}) => {
   const convertTimeDeadLine = (date) => new Date(date).getTime() - Date.now();
 
   const urgencySetting = (time) => {
     return time * 3600000;
   };
 
-  useEffect(() => {
+  const showEventModal = (i) => {
+    setShowModal(true);
+    setEvent(i);
+  };
+
+  // };
+
+  const filterNdSortItems = () => {
     const tempArr = [];
     items.forEach((item) => {
       const time = convertTimeDeadLine(item.dueDate); // convert time to milliseconds
 
       if (time < urgencySetting(userSettings.urgency) && !item.isCompleted) {
-        tempArr.push({
-          key: item._id,
-          title: item.title,
-          // due: time,
-          dueDate: item.dueDate,
-        });
+        tempArr.push(item);
       }
-
-      //sort them here
-      const collator = new Intl.Collator('en', {
-        numeric: true,
-        sensitivity: 'base',
-      });
-      tempArr.sort((a, b) => {
-        return collator.compare(a.dueDate, b.dueDate);
-      });
     });
-    setApproaching(tempArr);
-  }, [userSettings]);
 
-  const renderItems = () => {
-    if (approaching.length > 0) {
-      return approaching.map((i) => {
-        {
-        }
-        return (
-          <div
-            className="capitalize border-b-gray-300 border-b mt-5 text-sm"
-            key={i.key}
-          >
-            <div className="flex justify-between p-1">
-              <p>{i.title}</p>
-              <p>{new Date(i.dueDate).toLocaleString()}</p>
-            </div>
-          </div>
-        );
-      });
-    }
+    const collator = new Intl.Collator('en', {
+      numeric: true,
+      sensitivity: 'base',
+    });
+    tempArr.sort((a, b) => {
+      return collator.compare(a.dueDate, b.dueDate);
+    });
+    return tempArr;
   };
 
   const day = userSettings.urgency / 24;
+
+  const renderItems = () => {
+    return filterNdSortItems().map((i) => {
+      return (
+        <div
+          key={i._id}
+          className="capitalize border-b-gray-300 border-b mt-5 text-sm cursor-pointer"
+        >
+          <div
+            className="flex justify-between p-1"
+            onClick={() => showEventModal(i)}
+          >
+            <p>{i.title}</p>
+            <p>{new Date(i.dueDate).toLocaleString()}</p>
+          </div>
+        </div>
+      );
+    });
+  };
 
   return (
     <section className="p-5 h-fit">

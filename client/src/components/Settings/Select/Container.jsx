@@ -6,7 +6,7 @@ const Container = ({ placeholderText, list, setValue, defaultValue }) => {
   const dropdownRef = useRef(null);
 
   const handleSelectOption = (option) => {
-    setValue(option);
+    setValue(option); //for settings and todo to function together
     setDropdownOpen(false);
     setSelectedOption(option);
   };

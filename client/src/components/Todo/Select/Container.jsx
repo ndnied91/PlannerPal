@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { useGlobalContext } from '../todoContext';
+
 const Container = ({
   placeholderText,
   list,

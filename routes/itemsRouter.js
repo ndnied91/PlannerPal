@@ -19,16 +19,15 @@ router.route('/').post(checkForTestUser, createItem); //creates all items
 router.route('/').get(getAllItems); //get all items
 router.route('/filter/:filteredBy').get(getFilteredItems); //get all items
 
+router.route('/delete/:id').post(validateIdParam, deleteItem);
 router.route('/deleteMany/delete').post(deleteItems); //this is deleting from the archives page
 
 router
   .route('/pinned/:id')
   .patch(validateIdParam, checkForTestUser, updatePinnedItem);
 
-router
-  .route('/:id')
-  .patch(validateIdParam, updateItem)
-  .delete(validateIdParam, deleteItem);
+router.route('/:id').patch(validateIdParam, updateItem);
+// .delete(validateIdParam, deleteItem);
 
 router.route('/update/:calCode').patch(updateTodoEventFromCal);
 

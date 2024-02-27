@@ -36,6 +36,7 @@
     "react-date-picker": "^10.6.0",
     "react-icons": "^4.12.0",
     "react-router-dom": "^6.21.1",
+    "react-search-field": "^2.0.1",
     "uuid": "^9.0.1"
   }
 }

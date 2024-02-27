@@ -55,7 +55,7 @@ const container = ({ userContext }) => {
   };
 
   return (
-    <div className="pl-20 pt-5">
+    <div className="pl-32 pt-5">
       <aside className="flex">
         <NoteAside
           notes={notes.sort((a, b) => b.createdAt.localeCompare(a.createdAt))}

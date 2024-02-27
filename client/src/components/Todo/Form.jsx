@@ -4,8 +4,9 @@ import customFetch from '../../utils/customFetch';
 import { useGlobalContext } from './todoContext';
 import FormModal from './FormModal';
 
-const Form = ({ style, text, type, userSettings }) => {
-  const { showModal, setShowModal, setItems, filteredBy } = useGlobalContext();
+const Form = ({ style, text, type, userSettings, userContext }) => {
+  const { showModal, setShowModal, setItems, filteredBy, updateSortedItems } =
+    useGlobalContext();
 
   const sendToServer = async (e, pane) => {
     let newItemName = {};
@@ -41,12 +42,12 @@ const Form = ({ style, text, type, userSettings }) => {
           await customFetch.post('/cal', newItemName);
         }
 
-        const { data } = await customFetch.post('/items', {
+        await customFetch.post('/items', {
           todo: newItemName,
           filteredBy,
         });
 
-        setItems(data.items);
+        updateSortedItems(userSettings.sortBy, userContext._id);
 
         setShowModal(false);
         if (pane === 'countdown') {
@@ -73,14 +74,13 @@ const Form = ({ style, text, type, userSettings }) => {
         {text}
       </button>
 
-      {showModal ? (
-        <FormModal
-          sendToServer={sendToServer}
-          setShowModal={setShowModal}
-          type={type}
-          userSettings={userSettings}
-        />
-      ) : null}
+      <FormModal
+        showModal={showModal}
+        sendToServer={sendToServer}
+        setShowModal={setShowModal}
+        type={type}
+        userSettings={userSettings}
+      />
     </div>
   );
 };

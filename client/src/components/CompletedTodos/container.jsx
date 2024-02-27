@@ -33,7 +33,7 @@ const container = ({ items, userSettings, setItems }) => {
   return (
     <section className="pr-2 pl-2">
       <div>
-        <p className="text-center w-full font-semibold text-lg text-gray-200">
+        <p className="text-center w-full font-semibold text-lg text-gray-900">
           Items will automatically delete in {userSettings.deleteTime / 24} days
         </p>
 

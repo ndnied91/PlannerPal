@@ -75,14 +75,14 @@ const Options = ({ setShowSettingsModal }) => {
       onMouseOut={() => setHoveredOver(false)}
     >
       <div
-        className={`text-center font-bold hover:scale-105 duration-300 transition-all ease-in-out ${
+        className={`!text-gray-800 text-center font-bold hover:scale-105 duration-300 transition-all ease-in-out ${
           hoveredOver ? 'tracking-widest text-xl' : 'text-sm text-center'
         }`}
       >
         PlannerPal
       </div>
       <ul
-        className={`links duration-200 w-[90px] p-3 ${
+        className={`text-grey-600 links duration-200 w-[90px] p-3 ${
           hoveredOver ? 'duration-200  w-52' : ' '
         }`}
       >
@@ -97,7 +97,7 @@ const Options = ({ setShowSettingsModal }) => {
                 <div
                   className={`pl-1 ${
                     text === userSettings?.selectedPane
-                      ? 'text-blue-700 '
+                      ? '!text-gray-900 font-bold'
                       : null
                   } `}
                 >

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
-import { ImCross } from 'react-icons/im';
+import { IoMdClose } from 'react-icons/io';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import OutsideClickHandler from 'react-outside-click-handler';
 import { useGlobalContext } from './todoContext';
 
 import FilterSelect from './FilterSelect';
@@ -16,20 +17,20 @@ const FormModal = ({
   userSettings,
   userContext,
   setUserSettings,
+  showModal,
 }) => {
   const { filteredBy } = useGlobalContext();
   const [date, setDate] = useState('');
   const [category, setCategory] = useState(filteredBy);
 
   const [currentItem, setCurrentItem] = useState({
-    currentTitle: 'Default title',
-    description: 'placeholder desc',
+    currentTitle: '',
+    description: '',
     isAddedToCal: userSettings?.isAddToCal,
     isPriority: false,
   });
 
   const [currentPane, setCurrentPane] = useState('todo');
-  const [selectedDate, setSelectedDate] = useState(null);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -60,6 +61,12 @@ const FormModal = ({
       toast.error('Date must be selected!');
     } else {
       sendToServer(currentItem, currentPane);
+      setCurrentItem({
+        currentTitle: '',
+        description: '',
+        isAddedToCal: userSettings?.isAddToCal,
+        isPriority: false,
+      });
     }
   };
 
@@ -73,193 +80,186 @@ const FormModal = ({
 
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div
+        className={`fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10 ${
+          showModal
+            ? 'opacity-100 duration-200'
+            : 'opacity-0 hidden duration-100'
+        } `}
+      ></div>
+      <div
+        className={`fixed inset-0 z-10 w-screen overflow-y-auto ${
+          showModal
+            ? 'opacity-100 translate-y-0 duration-50'
+            : 'opacity-0 translate-y-2 invisible duration-50'
+        }`}
+      >
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div className="relative transform overflow-visible rounded-xl bg-slate-200 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl self-center">
-            <div className="font-bold text-4xl p-4 border-b border-x-slate-300 flex justify-end items-center">
-              {/* {currentPane === 'todo' ? (
-                <p>Add Todo </p>
-              ) : (
-                <p>Add Countdown </p>
-              )} */}
-
-              <button
-                onClick={() => setShowModal(false)}
-                type="button"
-                className="text-red-700 max-w-fit rounded-md px-3 py-2 text-sm font-semibold hover:scale-110 duration-300"
-              >
-                <ImCross className="text-2xl" />
-              </button>
-            </div>
-
-            <div className="bg-slate-200 100 px-4 pb-4 pt-0 sm:p-6 sm:pb-4 rounded-b-xl">
-              <section className="flex justify-around capitalize ">
-                <div
-                  onClick={() => setCurrentPane('todo')}
-                  className={`${
-                    currentPane === 'todo'
-                      ? 'bg-slate-200 font-bold  text-2xl'
-                      : 'bg-slate-200 '
-                  } w-1/2 h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300`}
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setShowModal(false);
+            }}
+          >
+            <div className="relative transform overflow-visible  bg-slate-00 text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center w-[32rem]">
+              <div className="font-bold text-4xl p-2 pt-0 pb-0 flex justify-end items-center bg-gray-100">
+                <button
+                  onClick={() => setShowModal(false)}
+                  type="button"
+                  className="text-grey-400 max-w-fit py-2 text-sm font-semibold hover:scale-110 duration-300"
                 >
-                  {' '}
-                  todo
-                </div>
-                <div
-                  className={`${
-                    currentPane === 'countdown'
-                      ? 'bg-slate-200 font-bold text-2xl'
-                      : 'bg-slate-200'
-                  } w-1/2 h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300`}
-                  onClick={() => setCurrentPane('countdown')}
-                >
-                  {' '}
-                  countdown
-                </div>
-              </section>
-              <div className="align-center mb-4">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-md tracking-wide font-bold mb-2"
-                      htmlFor="currentTitle"
-                    >
-                      {/* Title */}
-                    </label>
-                    <input
-                      className="appearance-none border rounded w-full py-2 px-3 text-gray-700 h-12 focus:outline-none focus:shadow-outline "
-                      id="currentTitle"
-                      type="text"
-                      name="currentTitle"
-                      maxLength="20"
-                      value={currentItem.currentTitle}
-                      placeholder="Title"
-                      required
-                      onChange={(e) => handleChange(e)}
-                    />
-                  </div>
-                  {/* description */}
-                  <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-md tracking-wide font-bold mb-2 "
-                      htmlFor=""
-                    >
-                      {/* Description */}
-                    </label>
-                    <textarea
-                      className="w-full text-gray-700 h-24 focus:outline-none focus:shadow-outline"
-                      id="description"
-                      type="textarea"
-                      name="description"
-                      placeholder="Description"
-                      required
-                      value={currentItem.description}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  {/* time */}
+                  <IoMdClose className="text-2xl m-1" />
+                </button>
+              </div>
 
-                  <div className="dropdowns">
-                    <label className="block text-gray-700 text-md tracking-wide font-bold mb-2 ">
-                      {/* Due date */}
-                    </label>
-                    <div
-                      onMouseLeave={handleMouseLeave}
-                      className="flex flex-col max-w-fit"
-                    >
-                      <DatePicker
-                        showTimeSelect
-                        selected={date}
+              <div className="bg-white 100 px-4 pb-4 !pt-4 sm:p-6 sm:pb-4">
+                <section className="flex justify-around capitalize mb-4 ">
+                  <div
+                    onClick={() => setCurrentPane('todo')}
+                    className={`${
+                      currentPane === 'todo'
+                        ? 'bg-white font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
+                        : 'bg-white text-gray-400 border hover:bg-gray-100 duration-200'
+                    } w-1/3 h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300  `}
+                  >
+                    {' '}
+                    todo
+                  </div>
+                  <div
+                    className={`${
+                      currentPane === 'countdown'
+                        ? 'bg-white font-semibold tracking-wider text-gray-800 border  rounded-sm hover:bg-gray-100 duration-200'
+                        : 'bg-white text-gray-400 border rounded-sm hover:bg-gray-100 duration-200'
+                    } w-1/3 h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300   `}
+                    onClick={() => setCurrentPane('countdown')}
+                  >
+                    {' '}
+                    countdown
+                  </div>
+                </section>
+                <div className="align-center mb-4">
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                      <input
+                        className="pt-3 text-gray-600 text-md font-semibold pb-2 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        id="currentTitle"
+                        type="text"
+                        name="currentTitle"
+                        maxLength="20"
+                        value={currentItem.currentTitle}
+                        placeholder="Title"
                         required
-                        placeholderText="Due date.."
-                        className="cursor-pointer mb-3 !w-60"
-                        onChange={(date) => setDate(date)}
-                        dateFormat="MMMM d, yyyy h:mmaa"
-                        open={isDatePickerOpen}
-                        onFocus={() => setIsDatePickerOpen(true)}
-                        onClose={() => setIsDatePickerOpen(false)}
+                        onChange={(e) => handleChange(e)}
                       />
                     </div>
-                    {/* here */}
-                    <div className="flex  items-center">
-                      {/* <p className="text-sm font-bold mb-1 mr-4 text-gray-700">
-                        {' '}
-                        Category
-                      </p> */}
-
-                      <FilterSelect
-                        showFilterIcon={false}
-                        userSettings={userSettings}
-                        userContext={userContext}
-                        setUserSettings={setUserSettings}
-                        updatable={false}
-                        updateCategory={updateCategory}
+                    {/* description */}
+                    <div className="mb-2">
+                      <textarea
+                        className="pt-3 text-gray-600 text-md font-semibold w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        id="description"
+                        type="textarea"
+                        name="description"
+                        placeholder="Description"
+                        required
+                        value={currentItem.description}
+                        onChange={handleChange}
                       />
                     </div>
-                  </div>
+                    {/* time */}
 
-                  {/* cal */}
-                  <section className=" flex justify-start gap-20 mt-5">
-                    {currentPane === 'todo' ? (
-                      <div className="pb-5 items-baseline block">
-                        <label
-                          className=" text-gray-700 text-sm font-bold pr-2 "
-                          htmlFor="isAddedToCal"
-                        >
-                          Add to Cal?
-                        </label>
-                        <input
-                          className="bg-white"
-                          type="checkbox"
-                          name="isAddedToCal"
-                          checked={currentItem.isAddedToCal}
-                          onChange={handleCheckboxChange}
+                    <div className="dropdowns">
+                      <div
+                        onMouseLeave={handleMouseLeave}
+                        className="flex flex-col max-w-fit"
+                      >
+                        <DatePicker
+                          showTimeSelect
+                          selected={date}
+                          required
+                          placeholderText="Due date.."
+                          className="pt-3 text-gray-600 text-sm font-semibold pb-2 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                          onChange={(date) => setDate(date)}
+                          dateFormat="MMMM d, yyyy h:mmaa"
+                          open={isDatePickerOpen}
+                          onFocus={() => setIsDatePickerOpen(true)}
+                          onClose={() => setIsDatePickerOpen(false)}
                         />
                       </div>
-                    ) : (
-                      <div className="pb-5">
-                        <input className="invisible" type="checkbox" />
-                      </div>
-                    )}
-
-                    {currentPane === 'todo' ? (
-                      <div className="pb-2">
-                        <label
-                          className=" text-gray-700 text-sm font-bold pr-2 "
-                          htmlFor="isAddedToCal"
-                        >
-                          Add to Priority?
-                        </label>
-                        <input
-                          className=""
-                          type="checkbox"
-                          name="isPriority"
-                          checked={currentItem.isPriority}
-                          onChange={handleCheckboxChange}
+                      {/* here */}
+                      <div className="flex items-center">
+                        <FilterSelect
+                          textPrompt={'Select'}
+                          className="relative mt-3 p-3 text-sm font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                          showFilterIcon={false}
+                          userSettings={userSettings}
+                          userContext={userContext}
+                          setUserSettings={setUserSettings}
+                          updatable={false}
+                          updateCategory={updateCategory}
                         />
                       </div>
-                    ) : (
-                      <div className="pb-2">
-                        <input className="invisible" type="checkbox" />
-                      </div>
-                    )}
-                  </section>
+                    </div>
 
-                  <div className="flex justify-center">
-                    <button
-                      className="block w-96 text-blue-500 text-center rounded-md bg-white px-3 py-2 h-12 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 "
-                      type="submit"
-                    >
-                      {currentPane === 'todo'
-                        ? 'Create Todo'
-                        : 'Create Countdown'}
-                    </button>
-                  </div>
-                </form>
+                    {/* cal */}
+                    <section className=" flex justify-center gap-20 mt-5">
+                      {currentPane === 'todo' ? (
+                        <div className="pb-5 items-baseline block">
+                          <label
+                            className="pt-3 text-gray-600 text-sm font-semibold pb-2 w-full pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
+                            htmlFor="isAddedToCal"
+                          >
+                            Add to Cal?
+                          </label>
+                          <input
+                            className="bg-white"
+                            type="checkbox"
+                            name="isAddedToCal"
+                            checked={currentItem.isAddedToCal}
+                            onChange={handleCheckboxChange}
+                          />
+                        </div>
+                      ) : (
+                        <div className="pb-5">
+                          <input className="invisible" type="checkbox" />
+                        </div>
+                      )}
+
+                      {currentPane === 'todo' ? (
+                        <div className="pb-2">
+                          <label
+                            className="pt-3 text-gray-600 text-sm font-semibold pb-2 w-full pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
+                            htmlFor="isAddedToCal"
+                          >
+                            Add to Priority?
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="isPriority"
+                            checked={currentItem.isPriority}
+                            onChange={handleCheckboxChange}
+                          />
+                        </div>
+                      ) : (
+                        <div className="pb-2">
+                          <input className="invisible" type="checkbox" />
+                        </div>
+                      )}
+                    </section>
+
+                    <div className="flex justify-center">
+                      <button
+                        className="block w-96 text-white text-center rounded-md bg-gray-800 px-3 py-2 h-12 text-sm font-semibold shadow-sm hover:opacity-90 sm:mt-0 tracking-widest"
+                        type="submit"
+                      >
+                        {currentPane === 'todo'
+                          ? 'Create Todo'
+                          : 'Create Countdown'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
+          </OutsideClickHandler>
         </div>
       </div>
     </div>

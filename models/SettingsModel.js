@@ -9,6 +9,7 @@ const SettingsSchema = new mongoose.Schema({
   sortBy: { type: String, default: 'A-Z' },
   deleteTime: { type: Number, default: 7 }, //7 days
   filterOptions: { type: Array }, //default is an empty array
+  currentFilterOption: String, //the current filter is user is on
   isAddToCal: { type: Boolean, default: true }, //for adding a todo to cal
 });
 

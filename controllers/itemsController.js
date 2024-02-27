@@ -1,8 +1,16 @@
 import 'express-async-errors';
 import Item from '../models/ItemsModel.js';
+import Settings from '../models/SettingsModel.js';
+
 import { StatusCodes } from 'http-status-codes';
 
 import { ObjectId } from 'mongodb';
+
+const sortOptions = {
+  'Z-A': '-title',
+  'A-Z': 'title',
+  'Due date': 'dueDate',
+};
 
 export const createItem = async (req, res) => {
   let text = Object.values(req.body)[0].text;
@@ -46,25 +54,32 @@ export const getAllItems = async (req, res) => {
 };
 
 export const getFilteredItems = async (req, res) => {
+  const sortKey = sortOptions[req.body.sortBy] || sortOptions.newest;
   if (req.params.filteredBy !== 'all') {
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.params.filteredBy,
-    });
+    }).sort(sortKey);
 
     res.status(StatusCodes.CREATED).json({ items });
   } else {
     const items = await Item.find({
       createdBy: req.user.userId,
-    });
+    }).sort(sortKey);
 
     res.status(StatusCodes.CREATED).json({ items });
   }
 };
 
 export const deleteItem = async (req, res) => {
-  const removedItem = await Item.findByIdAndDelete(req.params.id);
-  res.status(200).json({ item: removedItem });
+  await Item.findByIdAndDelete(req.params.id);
+  const userSettings = await Settings.find(req.body.createdBy);
+
+  const sortedOrder = await Item.find(req.body.createdBy).sort(
+    userSettings.sortBy
+  );
+
+  res.status(200).json({ sortedItems: sortedOrder });
 };
 
 export const updateItem = async (req, res) => {
@@ -75,14 +90,17 @@ export const updateItem = async (req, res) => {
     req.body
   );
 
+  const sortKey = sortOptions[req.body.sortBy] || sortOptions.newest;
+
   if (req.body.filteredBy === 'all') {
-    const items = await Item.find({ createdBy: req.user.userId });
+    const items = await Item.find({ createdBy: req.user.userId }).sort(sortKey);
     res.status(StatusCodes.CREATED).json({ items });
   } else {
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.body.filteredBy,
-    });
+    }).sort(sortKey);
+
     res.status(StatusCodes.CREATED).json({ items });
   }
 };
@@ -91,24 +109,24 @@ export const updatePinnedItem = async (req, res) => {
   const { id } = req.params;
   const { isPinned, filteredBy } = req.body;
 
-  const result = await Item.findByIdAndUpdate(
+  await Item.findByIdAndUpdate(
     {
       _id: id,
     },
     { isPinned: isPinned }
   );
 
-  // const items = await Item.find({ createdBy: req.user.userId });
-  // res.status(StatusCodes.OK).json({ items });
+  const sortKey = sortOptions[req.body.sortBy] || sortOptions.newest;
 
   if (filteredBy === 'all') {
-    const items = await Item.find({ createdBy: req.user.userId });
+    const items = await Item.find({ createdBy: req.user.userId }).sort(sortKey);
     res.status(StatusCodes.CREATED).json({ items });
   } else {
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.body.filteredBy,
-    });
+    }).sort(sortKey);
+
     res.status(StatusCodes.CREATED).json({ items });
   }
 };

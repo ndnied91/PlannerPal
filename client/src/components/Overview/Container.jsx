@@ -8,10 +8,17 @@ import customFetch from '../../utils/customFetch';
 import { useGlobalContext } from '../Todo/todoContext';
 import PinnedOverview from './PinnedOverview';
 
+import OverviewModal from './OverviewModal';
+
+import SearchBox from '../SearchBox/index';
+
 const container = ({ userSettings, userContext }) => {
   const [previewEvents, setPreviewEvents] = useState([]); //events set for preview
   const [popupPosition, setPopupPosition] = useState(''); //when hovering over small cal
   const { items, setItems } = useGlobalContext();
+
+  const [showModal, setShowModal] = useState(false);
+  const [event, setEvent] = useState('');
 
   useEffect(() => {
     const setOrder = async () => {
@@ -34,14 +41,23 @@ const container = ({ userSettings, userContext }) => {
   }, [items]);
 
   return (
-    <div className="pt-5 ml-20 flex flex-wrap max-w-screen">
-      <div className="mb-6">
-        <p className="text-3xl font-bold"> Welcome, {userContext.name}!</p>
-        <p> Manage your tasks and deadlines in one place</p>
-      </div>
+    <div className="ml-28 flex flex-wrap p-5">
       <section className="flex justify-between flex-wrap">
-        <section className="flex flex-wrap gap-5">
-          <div className="bg-slate-50 rounded-lg shadow-sm p-6 w-[24rem] h-min">
+        <section className="flex flex-wrap gap-4">
+          <div className="flex w-full " id="sss">
+            <div className="w-1/2">
+              <p className="text-3xl font-bold">
+                {' '}
+                Welcome, {userContext.name}!
+              </p>
+              <p> Manage your tasks and deadlines in one place</p>
+            </div>
+
+            <p className="w-3/4 rounded-lg text-end" id="aaa">
+              <SearchBox />
+            </p>
+          </div>
+          <div className="bg-slate-100 rounded-lg shadow-sm p-6  child">
             <SmallCalendarOverview
               setPreviewEvents={setPreviewEvents}
               setPopupPosition={setPopupPosition}
@@ -54,17 +70,40 @@ const container = ({ userSettings, userContext }) => {
             />
           </div>
           {/* countdown details  */}
-          <div className="ml-2 bg-slate-50 rounded-lg shadow-sm h-80 overflow-scroll">
-            <UrgentTodoOverview items={items} userSettings={userSettings} />
+          <div className="bg-slate-100 rounded-lg shadow-sm  overflow-scroll child">
+            <UrgentTodoOverview
+              items={items}
+              userSettings={userSettings}
+              setShowModal={setShowModal}
+              setEvent={setEvent}
+            />
           </div>
-          <div className="ml-2 mr-2 bg-slate-50 rounded-lg shadow-sm h-80 overflow-scroll">
-            <PriorityTodoOverview items={items} userSettings={userSettings} />
+          <div className="bg-slate-100 rounded-lg shadow-sm  overflow-scroll child">
+            <PriorityTodoOverview
+              items={items}
+              userSettings={userSettings}
+              setShowModal={setShowModal}
+              setEvent={setEvent}
+            />
           </div>
-          <div className="bg-slate-50 rounded-lg shadow-sm h-80 overflow-scroll">
-            <PinnedOverview items={items} userSettings={userSettings} />
+          <div className="bg-slate-100 rounded-lg shadow-sm  overflow-scroll child">
+            <PinnedOverview
+              items={items}
+              userSettings={userSettings}
+              setShowModal={setShowModal}
+              setEvent={setEvent}
+            />
           </div>
         </section>
       </section>
+
+      {showModal && (
+        <OverviewModal
+          setShowModal={setShowModal}
+          showModal={showModal}
+          event={event}
+        />
+      )}
     </div>
   );
   // }

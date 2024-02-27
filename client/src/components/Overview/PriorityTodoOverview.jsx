@@ -1,6 +1,11 @@
 import React from 'react';
 
-const PriorityTodoOverview = ({ items }) => {
+const PriorityTodoOverview = ({ items, setShowModal, setEvent }) => {
+  const showEventModal = (i) => {
+    setShowModal(true);
+    setEvent(i);
+  };
+
   const priorityItems = () => {
     const priority = items.filter(
       (item) => item.isPriority === true && !item.isCompleted
@@ -11,8 +16,9 @@ const PriorityTodoOverview = ({ items }) => {
       return priority.map((i) => {
         return (
           <div
-            className="capitalize border-b-gray-300 border-b mt-5 text-sm"
+            className="capitalize border-b-gray-300 border-b mt-5 text-sm cursor-pointer"
             key={i._id}
+            onClick={() => showEventModal(i)}
           >
             {' '}
             {i.title}

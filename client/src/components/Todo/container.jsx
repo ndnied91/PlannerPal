@@ -1,7 +1,6 @@
 import { useGlobalContext } from './todoContext';
 import SingleItem from './SingleItem';
 import { useEffect, useRef, useState } from 'react';
-// import Select from 'react-dropdown-select';
 import Form from './Form';
 import CompletedTodos from '../CompletedTodos/container.jsx';
 import customFetch from '../../utils/customFetch.js';
@@ -28,7 +27,6 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
   const [showSortModal, setShowSortModal] = useState(false);
   const [sortOptions, setSortOptions] = useState();
   const [addNewFilter, setAddNewFilter] = useState(false);
-  const [isCountdownItem, setIsCountdownItem] = useState(false);
 
   const updateItemsAfterEditTodo = async () => {
     updateSortedItems(userSettings.sortBy, userContext._id);
@@ -39,7 +37,8 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
   }, [userSettings]);
 
   const renderTitle = () => {
-    const even = (element) => element.isPriority === true;
+    const even = (element) => element.isPriority && !element.isCompleted;
+
     return items.some(even);
   };
 
@@ -47,8 +46,6 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
     const countdown = (element) => element.isCountDown === true;
     return items.some(countdown);
   };
-
-  console.log(isCountDown());
 
   const showDropdown = () => {
     const options = ['Due date', 'A-Z', 'Z-A'];
@@ -71,10 +68,10 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
       sortBy,
     });
     setItems(data.sortedOrder);
+    setUserSettings(data.settings);
   };
 
   useEffect(() => {
-    console.log('triggered..');
     const setOrder = async () => {
       const { data } = await customFetch.post(`/settings/${userContext._id}`, {
         sortBy: userSettings.sortBy,
@@ -83,7 +80,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
     };
 
     setOrder();
-  }, [userSettings, items.length]);
+  }, [userSettings]);
 
   const renderSortedArray = (text) => {
     if (text === 'normal') {
@@ -202,15 +199,16 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
     }
   };
 
-  const filterItems = async (value) => {
+  const filterItems = async (value, sortBy) => {
     if (value === 'add +') {
-      setAddNewFilter(true);
+      setAddNewFilter(true); //pop input field to add new filter
     } else {
       setFilteredBy(value);
       setAddNewFilter(false);
       try {
         const { data } = await customFetch.get(`/items/filter/${value}`, {
           filter: value,
+          sortBy,
         });
         setItems(data.items);
       } catch (e) {
@@ -229,6 +227,8 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
         <div className="flex items-end">
           {!addNewFilter && (
             <FilterSelect
+              className="relative p-2 cursor-pointer bg-gray-100 border-solid rounded-md"
+              textPrompt={'Filter'}
               showFilterIcon={true}
               updatable={true}
               userSettings={userSettings}
@@ -300,7 +300,10 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
                       >
                         {showDropdown()}
                       </div>
-                      <div onClick={() => setShowSortModal(!showSortModal)}>
+                      <div
+                        className="hover:scale-110 duration-300"
+                        onClick={() => setShowSortModal(!showSortModal)}
+                      >
                         {renderIcon()}
                       </div>
                     </section>
@@ -315,7 +318,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
                     {renderTitle() ? (
                       'High Priority List'
                     ) : (
-                      <div className="flex justify-center w-full h-full items-center mt-80">
+                      <div className="flex justify-center w-full h-full items-center mt-1/2">
                         No items currently in Priority{' '}
                       </div>
                     )}
@@ -351,6 +354,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
             text={'Add item'}
             userSettings={userSettings}
             setUserSettings={setUserSettings}
+            userContext={userContext}
           />
         </>
       )}

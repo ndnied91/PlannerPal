@@ -23,7 +23,7 @@ const Day = ({ day, rowIdx }) => {
 
   const getCurrentDayClass = () => {
     return day.format(`DD-MM-YY`) === dayjs().format(`DD-MM-YY`)
-      ? 'bg-blue-600 text-white rounded-full w-7'
+      ? 'bg-gray-600 text-white rounded-full w-7'
       : null;
   };
 

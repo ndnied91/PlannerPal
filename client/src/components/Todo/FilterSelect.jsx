@@ -12,6 +12,8 @@ const FilterSelect = ({
   updateCategory,
   category,
   setFilteredBy,
+  className,
+  textPrompt,
 }) => {
   var labelArr = [];
 
@@ -24,14 +26,13 @@ const FilterSelect = ({
     labelArr = userSettings.filterOptions.map((item) => item);
   }
 
-  console.log(category);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(category || '');
   const dropdownRef = useRef(null);
 
   const handleSelectOption = (option) => {
     if (updatable) {
-      filterItems(option);
+      filterItems(option, userSettings.sortBy);
     }
 
     setSelectedOption(option);
@@ -60,7 +61,7 @@ const FilterSelect = ({
       setUserSettings(data.settings);
       setSelectedOption('all');
       setFilteredBy('all');
-      filterItems('all');
+      filterItems('all', userSettings.sortBy);
       //here we need to set the filtedBy that is coming from globalContext TODO
     } catch (e) {
       console.log(e);
@@ -88,23 +89,24 @@ const FilterSelect = ({
     } else if (selectedOption !== '' && !isDropdownOpen) {
       return '↓';
     } else {
-      return 'Select ↓';
+      // return 'Select ↓';
+      return `${textPrompt} ↓`;
     }
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider w-28 text-sm font-normal">
+    <div className="custom-dropdown-container tracking-wider min-w-24 w-fit text-sm font-normal pr-2">
       <div
-        className="relative p-2 cursor-pointer bg-white"
+        className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         ref={dropdownRef}
       >
         <div className="flex justify-between">
-          <p className="capitalize text-lg tracking-wider text-gray-700">
+          <p className="capitalize tracking-wider text-gray-700">
             {selectedOption}
           </p>
           <span
-            className="arrow-icon text-gray-600 text-md tracking-widest flex items-center"
+            className="arrow-icon text-gray-600 tracking-widest flex items-center"
             id="icon"
           >
             {renderIcon()}
@@ -132,7 +134,7 @@ const FilterSelect = ({
                       <p className="capitalize">{option}</p>
                       {updatable && (
                         <button
-                          className="px-2 py-1 bg-red-500 text-white rounded"
+                          className="px-2 py-1 text-gray-900 hover:scale-110 duration-300 rounded"
                           onClick={() => handleDeleteClick(option)}
                         >
                           <FaRegTrashAlt />
