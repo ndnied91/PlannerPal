@@ -4,9 +4,15 @@ import customFetch from '../../utils/customFetch';
 import { useGlobalContext } from './todoContext';
 import FormModal from './FormModal';
 
-const Form = ({ style, text, type, userSettings, userContext }) => {
-  const { showModal, setShowModal, setItems, filteredBy, updateSortedItems } =
-    useGlobalContext();
+const Form = ({ style, text, type, userSettings }) => {
+  const {
+    showModal,
+    setShowModal,
+    filteredBy,
+    updateSortedItems,
+    userContext,
+    setItems,
+  } = useGlobalContext();
 
   const sendToServer = async (e, pane) => {
     let newItemName = {};
@@ -34,6 +40,7 @@ const Form = ({ style, text, type, userSettings, userContext }) => {
     }
 
     if (!newItemName) {
+      //TODO move to todoContext
       toast.error('Please enter a valid todo');
       return;
     } else {
@@ -47,7 +54,13 @@ const Form = ({ style, text, type, userSettings, userContext }) => {
           filteredBy,
         });
 
-        updateSortedItems(userSettings.sortBy, userContext._id);
+        // setItems(data.items);
+
+        updateSortedItems(
+          userContext._id,
+          userSettings.sortBy,
+          userSettings.currentFilterOption
+        );
 
         setShowModal(false);
         if (pane === 'countdown') {

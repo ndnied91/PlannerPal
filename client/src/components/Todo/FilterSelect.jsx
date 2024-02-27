@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
+import { useGlobalContext } from './todoContext';
 
 const FilterSelect = ({
   userSettings,
-  userContext,
   filterItems,
   setUserSettings,
   updatable,
@@ -17,6 +17,9 @@ const FilterSelect = ({
 }) => {
   var labelArr = [];
 
+  const { updateSortedItems, userContext, getFilteredItems } =
+    useGlobalContext();
+
   if (!updatable) {
     const itemsToRemove = ['add +'];
     labelArr = userSettings.filterOptions.filter(
@@ -27,19 +30,28 @@ const FilterSelect = ({
   }
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(category || '');
+  const [currentFilterOption, setCurrentFilterOption] = useState(
+    category || ''
+  );
+
+  useEffect(() => {
+    const updateSettings = async () => {
+      await customFetch.post(`/settings/${userContext._id}`, {
+        sortBy: userSettings.sortBy,
+        currentFilterOption,
+      });
+    };
+
+    updateSettings();
+
+    filterItems(currentFilterOption, userSettings.sortBy);
+  }, [currentFilterOption]);
+
   const dropdownRef = useRef(null);
 
   const handleSelectOption = (option) => {
-    if (updatable) {
-      filterItems(option, userSettings.sortBy);
-    }
-
-    setSelectedOption(option);
+    setCurrentFilterOption(option);
     setDropdownOpen(false);
-    if (!updatable) {
-      updateCategory(option);
-    }
   };
 
   const handleDeleteClick = async (option) => {
@@ -59,8 +71,8 @@ const FilterSelect = ({
       );
 
       setUserSettings(data.settings);
-      setSelectedOption('all');
-      setFilteredBy('all');
+      setCurrentFilterOption('all');
+      setFilteredBy('all'); //after deleting filter set back to 'all'
       filterItems('all', userSettings.sortBy);
       //here we need to set the filtedBy that is coming from globalContext TODO
     } catch (e) {
@@ -86,7 +98,7 @@ const FilterSelect = ({
   const renderIcon = () => {
     if (isDropdownOpen) {
       return '↑';
-    } else if (selectedOption !== '' && !isDropdownOpen) {
+    } else if (currentFilterOption !== '' && !isDropdownOpen) {
       return '↓';
     } else {
       // return 'Select ↓';
@@ -103,7 +115,7 @@ const FilterSelect = ({
       >
         <div className="flex justify-between">
           <p className="capitalize tracking-wider text-gray-700">
-            {selectedOption}
+            {currentFilterOption}
           </p>
           <span
             className="arrow-icon text-gray-600 tracking-widest flex items-center"

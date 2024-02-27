@@ -5,18 +5,19 @@ import { toast } from 'react-toastify';
 const AppContext = createContext();
 
 export const TodoAppProvider = ({ children }) => {
+  // console.log(children.props.userContext);
   const [items, setItems] = useState([]); //main todos
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [updateItem, setUpdateItem] = useState({}); //for patch route update content
   const [countdownItems, setCountdownItems] = useState([]);
   const [filteredBy, setFilteredBy] = useState('all');
+  const [userContext, setUserContext] = useState(children.props.userContext);
 
-  const updateSortedItems = async (sortBy, id) => {
-    console.log(sortBy, id);
-    console.log('inside update');
+  const updateSortedItems = async (id, sortBy, currentFilterOption) => {
     const { data } = await customFetch.post(`/settings/${id}`, {
       sortBy,
+      currentFilterOption,
     });
 
     setItems(data.sortedOrder);
@@ -33,12 +34,14 @@ export const TodoAppProvider = ({ children }) => {
 
   // working for both
   const updateStatus = async (item, sortBy) => {
+    console.log('updateStatus');
     const { data } = await customFetch.patch(`/items/${item._id}`, {
       isCompleted: !item.isCompleted,
       filteredBy,
       sortBy,
     });
 
+    console.log(data);
     setItems(data.items);
   };
 
@@ -53,6 +56,7 @@ export const TodoAppProvider = ({ children }) => {
   };
 
   const updateContent = async (item, sortBy) => {
+    console.log('updateContent');
     const response = await customFetch.patch(`/items/${item._id}`, {
       ...item,
       filteredBy,
@@ -106,6 +110,7 @@ export const TodoAppProvider = ({ children }) => {
         setFilteredBy,
         updateSortedItems,
         setPinnedItem,
+        userContext: children.props.userContext,
       }}
     >
       {children}

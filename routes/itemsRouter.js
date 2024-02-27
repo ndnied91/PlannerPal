@@ -4,7 +4,7 @@ import { validateIdParam } from '../middleware/validationMiddleware.js'; //middl
 
 import {
   createItem,
-  getAllItems,
+  // getAllItems,
   getFilteredItems, //for filtering
   deleteItem,
   updateItem,
@@ -16,8 +16,8 @@ import {
 import { checkForTestUser } from '../middleware/authMiddleware.js';
 
 router.route('/').post(checkForTestUser, createItem); //creates all items
-router.route('/').get(getAllItems); //get all items
-router.route('/filter/:filteredBy').get(getFilteredItems); //get all items
+// router.route('/').get(getAllItems); //get all items
+router.route('/filter/:filteredBy').post(getFilteredItems); //get all items
 
 router.route('/delete/:id').post(validateIdParam, deleteItem);
 router.route('/deleteMany/delete').post(deleteItems); //this is deleting from the archives page

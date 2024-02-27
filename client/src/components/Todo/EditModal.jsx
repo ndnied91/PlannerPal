@@ -9,16 +9,17 @@ import { parseISO } from 'date-fns';
 import { IoMdClose } from 'react-icons/io';
 
 import FilterSelect from './FilterSelect';
+
 import FormEditModal from './FormEditModal';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const EditModal = ({
   setShowEditModal,
   userSettings,
-  userContext,
   setUserSettings,
   updateItemsAfterEditTodo,
 }) => {
+  const { userContext } = useGlobalContext();
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
@@ -47,7 +48,6 @@ const EditModal = ({
               <FormEditModal
                 updateItemsAfterEditTodo={updateItemsAfterEditTodo}
                 userSettings={userSettings}
-                userContext={userContext}
                 setUserSettings={setUserSettings}
               />
               {/* </OutsideClickHandler> */}
@@ -60,3 +60,5 @@ const EditModal = ({
 };
 
 export default EditModal;
+
+import React from 'react';

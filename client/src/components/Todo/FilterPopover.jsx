@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useGlobalContext } from './todoContext';
 const arrayContainsObject = (array, object) => {
   return array.some((item) =>
     Object.keys(item).every((key) => item[key] === object[key])
   );
 };
 
-const FilterPopover = ({
-  userContext,
-  userSettings,
-  setUserSettings,
-  setAddNewFilter,
-}) => {
+const FilterPopover = ({ userSettings, setUserSettings, setAddNewFilter }) => {
   const [filter, setFilter] = useState('');
+
+  const { userContext } = useGlobalContext();
 
   const handleSubmit = async () => {
     let updatedFilter = [...userSettings.filterOptions];

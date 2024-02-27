@@ -9,13 +9,16 @@ export const getUserSettings = async (req, res) => {
 };
 
 export const setUserSettings = async (req, res) => {
+  console.log('in setUserSettings');
   const createdBy = req.params._id;
+  console.log(req.body);
 
   const { sortBy } = req.body;
   const settings = await Settings.findOneAndUpdate({ createdBy }, req.body, {
     new: true,
   });
 
+  console.log('in setUserSettings', sortBy);
   const sortOptions = {
     'Z-A': '-title',
     'A-Z': 'title',
@@ -24,7 +27,7 @@ export const setUserSettings = async (req, res) => {
 
   const sortKey = sortOptions[sortBy] || sortOptions.newest;
   const sortedOrder = await Item.find({ createdBy }).sort(sortKey);
-  // console.log(sortedOrder);
+  console.log(sortedOrder);
   res.status(StatusCodes.CREATED).json({ sortedOrder, settings });
 };
 

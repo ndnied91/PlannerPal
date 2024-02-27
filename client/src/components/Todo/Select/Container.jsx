@@ -37,7 +37,7 @@ const Container = ({
     <div className="custom-dropdown-container tracking-normal w-24 text-xs text-gray-500 bg-white mt-2">
       <OutsideClickHandler onOutsideClick={() => setShowSortModal(false)}>
         <div
-          className="relative border p-2 cursor-pointer bg-white "
+          className="relative border p-2 cursor-pointer bg-white"
           onClick={() => setDropdownOpen(!isDropdownOpen)}
           ref={dropdownRef}
         >

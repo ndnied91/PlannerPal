@@ -6,16 +6,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { parseISO } from 'date-fns';
 
-import { IoMdClose } from 'react-icons/io';
-import FilterSelect from './FilterSelect';
+import Select from './Select';
 
 const FormEditModal = ({
   updateItemsAfterEditTodo,
   userSettings,
-  userContext,
   setUserSettings,
 }) => {
-  const { updateItem, updateContent } = useGlobalContext();
+  const { updateItem, updateContent, userContext } = useGlobalContext();
 
   const [currentItem, setCurrentItem] = useState({
     currentTitle: updateItem.title,
@@ -107,11 +105,10 @@ const FormEditModal = ({
                     className="pt-3 text-gray-600 text-sm font-semibold pb-2 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   />
 
-                  <FilterSelect
+                  <Select
                     textPrompt={'Select'}
                     className="relative mt-3 p-3 text-sm font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                     userSettings={userSettings}
-                    userContext={userContext}
                     setUserSettings={setUserSettings}
                     updatable={false}
                     updateCategory={updateCategory}

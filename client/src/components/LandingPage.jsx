@@ -37,7 +37,7 @@ export const LandingPage = ({ setShowLoginModal, setShowRegModal }) => {
 
         <span
           onClick={() => setShowLoginModal(true)}
-          className="bg-red-500 relative p-2 rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-400"
+          className="bg-red-500 text-white relative p-2 rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-400"
         >
           Sign in
         </span>

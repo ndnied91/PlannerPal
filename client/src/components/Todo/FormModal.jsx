@@ -10,6 +10,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { useGlobalContext } from './todoContext';
 
 import FilterSelect from './FilterSelect';
+import Select from './Select';
 
 const FormModal = ({
   sendToServer,
@@ -186,14 +187,10 @@ const FormModal = ({
                       </div>
                       {/* here */}
                       <div className="flex items-center">
-                        <FilterSelect
+                        <Select
                           textPrompt={'Select'}
                           className="relative mt-3 p-3 text-sm font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                          showFilterIcon={false}
                           userSettings={userSettings}
-                          userContext={userContext}
-                          setUserSettings={setUserSettings}
-                          updatable={false}
                           updateCategory={updateCategory}
                         />
                       </div>

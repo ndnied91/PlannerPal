@@ -8,14 +8,10 @@ import { BsArrowReturnLeft } from 'react-icons/bs';
 import { useGlobalContext } from './todoContext';
 import { RiPushpinLine, RiUnpinLine } from 'react-icons/ri';
 
-import OutsideClickHandler from 'react-outside-click-handler';
-
 import EditModal from './EditModal';
 import renderer from '../CountdownTimer';
 import Countdown from 'react-countdown';
 import { useState } from 'react';
-import customFetch from '../../utils/customFetch';
-import { useEffect } from 'react';
 
 export const SingleItem = ({
   item,
@@ -23,7 +19,6 @@ export const SingleItem = ({
   style,
   type,
   userSettings,
-  userContext,
   setUserSettings,
   updateItemsAfterEditTodo,
 }) => {
@@ -35,13 +30,12 @@ export const SingleItem = ({
     showEditModal,
     setShowEditModal,
     setUpdateItem,
-    setItems,
-    filteredBy,
     setPinnedItem,
+    userContext,
   } = useGlobalContext();
 
   const itemToUpdate = (item, sortBy) => {
-    console.log(item, sortBy);
+    // console.log(item, sortBy);
     setUpdateItem(item);
     setShowEditModal(true);
   };
@@ -180,7 +174,6 @@ export const SingleItem = ({
             <EditModal
               setShowEditModal={setShowEditModal}
               userSettings={userSettings}
-              userContext={userContext}
               setUserSettings={setUserSettings}
               updateItemsAfterEditTodo={updateItemsAfterEditTodo}
             />

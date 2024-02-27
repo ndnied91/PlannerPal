@@ -13,6 +13,7 @@ const sortOptions = {
 };
 
 export const createItem = async (req, res) => {
+  console.log('create Item func');
   let text = Object.values(req.body)[0].text;
   let type = Object.keys(req.body)[0];
 
@@ -48,11 +49,6 @@ export const createItem = async (req, res) => {
   //sending back ALL items by specific user
 };
 
-export const getAllItems = async (req, res) => {
-  const items = await Item.find({ createdBy: req.user.userId });
-  res.status(StatusCodes.CREATED).json({ items });
-};
-
 export const getFilteredItems = async (req, res) => {
   const sortKey = sortOptions[req.body.sortBy] || sortOptions.newest;
   if (req.params.filteredBy !== 'all') {
@@ -72,6 +68,7 @@ export const getFilteredItems = async (req, res) => {
 };
 
 export const deleteItem = async (req, res) => {
+  console.log('deleteItem func');
   await Item.findByIdAndDelete(req.params.id);
   const userSettings = await Settings.find(req.body.createdBy);
 
@@ -83,6 +80,7 @@ export const deleteItem = async (req, res) => {
 };
 
 export const updateItem = async (req, res) => {
+  console.log('updateItem func');
   await Item.findByIdAndUpdate(
     {
       _id: req.params.id,
@@ -90,22 +88,21 @@ export const updateItem = async (req, res) => {
     req.body
   );
 
-  const sortKey = sortOptions[req.body.sortBy] || sortOptions.newest;
-
   if (req.body.filteredBy === 'all') {
-    const items = await Item.find({ createdBy: req.user.userId }).sort(sortKey);
+    const items = await Item.find({ createdBy: req.user.userId });
     res.status(StatusCodes.CREATED).json({ items });
   } else {
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.body.filteredBy,
-    }).sort(sortKey);
+    });
 
     res.status(StatusCodes.CREATED).json({ items });
   }
 };
 
 export const updatePinnedItem = async (req, res) => {
+  console.log('updatePinnedItem func');
   const { id } = req.params;
   const { isPinned, filteredBy } = req.body;
 

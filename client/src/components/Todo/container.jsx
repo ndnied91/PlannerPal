@@ -19,9 +19,15 @@ import FilterSelect from './FilterSelect.jsx';
 
 import Container from './Select/Container.jsx';
 
-const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
-  const { items, setItems, filteredBy, setFilteredBy, updateSortedItems } =
-    useGlobalContext();
+const MainContainer = ({ userSettings, setUserSettings }) => {
+  const {
+    items,
+    setItems,
+    filteredBy,
+    userContext,
+    setFilteredBy,
+    updateSortedItems,
+  } = useGlobalContext();
 
   const [showCompleted, setShowCompleted] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
@@ -29,7 +35,11 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
   const [addNewFilter, setAddNewFilter] = useState(false);
 
   const updateItemsAfterEditTodo = async () => {
-    updateSortedItems(userSettings.sortBy, userContext._id);
+    updateSortedItems(
+      userContext._id,
+      userSettings.sortBy,
+      userSettings.currentFilterOption
+    );
   };
 
   useEffect(() => {
@@ -52,7 +62,7 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
 
     return (
       <Container
-        placeholderText={'Select an urgency'}
+        placeholderText={''}
         list={options}
         setValue={updateSortFilter}
         defaultValue={sortOptions}
@@ -67,16 +77,20 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
     const { data } = await customFetch.post(`/settings/${userContext._id}`, {
       sortBy,
     });
-    setItems(data.sortedOrder);
+
+    console.log(data);
     setUserSettings(data.settings);
   };
 
   useEffect(() => {
     const setOrder = async () => {
-      const { data } = await customFetch.post(`/settings/${userContext._id}`, {
-        sortBy: userSettings.sortBy,
-      });
-      setItems(data.sortedOrder);
+      const { data } = await customFetch.post(
+        `items/filter/${userSettings?.currentFilterOption}`,
+        {
+          sortBy: userSettings.sortBy,
+        }
+      );
+      setItems(data.items);
     };
 
     setOrder();
@@ -97,7 +111,6 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
                 item={item}
                 style={'flex items-center p-5 bg-white rounded-md shadow-2xl'}
                 userSettings={userSettings}
-                userContext={userContext}
                 setUserSettings={setUserSettings}
                 updateItemsAfterEditTodo={updateItemsAfterEditTodo}
               />
@@ -200,13 +213,19 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
   };
 
   const filterItems = async (value, sortBy) => {
+    // await customFetch.post(`/settings/${userContext._id}`, {
+    //   sortBy,
+    //   currentFilterOption,
+    // });
+
+    // TODO extract to todoContext
     if (value === 'add +') {
       setAddNewFilter(true); //pop input field to add new filter
     } else {
       setFilteredBy(value);
       setAddNewFilter(false);
       try {
-        const { data } = await customFetch.get(`/items/filter/${value}`, {
+        const { data } = await customFetch.post(`/items/filter/${value}`, {
           filter: value,
           sortBy,
         });
@@ -234,8 +253,8 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
               userSettings={userSettings}
               filterItems={filterItems}
               setUserSettings={setUserSettings}
-              userContext={userContext}
               setFilteredBy={setFilteredBy}
+              category={userSettings.currentFilterOption}
             />
           )}
 
@@ -252,7 +271,6 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
               <FilterPopover
                 setAddNewFilter={setAddNewFilter}
                 userSettings={userSettings}
-                userContext={userContext}
                 setUserSettings={setUserSettings}
               />
             </OutsideClickHandler>
@@ -354,7 +372,6 @@ const MainContainer = ({ userContext, userSettings, setUserSettings }) => {
             text={'Add item'}
             userSettings={userSettings}
             setUserSettings={setUserSettings}
-            userContext={userContext}
           />
         </>
       )}

@@ -41,9 +41,9 @@ const App = () => {
         return (
           <TodoAppProvider>
             <Todo
-              userContext={userContext}
               userSettings={userSettings}
               setUserSettings={setUserSettings}
+              userContext={userContext}
             />
           </TodoAppProvider>
         );
