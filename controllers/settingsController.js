@@ -41,7 +41,7 @@ export const setUserFilterSettings = async (req, res) => {
   console.log(totalJobs);
   if (totalJobs > 0) {
     res.status(StatusCodes.FORBIDDEN).json({
-      error: 'unable to remove item as there as todos attached it it',
+      error: 'unable to remove item as there as items attached it it',
     });
   } else {
     const updatedFilterOptions = req.body.filterOptions;

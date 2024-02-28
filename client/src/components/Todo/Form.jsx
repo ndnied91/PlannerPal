@@ -19,8 +19,8 @@ const Form = ({ style, text, type, userSettings }) => {
 
     if (pane === 'countdown') {
       newItemName = {
-        text: e.currentTitle,
-        description: e.description,
+        text: e.currentTitle.toLowerCase(),
+        description: e.description.toLowerCase(),
         dueDate: e.dueDate,
         day: e.day,
         isCountDown: true,
@@ -28,8 +28,8 @@ const Form = ({ style, text, type, userSettings }) => {
       };
     } else {
       newItemName = {
-        text: e.currentTitle,
-        description: e.description,
+        text: e.currentTitle.toLowerCase(),
+        description: e.description.toLowerCase(),
         dueDate: e.dueDate,
         isPriority: e.isPriority,
         day: e.day,

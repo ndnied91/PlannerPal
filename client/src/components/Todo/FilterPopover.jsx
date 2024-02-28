@@ -9,10 +9,10 @@ const arrayContainsObject = (array, object) => {
   );
 };
 
-const FilterPopover = ({ userSettings, setUserSettings, setAddNewFilter }) => {
+const FilterPopover = ({ userSettings, setUserSettings }) => {
   const [filter, setFilter] = useState('');
 
-  const { userContext } = useGlobalContext();
+  const { userContext, setAddNewFilter } = useGlobalContext();
 
   const handleSubmit = async () => {
     let updatedFilter = [...userSettings.filterOptions];
@@ -40,6 +40,7 @@ const FilterPopover = ({ userSettings, setUserSettings, setAddNewFilter }) => {
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         placeholder="Add new filter"
+        maxLength={10}
       />
       <button
         className="bg-black rounded-md ml-2 p-1 shadow-md tracking-wide text-white"

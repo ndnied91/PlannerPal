@@ -7,13 +7,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
 import Select from './Select';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 const FormEditModal = ({
   updateItemsAfterEditTodo,
   userSettings,
   setUserSettings,
 }) => {
-  const { updateItem, updateContent, userContext } = useGlobalContext();
+  const { updateItem, updateContent } = useGlobalContext();
 
   const [currentItem, setCurrentItem] = useState({
     currentTitle: updateItem.title,
@@ -54,7 +55,7 @@ const FormEditModal = ({
   };
 
   return (
-    <div className="bg-white px-4 pb-4 !pt-0 sm:p-6 sm:pb-4 h-fit ">
+    <div className="bg-white px-4 pb-4 !pt-0 sm:p-6 sm:pb-4 h-fit">
       <div className="modalClass">
         <div className="mt-3 text-center sm:mt-0 sm:text-left">
           <div className="mt-2">
@@ -107,7 +108,7 @@ const FormEditModal = ({
 
                   <Select
                     textPrompt={'Select'}
-                    className="relative mt-3 p-3 text-sm font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                    className="relative mt-3 p-3 text-sm font-semibold cursor-pointer w-32  bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                     userSettings={userSettings}
                     setUserSettings={setUserSettings}
                     updatable={false}

@@ -6,10 +6,8 @@ import { useGlobalContext } from './todoContext';
 
 const FilterSelect = ({
   userSettings,
-  filterItems,
   setUserSettings,
   updatable,
-  updateCategory,
   category,
   setFilteredBy,
   className,
@@ -17,8 +15,7 @@ const FilterSelect = ({
 }) => {
   var labelArr = [];
 
-  const { updateSortedItems, userContext, getFilteredItems } =
-    useGlobalContext();
+  const { userContext, getFilteredItems } = useGlobalContext();
 
   if (!updatable) {
     const itemsToRemove = ['add +'];
@@ -35,23 +32,19 @@ const FilterSelect = ({
   );
 
   useEffect(() => {
-    const updateSettings = async () => {
-      await customFetch.post(`/settings/${userContext._id}`, {
-        sortBy: userSettings.sortBy,
-        currentFilterOption,
-      });
-    };
-
-    updateSettings();
-
-    filterItems(currentFilterOption, userSettings.sortBy);
+    getFilteredItems(currentFilterOption, userSettings.sortBy);
   }, [currentFilterOption]);
 
   const dropdownRef = useRef(null);
 
-  const handleSelectOption = (option) => {
+  const handleSelectOption = async (option) => {
     setCurrentFilterOption(option);
     setDropdownOpen(false);
+  };
+
+  const updateSettings = async () => {
+    const { data } = await customFetch.get(`/settings/${userContext._id}`);
+    setUserSettings(data.userSettings[0]);
   };
 
   const handleDeleteClick = async (option) => {
@@ -59,22 +52,15 @@ const FilterSelect = ({
       (item) => item !== option
     );
 
-    //here is where we need to check if there are items that are associated with the filter to be deleted
-
     try {
-      const { data } = await customFetch.post(
-        `/settings/filters/${userContext._id}`,
-        {
-          filterOptions: filtered,
-          toRemove: option,
-        }
-      );
-
-      setUserSettings(data.settings);
+      await customFetch.post(`/settings/filters/${userContext._id}`, {
+        filterOptions: filtered, //new array of filters without the deleted one
+        toRemove: option, //deleted item
+      });
+      getFilteredItems('all', userSettings.sortBy);
+      updateSettings();
       setCurrentFilterOption('all');
       setFilteredBy('all'); //after deleting filter set back to 'all'
-      filterItems('all', userSettings.sortBy);
-      //here we need to set the filtedBy that is coming from globalContext TODO
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.error);
@@ -101,13 +87,12 @@ const FilterSelect = ({
     } else if (currentFilterOption !== '' && !isDropdownOpen) {
       return '↓';
     } else {
-      // return 'Select ↓';
       return `${textPrompt} ↓`;
     }
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider min-w-24 w-fit text-sm font-normal pr-2">
+    <div className="custom-dropdown-container tracking-wider min-w-24 w-32 text-sm font-normal pr-2 ">
       <div
         className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
@@ -118,30 +103,32 @@ const FilterSelect = ({
             {currentFilterOption}
           </p>
           <span
-            className="arrow-icon text-gray-600 tracking-widest flex items-center"
+            className="arrow-icon text-gray-600 tracking-widest flex items-center "
             id="icon"
           >
             {renderIcon()}
           </span>
         </div>
         {isDropdownOpen && (
-          <div className="absolute top-full left-0 w-full border bg-white shadow">
-            {labelArr.map((option) => (
-              <div
-                key={option}
-                className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
-                onClick={() => handleSelectOption(option)}
-              >
-                {option === 'all' || option === 'add +' ? (
-                  <>
-                    <p className="capitalize">{option}</p>
-                    <button
-                      className="px-2 py-1 text-white rounded"
-                      onClick={() => handleDeleteClick(option)}
-                    ></button>
-                  </>
-                ) : (
-                  <>
+          <div className="absolute top-full left-0  border bg-white shadow w-max">
+            {labelArr.map((option) => {
+              return (
+                <div
+                  key={option}
+                  className={`p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 ${
+                    option === 'add +' ? 'font-bold' : 'font-normal'
+                  }`}
+                  onClick={() => handleSelectOption(option)}
+                >
+                  {option === 'all' || option === 'add +' ? (
+                    <>
+                      <p className="capitalize">{option}</p>
+                      <button
+                        className="px-2 py-1 text-white rounded"
+                        onClick={() => handleDeleteClick(option)}
+                      ></button>
+                    </>
+                  ) : (
                     <>
                       <p className="capitalize">{option}</p>
                       {updatable && (
@@ -153,10 +140,10 @@ const FilterSelect = ({
                         </button>
                       )}
                     </>
-                  </>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

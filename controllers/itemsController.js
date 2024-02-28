@@ -51,6 +51,24 @@ export const createItem = async (req, res) => {
 
 export const getFilteredItems = async (req, res) => {
   const sortKey = sortOptions[req.body.sortBy] || sortOptions.newest;
+
+  const response = await Settings.findOneAndUpdate(
+    { createdBy: req.user.userId },
+    req.body,
+    {
+      new: true,
+    }
+  );
+
+  if (!response.filterOptions.includes(req.params.filteredBy)) {
+    //weird edge case
+    const items = await Item.find({
+      createdBy: req.user.userId,
+    }).sort(sortKey);
+
+    res.status(StatusCodes.CREATED).json({ items });
+  }
+
   if (req.params.filteredBy !== 'all') {
     const items = await Item.find({
       createdBy: req.user.userId,
@@ -81,6 +99,9 @@ export const deleteItem = async (req, res) => {
 
 export const updateItem = async (req, res) => {
   console.log('updateItem func');
+
+  const sortKey = sortOptions[req.body.sortBy] || sortOptions.newest;
+
   await Item.findByIdAndUpdate(
     {
       _id: req.params.id,
@@ -89,13 +110,13 @@ export const updateItem = async (req, res) => {
   );
 
   if (req.body.filteredBy === 'all') {
-    const items = await Item.find({ createdBy: req.user.userId });
+    const items = await Item.find({ createdBy: req.user.userId }).sort(sortKey);
     res.status(StatusCodes.CREATED).json({ items });
   } else {
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.body.filteredBy,
-    });
+    }).sort(sortKey);
 
     res.status(StatusCodes.CREATED).json({ items });
   }

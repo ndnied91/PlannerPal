@@ -16,7 +16,7 @@ export const LandingPage = ({ setShowLoginModal, setShowRegModal }) => {
           </p>
 
           <button
-            className="test-btn tracking-widest font-bold text-slate-100 uppercase flex items-center"
+            className="test-btn tracking-widest font-bold text-gray-950 uppercase flex items-center "
             onClick={() => setShowRegModal(true)}
           >
             Get started
@@ -37,7 +37,7 @@ export const LandingPage = ({ setShowLoginModal, setShowRegModal }) => {
 
         <span
           onClick={() => setShowLoginModal(true)}
-          className="bg-red-500 text-white relative p-2 rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-400"
+          className="bg-gray-800 text-white relative flex items-center justify-center rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-200"
         >
           Sign in
         </span>

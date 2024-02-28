@@ -26,13 +26,14 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
     filteredBy,
     userContext,
     setFilteredBy,
+    addNewFilter,
+    setAddNewFilter,
     updateSortedItems,
   } = useGlobalContext();
 
   const [showCompleted, setShowCompleted] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
   const [sortOptions, setSortOptions] = useState();
-  const [addNewFilter, setAddNewFilter] = useState(false);
 
   const updateItemsAfterEditTodo = async () => {
     updateSortedItems(
@@ -95,6 +96,8 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
 
     setOrder();
   }, [userSettings]);
+
+  console.log(items);
 
   const renderSortedArray = (text) => {
     if (text === 'normal') {
@@ -212,30 +215,6 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
     }
   };
 
-  const filterItems = async (value, sortBy) => {
-    // await customFetch.post(`/settings/${userContext._id}`, {
-    //   sortBy,
-    //   currentFilterOption,
-    // });
-
-    // TODO extract to todoContext
-    if (value === 'add +') {
-      setAddNewFilter(true); //pop input field to add new filter
-    } else {
-      setFilteredBy(value);
-      setAddNewFilter(false);
-      try {
-        const { data } = await customFetch.post(`/items/filter/${value}`, {
-          filter: value,
-          sortBy,
-        });
-        setItems(data.items);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
-
   return (
     <section className="pr-2 pt-5">
       <div className="flex mb-5">
@@ -251,7 +230,6 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
               showFilterIcon={true}
               updatable={true}
               userSettings={userSettings}
-              filterItems={filterItems}
               setUserSettings={setUserSettings}
               setFilteredBy={setFilteredBy}
               category={userSettings.currentFilterOption}
@@ -269,7 +247,6 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
               }}
             >
               <FilterPopover
-                setAddNewFilter={setAddNewFilter}
                 userSettings={userSettings}
                 setUserSettings={setUserSettings}
               />
@@ -348,7 +325,6 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
                 </div>
               </div>
             </section>
-
             {isCountDown() && (
               <section>
                 <div className="bg-slate-200 rounded-xl pt-3 h-full min-w-[28rem]">

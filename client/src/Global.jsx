@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { LandingPage } from './components/LandingPage';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 const Example = () => {
   const [showRegModal, setShowRegModal] = useState(false);
@@ -20,12 +21,6 @@ const Example = () => {
 
   return (
     <div className="w-screen h-screen z-10 absolute">
-      {/* {showRegModal ? (
-        <RegisterModal
-          setShowRegModal={setShowRegModal}
-          renderSignIn={renderSignIn}
-        />
-      ) : null} */}
       <div className={`${showRegModal ? 'opacity-100' : 'opacity-0'}`}>
         <RegisterModal
           showRegModal={showRegModal}

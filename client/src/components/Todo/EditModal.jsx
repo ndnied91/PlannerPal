@@ -1,14 +1,8 @@
-import { useEffect, useState } from 'react';
 import { useGlobalContext } from './todoContext';
 
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { parseISO } from 'date-fns';
-
 import { IoMdClose } from 'react-icons/io';
-
-import FilterSelect from './FilterSelect';
 
 import FormEditModal from './FormEditModal';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -22,7 +16,7 @@ const EditModal = ({
   const { userContext } = useGlobalContext();
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-30 transition-opacity z-10"></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex items-center justify-center p-4 text-center sm:items-center sm:p-0 h-full">
           <div className="transform  bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center overflow-visible w-[32rem]">

@@ -46,8 +46,8 @@
 
 
 .test-btn {
-  box-shadow: 0 4px 30px #2b5592;
-  background: #2b5592;
+  box-shadow: 0 4px 30px #DF5A5A;
+  background: #EC6D68;
   padding: 12px 30px;
   border-radius: 4px;
   outline: none;
@@ -60,8 +60,8 @@
 .test-btn:hover {
   color: black;
   cursor: pointer;
-  box-shadow: 0 4px 40px #ffd900;
-  background: #ffd900;
+  box-shadow: 0 4px 40px #FE8D85;
+  background: #FE8D85;
   transform: scale(1.05)
 }
 

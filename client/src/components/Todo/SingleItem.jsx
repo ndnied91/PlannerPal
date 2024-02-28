@@ -7,6 +7,7 @@ import {
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { useGlobalContext } from './todoContext';
 import { RiPushpinLine, RiUnpinLine } from 'react-icons/ri';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 import EditModal from './EditModal';
 import renderer from '../CountdownTimer';
@@ -31,17 +32,14 @@ export const SingleItem = ({
     setShowEditModal,
     setUpdateItem,
     setPinnedItem,
-    userContext,
   } = useGlobalContext();
 
   const itemToUpdate = (item, sortBy) => {
-    // console.log(item, sortBy);
     setUpdateItem(item);
     setShowEditModal(true);
   };
 
   const convertDate = (date) => {
-    // return new Date(date).toString().slice(0, 15);
     return new Date(date).toLocaleDateString('en-US');
   };
 
@@ -195,6 +193,7 @@ export const SingleItem = ({
             />
           )}
         </div>
+
         <button
           className={`btn remove-btn ${!archivedList ? 'hidden' : null}`}
           onClick={() => removeItem(item)}

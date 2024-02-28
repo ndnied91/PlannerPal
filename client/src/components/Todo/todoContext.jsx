@@ -12,9 +12,10 @@ export const TodoAppProvider = ({ children }) => {
   const [updateItem, setUpdateItem] = useState({}); //for patch route update content
   const [countdownItems, setCountdownItems] = useState([]);
   const [filteredBy, setFilteredBy] = useState('all');
-  const [userContext, setUserContext] = useState(children.props.userContext);
+  const [addNewFilter, setAddNewFilter] = useState(false); //adding new filters to filter select
 
   const updateSortedItems = async (id, sortBy, currentFilterOption) => {
+    console.log('in updateSortedItems');
     const { data } = await customFetch.post(`/settings/${id}`, {
       sortBy,
       currentFilterOption,
@@ -41,7 +42,6 @@ export const TodoAppProvider = ({ children }) => {
       sortBy,
     });
 
-    console.log(data);
     setItems(data.items);
   };
 
@@ -89,6 +89,26 @@ export const TodoAppProvider = ({ children }) => {
     setItems(data.items);
   };
 
+  const getFilteredItems = async (currentFilterOption, sortBy) => {
+    console.log('in getFilteredItems');
+    console.log(currentFilterOption, sortBy);
+    if (currentFilterOption === 'add +') {
+      setAddNewFilter(true); //pop input field to add new filter
+    } else {
+      const { data } = await customFetch.post(
+        `items/filter/${currentFilterOption}`,
+        {
+          currentFilterOption,
+          sortBy,
+        }
+      );
+
+      console.log(data.items);
+      setItems(data.items);
+      console.log(data.items);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -110,7 +130,10 @@ export const TodoAppProvider = ({ children }) => {
         setFilteredBy,
         updateSortedItems,
         setPinnedItem,
+        getFilteredItems,
         userContext: children.props.userContext,
+        addNewFilter,
+        setAddNewFilter,
       }}
     >
       {children}

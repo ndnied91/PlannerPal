@@ -41,7 +41,6 @@ const Select = ({
     } else if (selectedOption !== '' && !isDropdownOpen) {
       return '↓';
     } else {
-      // return 'Select ↓';
       return `${textPrompt} ↓`;
     }
   };
@@ -66,15 +65,19 @@ const Select = ({
         </div>
         {isDropdownOpen && (
           <div className="absolute top-full left-0 w-full border bg-white shadow">
-            {labelArr.map((option) => (
-              <div
-                key={option}
-                className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
-                onClick={() => handleSelectOption(option)}
-              >
-                <p className="capitalize">{option}</p>
-              </div>
-            ))}
+            {labelArr.map((option) => {
+              if (option !== 'add +') {
+                return (
+                  <div
+                    key={option}
+                    className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
+                    onClick={() => handleSelectOption(option)}
+                  >
+                    <p className="capitalize">{option}</p>
+                  </div>
+                );
+              }
+            })}
           </div>
         )}
       </div>
