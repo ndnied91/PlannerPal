@@ -28,6 +28,17 @@ const SingleNote = ({
     }
   };
 
+  const shortenTitle = (title) => {
+    return title.props.children.length > 10
+      ? `${title.props.children.substring(0, 10)}...`
+      : title.props.children;
+  };
+
+  const renderTitle = (title) => {
+    // return parse(title);
+    return shortenTitle(parse(title));
+  };
+
   const handleClick = () => {
     setIsDisabled(false);
     setSelectedNote({ _id, body, title });
@@ -42,7 +53,7 @@ const SingleNote = ({
     >
       <div className="flex items-center w-full justify-between">
         <div className="flex flex-col">
-          <span className="capitalize text-sm">{parse(title)}</span>
+          <span className="capitalize text-sm">{renderTitle(title)}</span>
           <p className="text-xs text-gray-700">
             {new Date(createdAt).toLocaleTimeString('en-US')}{' '}
           </p>

@@ -44,6 +44,7 @@ const container = ({ userContext }) => {
         createdBy: userContext._id,
       });
       setNotes(data.items);
+      toast.success('Item saved successfully!');
     } catch (e) {
       toast.error(e.response.data.msg || 'Demo Only!');
     }

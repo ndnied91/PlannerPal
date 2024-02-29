@@ -65,6 +65,14 @@ export const SingleItem = ({
     }
   };
 
+  const renderDescTrash = (desc) => {
+    if (!readMore && desc.length > 25) {
+      return `${item.description.substring(0, 25)}...`;
+    } else {
+      return desc;
+    }
+  };
+
   const renderDescExpand = (desc) => {
     if (desc.length < 100) return;
     if (readMore) {
@@ -86,7 +94,7 @@ export const SingleItem = ({
           <div className="font-bold capitalize">
             <p className="">{item.title}</p>
             <p className="text-sm capitalize text-gray-900 font-normal">
-              {item?.category !== 'all' ? item?.category : null}
+              {item?.category}
             </p>
           </div>
 
@@ -101,8 +109,8 @@ export const SingleItem = ({
           </p>
 
           {!type === 'trash' ? null : (
-            <div className="font-light pt-4 capitalize text-xs text-gray-900">
-              {renderDesc(item.description)}
+            <div className="font-light pt-4 capitalize text-xs text-gray-900 mb-3">
+              {renderDescTrash(item.description)}
 
               <button
                 className="info-btn"
@@ -121,8 +129,9 @@ export const SingleItem = ({
         className={`${
           type !== 'trash'
             ? 'flex flex-col self-center gap-4'
-            : 'flex justify-between flex-row-reverse'
+            : 'sticky b-0 w-full flex justify-between flex-row-reverse'
         } `}
+        id="dssss"
       >
         {!archivedList ? (
           <>

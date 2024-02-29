@@ -11,4 +11,5 @@
 
 form > div.block > div:nth-child(2){
   height: 55px !important;
+  margin-bottom: 3px;
 }

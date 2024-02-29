@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { LandingPage } from './components/LandingPage';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
-import OutsideClickHandler from 'react-outside-click-handler';
 
 const Example = () => {
   const [showRegModal, setShowRegModal] = useState(false);

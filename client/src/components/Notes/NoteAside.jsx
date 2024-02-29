@@ -7,19 +7,11 @@ const NoteAside = ({
   setSelectedNote,
   selectedNote,
   setNotes,
-  updatePosition,
   isDisabled,
   setIsDisabled,
   setContent,
   setNoteTitle,
 }) => {
-  // useEffect(() => {
-  //   console.log(
-  //     'triggered only on a page load OR a new note OR when item is deleted'
-  //   );
-  //   updatePosition(notes);
-  // }, [notes.length]);
-
   return (
     <div className="bg-slate-100 min-w-48 h-[85vh] max-h-fit overflow-scroll">
       <button
@@ -40,13 +32,13 @@ const NoteAside = ({
             }, // and one new item at the end
           ]);
           //
-          setSelectedNote('');
+          setSelectedNote(null);
           setIsDisabled(true);
           setContent('');
           setNoteTitle('');
         }}
       >
-        <p className=" text-xl pl-2 ">
+        <p className="text-xl pl-2 ">
           <FaPlus />
         </p>
       </button>

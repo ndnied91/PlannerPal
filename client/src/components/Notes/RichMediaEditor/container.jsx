@@ -46,6 +46,12 @@ const container = ({
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <section>
       {loading && <Spinner />}
@@ -54,20 +60,23 @@ const container = ({
         className={`${setLoading ? 'opacity-100 duration-300' : 'opacity-0'}`}
       >
         {/* title */}
-        <div className={` ${!loading ? 'block' : 'hidden'}`}>
+        <div className={`${!loading ? 'block' : 'hidden'}`}>
           <Editor
             apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
             value={noteTitle}
             id="title"
             init={{
+              selector: 'textarea',
+              inline_boundaries: false,
               required: true,
-              width: 1200,
-              height: 40,
               toolbar: false,
               menubar: false,
+              selector: 'textarea',
+              inline_boundaries_selector: 'span',
               placeholder: 'Add title..',
             }}
             onEditorChange={(newText) => setNoteTitle(newText)}
+            onKeyDown={handleKeyPress}
           />
           {/* title */}
 
@@ -89,7 +98,9 @@ const container = ({
 
         <div
           onClick={saveItem}
-          className={`cursor-pointer bg-slate-300 rounded-md w-fit p-3 mt-1`}
+          className={`cursor-pointer bg-slate-300 rounded-md w-fit p-3 mt-1 ${
+            !loading ? 'block' : 'hidden'
+          }`}
         >
           Submit
         </div>

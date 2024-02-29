@@ -97,8 +97,6 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
     setOrder();
   }, [userSettings]);
 
-  console.log(items);
-
   const renderSortedArray = (text) => {
     if (text === 'normal') {
       return items.map((item) => {
