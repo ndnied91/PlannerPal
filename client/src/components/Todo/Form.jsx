@@ -11,7 +11,6 @@ const Form = ({ style, text, type, userSettings }) => {
     filteredBy,
     updateSortedItems,
     userContext,
-    setItems,
   } = useGlobalContext();
 
   const sendToServer = async (e, pane) => {
@@ -54,8 +53,6 @@ const Form = ({ style, text, type, userSettings }) => {
           filteredBy,
         });
 
-        // setItems(data.items);
-
         updateSortedItems(
           userContext._id,
           userSettings.sortBy,
@@ -63,6 +60,7 @@ const Form = ({ style, text, type, userSettings }) => {
         );
 
         setShowModal(false);
+
         if (pane === 'countdown') {
           toast.success('Countdown Created!');
         } else {

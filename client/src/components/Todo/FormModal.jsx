@@ -10,6 +10,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { useGlobalContext } from './todoContext';
 
 import Select from './Select';
+import { useEffect } from 'react';
 
 const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
   const { filteredBy } = useGlobalContext();
@@ -23,6 +24,17 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
     isPriority: false,
   });
 
+  useEffect(() => {
+    if (!showModal) {
+      setDate('');
+      setCurrentItem({
+        currentTitle: '',
+        description: '',
+        isAddedToCal: userSettings?.isAddToCal,
+        isPriority: false,
+      });
+    }
+  }, []);
   const [currentPane, setCurrentPane] = useState('todo');
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -54,12 +66,6 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
       toast.error('Date must be selected!');
     } else {
       sendToServer(currentItem, currentPane);
-      setCurrentItem({
-        currentTitle: '',
-        description: '',
-        isAddedToCal: userSettings?.isAddToCal,
-        isPriority: false,
-      });
     }
   };
 
@@ -91,6 +97,13 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
           <OutsideClickHandler
             onOutsideClick={() => {
               setShowModal(false);
+              setDate('');
+              setCurrentItem({
+                currentTitle: '',
+                description: '',
+                isAddedToCal: userSettings?.isAddToCal,
+                isPriority: false,
+              });
             }}
           >
             <div className="relative transform overflow-visible  bg-slate-00 text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center w-[32rem]">
@@ -169,7 +182,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                           selected={date}
                           required
                           placeholderText="Due date.."
-                          className="pt-3 text-gray-600 text-sm font-semibold pb-2 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                          className="text-gray-600 text-sm font-semibold pb-3 pt-3 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                           onChange={(date) => setDate(date)}
                           dateFormat="MMMM d, yyyy h:mmaa"
                           open={isDatePickerOpen}

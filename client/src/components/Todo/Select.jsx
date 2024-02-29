@@ -12,7 +12,7 @@ const Select = ({
   labelArr = userSettings.filterOptions.map((item) => item);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(category || '');
+  const [selectedOption, setSelectedOption] = useState(category || 'all');
   const dropdownRef = useRef(null);
 
   const handleSelectOption = (option) => {
@@ -46,7 +46,7 @@ const Select = ({
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider min-w-24 w-fit text-sm font-normal pr-2">
+    <div className="custom-dropdown-container tracking-wider text-sm font-normal pr-2">
       <div
         className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
@@ -57,7 +57,7 @@ const Select = ({
             {selectedOption}
           </p>
           <span
-            className="arrow-icon text-gray-600 tracking-widest flex items-center"
+            className="arrow-icon text-gray-600 tracking-widest flex items-center "
             id="icon"
           >
             {renderIcon()}
@@ -70,7 +70,7 @@ const Select = ({
                 return (
                   <div
                     key={option}
-                    className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
+                    className="p-2  items-center cursor-pointer hover:bg-gray-100 "
                     onClick={() => handleSelectOption(option)}
                   >
                     <p className="capitalize">{option}</p>

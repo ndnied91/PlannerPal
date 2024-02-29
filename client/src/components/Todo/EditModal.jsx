@@ -16,7 +16,7 @@ const EditModal = ({
   const { userContext } = useGlobalContext();
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-30 transition-opacity z-10"></div>
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity z-10"></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex items-center justify-center p-4 text-center sm:items-center sm:p-0 h-full">
           <div className="transform  bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center overflow-visible w-[32rem]">
@@ -34,17 +34,11 @@ const EditModal = ({
             </div>
 
             <div>
-              {/* <OutsideClickHandler
-                onOutsideClick={() => {
-                  setShowEditModal(false);
-                }}
-              > */}
               <FormEditModal
                 updateItemsAfterEditTodo={updateItemsAfterEditTodo}
                 userSettings={userSettings}
                 setUserSettings={setUserSettings}
               />
-              {/* </OutsideClickHandler> */}
             </div>
           </div>
         </div>
