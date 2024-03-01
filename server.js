@@ -20,7 +20,9 @@ import notesRouter from './routes/notesRouter.js';
 import settingsRouter from './routes/settingsRouter.js';
 
 import { authenticateUser } from './middleware/authMiddleware.js';
-
+// for searching
+import Item from './models/ItemsModel.js';
+// for searching
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, './client/dist')));
 

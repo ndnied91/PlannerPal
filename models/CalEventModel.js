@@ -10,6 +10,8 @@ const CalEventSchema = new mongoose.Schema({
   calCode: String,
 });
 
+CalEventSchema.index({ title: 'text' });
+
 export default mongoose.model('CalEvent', CalEventSchema);
 
 //Cal event is the name of this Model

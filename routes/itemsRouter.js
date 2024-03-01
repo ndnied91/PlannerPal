@@ -11,9 +11,12 @@ import {
   updatePinnedItem,
   updateTodoEventFromCal,
   deleteItems,
+  searchItems,
 } from '../controllers/itemsController.js';
 
 import { checkForTestUser } from '../middleware/authMiddleware.js';
+
+router.route('/search').get(searchItems); //search all items
 
 router.route('/').post(checkForTestUser, createItem); //creates all items
 // router.route('/').get(getAllItems); //get all items

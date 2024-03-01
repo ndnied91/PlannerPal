@@ -15,6 +15,8 @@ const ItemsSchema = new mongoose.Schema({
   category: String,
 });
 
+ItemsSchema.index({ title: 'text' });
+
 export default mongoose.model('Item', ItemsSchema);
 
 //User is the name of this Model

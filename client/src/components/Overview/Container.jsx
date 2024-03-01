@@ -53,9 +53,9 @@ const container = ({ userSettings, userContext }) => {
               <p> Manage your tasks and deadlines in one place</p>
             </div>
 
-            <p className="w-3/4 rounded-lg text-end" id="aaa">
+            <div className="w-3/4 rounded-lg text-end" id="aaa">
               <SearchBox />
-            </p>
+            </div>
           </div>
           <div className="bg-slate-100 rounded-lg shadow-sm p-6  child">
             <SmallCalendarOverview

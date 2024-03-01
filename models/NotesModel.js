@@ -7,6 +7,8 @@ const NotesSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+NotesSchema.index({ title: 'text' });
+
 export default mongoose.model('Note', NotesSchema);
 
 //User is the name of this Model

@@ -13,6 +13,7 @@ export const TodoAppProvider = ({ children }) => {
   const [countdownItems, setCountdownItems] = useState([]);
   const [filteredBy, setFilteredBy] = useState('all');
   const [addNewFilter, setAddNewFilter] = useState(false); //adding new filters to filter select
+  // const [allUserContent, setAllUserContent] = useState([]); // for search functionality
 
   const updateSortedItems = async (id, sortBy, currentFilterOption) => {
     console.log('in updateSortedItems');

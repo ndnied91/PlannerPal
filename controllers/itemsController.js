@@ -1,15 +1,29 @@
 import 'express-async-errors';
 import Item from '../models/ItemsModel.js';
+import Notes from '../models/NotesModel.js';
+import CalEvent from '../models/CalEventModel.js';
+
 import Settings from '../models/SettingsModel.js';
-
 import { StatusCodes } from 'http-status-codes';
-
 import { ObjectId } from 'mongodb';
 
 const sortOptions = {
   'Z-A': '-title',
   'A-Z': 'title',
   'Due date': 'dueDate',
+};
+
+export const searchItems = async (req, res) => {
+  const searchTerm = req.query.term;
+  const itemsResults = await Item.find({ $text: { $search: searchTerm } });
+  const notesResults = await Notes.find({ $text: { $search: searchTerm } });
+  const calEventsResults = await CalEvent.find({
+    $text: { $search: searchTerm },
+  });
+
+  res
+    .status(StatusCodes.OK)
+    .json({ itemsResults, notesResults, calEventsResults });
 };
 
 export const createItem = async (req, res) => {
