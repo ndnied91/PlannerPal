@@ -1,8 +1,8 @@
 import React from 'react';
 
-const PriorityTodoOverview = ({ items, setShowModal, setEvent }) => {
+const PriorityTodoOverview = ({ items, setItemsShowModal, setEvent }) => {
   const showEventModal = (i) => {
-    setShowModal(true);
+    setItemsShowModal(true);
     setEvent(i);
   };
 

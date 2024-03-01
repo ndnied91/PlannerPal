@@ -13,13 +13,21 @@ const sortOptions = {
   'Due date': 'dueDate',
 };
 
+async function searchDatabase(db, searchTerm) {
+  try {
+    const regex = new RegExp(searchTerm, 'i');
+    const result = await db.find({ title: { $regex: regex } });
+    return result;
+  } catch (error) {
+    console.error('Error searching database:', error);
+  }
+}
+
 export const searchItems = async (req, res) => {
   const searchTerm = req.query.term;
-  const itemsResults = await Item.find({ $text: { $search: searchTerm } });
-  const notesResults = await Notes.find({ $text: { $search: searchTerm } });
-  const calEventsResults = await CalEvent.find({
-    $text: { $search: searchTerm },
-  });
+  const itemsResults = await searchDatabase(Item, searchTerm);
+  const notesResults = await searchDatabase(Notes, searchTerm);
+  const calEventsResults = await searchDatabase(CalEvent, searchTerm);
 
   res
     .status(StatusCodes.OK)

@@ -9,15 +9,17 @@ import { useGlobalContext } from '../Todo/todoContext';
 import PinnedOverview from './PinnedOverview';
 
 import OverviewModal from './OverviewModal';
+import OverviewNotesModal from './OverviewNotesModal';
 
 import SearchBox from '../SearchBox/index';
 
-const container = ({ userSettings, userContext }) => {
+const container = ({ userSettings, userContext, setUserSettings }) => {
   const [previewEvents, setPreviewEvents] = useState([]); //events set for preview
   const [popupPosition, setPopupPosition] = useState(''); //when hovering over small cal
   const { items, setItems } = useGlobalContext();
 
-  const [showModal, setShowModal] = useState(false);
+  const [showItemsModal, setItemsShowModal] = useState(false); //todos
+  const [showNotesModal, setShowNotesModal] = useState(true); //notes
   const [event, setEvent] = useState('');
 
   useEffect(() => {
@@ -40,6 +42,18 @@ const container = ({ userSettings, userContext }) => {
     }
   }, [items]);
 
+  const renderItem = (pane, event) => {
+    if (pane === 'todo') {
+      setItemsShowModal(true);
+      setEvent(event);
+    } else if (pane === 'notes') {
+      setShowNotesModal(true); // Correct way to set showNotesModal state
+      setEvent(event);
+    } else if (pane === 'calendar') {
+      console.log('cal');
+    }
+  };
+
   return (
     <div className="ml-28 flex flex-wrap p-5">
       <section className="flex justify-between flex-wrap">
@@ -54,7 +68,7 @@ const container = ({ userSettings, userContext }) => {
             </div>
 
             <div className="w-3/4 rounded-lg text-end" id="aaa">
-              <SearchBox />
+              <SearchBox renderItem={renderItem} />
             </div>
           </div>
           <div className="bg-slate-100 rounded-lg shadow-sm p-6  child">
@@ -74,7 +88,7 @@ const container = ({ userSettings, userContext }) => {
             <UrgentTodoOverview
               items={items}
               userSettings={userSettings}
-              setShowModal={setShowModal}
+              setItemsShowModal={setItemsShowModal}
               setEvent={setEvent}
             />
           </div>
@@ -82,7 +96,7 @@ const container = ({ userSettings, userContext }) => {
             <PriorityTodoOverview
               items={items}
               userSettings={userSettings}
-              setShowModal={setShowModal}
+              setItemsShowModal={setItemsShowModal}
               setEvent={setEvent}
             />
           </div>
@@ -90,19 +104,24 @@ const container = ({ userSettings, userContext }) => {
             <PinnedOverview
               items={items}
               userSettings={userSettings}
-              setShowModal={setShowModal}
+              setItemsShowModal={setItemsShowModal}
               setEvent={setEvent}
             />
           </div>
         </section>
       </section>
 
-      {showModal && (
-        <OverviewModal
-          setShowModal={setShowModal}
-          showModal={showModal}
+      {console.log(event)}
+
+      {showNotesModal && (
+        <OverviewNotesModal
+          setShowNotesModal={setShowNotesModal}
           event={event}
         />
+      )}
+
+      {showItemsModal && (
+        <OverviewModal setItemsShowModal={setItemsShowModal} event={event} />
       )}
     </div>
   );

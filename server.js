@@ -42,10 +42,6 @@ app.use('/api/settings', authenticateUser, settingsRouter); //for all settings o
 
 app.use(errorHandlerMiddleware); //THIS IS WHAT RENDERS THE ERRORS NICELY
 
-app.get('/', (req, res) => {
-  res.send('hi there');
-});
-
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'not found' });
 });

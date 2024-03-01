@@ -1,8 +1,8 @@
 import React from 'react';
 
-const PinnedOverview = ({ items, setShowModal, setEvent }) => {
+const PinnedOverview = ({ items, setItemsShowModal, setEvent }) => {
   const showEventModal = (i) => {
-    setShowModal(true);
+    setItemsShowModal(true);
     setEvent(i);
   };
 

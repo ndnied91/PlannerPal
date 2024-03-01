@@ -1,7 +1,9 @@
+import React, { useEffect, useState } from 'react';
+
 const UrgentTodoOverview = ({
   items,
   userSettings,
-  setShowModal,
+  setItemsShowModal,
   setEvent,
 }) => {
   const convertTimeDeadLine = (date) => new Date(date).getTime() - Date.now();
@@ -11,7 +13,7 @@ const UrgentTodoOverview = ({
   };
 
   const showEventModal = (i) => {
-    setShowModal(true);
+    setItemsShowModal(true);
     setEvent(i);
   };
 

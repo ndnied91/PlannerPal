@@ -5,16 +5,15 @@ import { GrSearch } from 'react-icons/gr';
 import { FaGripLinesVertical } from 'react-icons/fa';
 import { RxCross2 } from 'react-icons/rx';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { useGlobalContext } from '../Todo/todoContext';
+import OverviewModal from '../Overview/OverviewModal';
 
-const SearchBox = () => {
+const SearchBox = ({ renderItem }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchItemsResults, setSearchItemsResults] = useState([]);
   const [searchNotesResults, setSearchNotesResults] = useState([]);
   const [searchCalEventsResults, setSearchCalEventsResults] = useState([]);
-
-  const handleClick = () => {
-    console.log('clicked');
-  };
+  const [showModal, setShowModal] = useState(true);
 
   const handleSearch = async () => {
     try {
@@ -28,6 +27,19 @@ const SearchBox = () => {
       console.error('Error searching:', error);
     }
   };
+
+  // const renderItem = async (pane, event) => {
+  // }
+
+  // try {
+  //   const { data } = await customFetch.post(`/settings/${userContext._id}`, {
+  //     selectedPane: pane,
+  //   });
+  //   setUserSettings(data.settings);
+  // } catch (e) {
+  //   // setUserSettings(null);
+  // }
+  // };
 
   return (
     <div className="relative">
@@ -84,7 +96,9 @@ const SearchBox = () => {
                 key={index}
                 className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
               >
-                <p className="pr-2">{result.title}</p>
+                <p className="pr-2" onClick={() => renderItem('todo', result)}>
+                  {result.title}
+                </p>
               </div>
             ))}
 
@@ -97,7 +111,12 @@ const SearchBox = () => {
                 key={index}
                 className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
               >
-                <div className="pr-2">{parse(result.title)}</div>
+                <div
+                  className="pr-2"
+                  onClick={() => renderItem('notes', result)}
+                >
+                  {parse(result.title)}
+                </div>
               </div>
             ))}
 
@@ -113,7 +132,12 @@ const SearchBox = () => {
                 className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
               >
                 {searchCalEventsResults.length > 0 ? (
-                  <p className="pr-2">{result.title}</p>
+                  <p
+                    className="pr-2"
+                    onClick={() => renderItem('calendar', result)}
+                  >
+                    {result.title}
+                  </p>
                 ) : null}
               </div>
             ))}

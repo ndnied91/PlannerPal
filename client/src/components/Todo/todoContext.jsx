@@ -13,7 +13,7 @@ export const TodoAppProvider = ({ children }) => {
   const [countdownItems, setCountdownItems] = useState([]);
   const [filteredBy, setFilteredBy] = useState('all');
   const [addNewFilter, setAddNewFilter] = useState(false); //adding new filters to filter select
-  // const [allUserContent, setAllUserContent] = useState([]); // for search functionality
+  const [allUserContent, setAllUserContent] = useState([]); // for search fubctui
 
   const updateSortedItems = async (id, sortBy, currentFilterOption) => {
     console.log('in updateSortedItems');
@@ -104,9 +104,7 @@ export const TodoAppProvider = ({ children }) => {
         }
       );
 
-      console.log(data.items);
       setItems(data.items);
-      console.log(data.items);
     }
   };
 

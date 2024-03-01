@@ -362,3 +362,11 @@ form h4 {
 .child {
   flex: 1 0 27%; 
 }
+
+
+
+
+
+.fixed.inset-0.z-10.w-screen.overflow-y-auto > div > div > div:nth-child(2) > div > div > div:nth-child(2){
+  height: 55px !important;
+}

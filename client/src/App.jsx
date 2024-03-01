@@ -62,7 +62,11 @@ const App = () => {
         return (
           <TodoAppProvider userSettings={userSettings}>
             <ContextWrapper>
-              <Overview userContext={userContext} userSettings={userSettings} />
+              <Overview
+                userContext={userContext}
+                userSettings={userSettings}
+                setUserSettings={setUserSettings}
+              />
             </ContextWrapper>
           </TodoAppProvider>
         );
