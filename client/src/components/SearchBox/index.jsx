@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import parse from 'html-react-parser';
 import customFetch from '../../utils/customFetch';
 import { GrSearch } from 'react-icons/gr';
 import { FaGripLinesVertical } from 'react-icons/fa';
 import { RxCross2 } from 'react-icons/rx';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { useGlobalContext } from '../Todo/todoContext';
-import OverviewModal from '../Overview/OverviewModal';
 
 const SearchBox = ({ renderItem }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,19 +25,6 @@ const SearchBox = ({ renderItem }) => {
       console.error('Error searching:', error);
     }
   };
-
-  // const renderItem = async (pane, event) => {
-  // }
-
-  // try {
-  //   const { data } = await customFetch.post(`/settings/${userContext._id}`, {
-  //     selectedPane: pane,
-  //   });
-  //   setUserSettings(data.settings);
-  // } catch (e) {
-  //   // setUserSettings(null);
-  // }
-  // };
 
   return (
     <div className="relative">

@@ -3,39 +3,48 @@ import { Editor } from '@tinymce/tinymce-react';
 import { toast } from 'react-toastify';
 import '../Notes/RichMediaEditor/style.css';
 import { FaRegTrashAlt } from 'react-icons/fa';
-const SingleNoteOverview = ({ item }) => {
-  // console.log(item);
+import customFetch from '../../utils/customFetch';
+const SingleNoteOverview = ({ setShowNotesModal, item }) => {
+  const [body, setBody] = useState(item.body);
+  const [title, setTitle] = useState(item.title);
 
-  // let body = '<p>lets see if it works on search!</p>';
-  let createdAt = '2024-02-29T04:26:54.949Z';
-  let createdBy = '659cb2843a62d13541e7be94';
-  // let title = '<p>Test Note</p>';
+  const saveItem = async () => {
+    if (title === undefined && body === undefined) {
+      toast.error('Title and body can not be empty');
+    } else if (title === undefined) {
+      toast.error('Title can not be empty');
+    } else if (body === undefined) {
+      toast.error('Body can not be empty');
+    } else {
+      try {
+        const response = await customFetch.post('/notes', {
+          createdBy: item.createdBy,
+          _id: item._id,
+          body, //update from modal
+          title, //update from modal
+        });
 
-  const [body, setBody] = useState('<p>lets see if it works on search!</p>');
-  const [title, setTitle] = useState('<p>Test Note</p>');
+        toast.success('Item updated successfully!');
+        setShowNotesModal(false);
+      } catch (e) {
+        toast.error(e.response.data.msg || 'Demo Only!');
+      }
+    }
+  };
 
-  // const {title, body, createdBy, createdAt} = item;
+  const deleteItem = async () => {
+    try {
+      await customFetch.delete(`notes/${item._id}`);
+      toast.success('Item updated deleted!');
+      setShowNotesModal(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleKeyPress = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
-    }
-  };
-
-  const handleChange = (content) => {
-    setContent(content);
-  };
-
-  const saveItem = () => {
-    if (title === undefined && content === undefined) {
-      toast.error('Title and body can not be empty');
-    } else if (title === undefined) {
-      toast.error('Title can not be empty');
-    } else if (content === undefined) {
-      toast.error('Body can not be empty');
-    } else {
-      // updateNotesArr({ _id, title: title, content });
-      // setIsDisabled(false);
     }
   };
 
@@ -55,7 +64,7 @@ const SingleNoteOverview = ({ item }) => {
             menubar: false,
             inline_boundaries_selector: 'span',
           }}
-          onEditorChange={(newText) => setTitle(newText)}
+          onEditorChange={(e) => setTitle(e)}
           onKeyDown={handleKeyPress}
         />
         <Editor
@@ -66,7 +75,7 @@ const SingleNoteOverview = ({ item }) => {
             menubar: false,
             placeholder: 'Add text here..',
           }}
-          onEditorChange={handleChange}
+          onEditorChange={(e) => setBody(e)}
         />
       </div>
       <div className="float-right p-2 flex items-center">
@@ -76,7 +85,7 @@ const SingleNoteOverview = ({ item }) => {
         >
           Update
         </div>
-        <div onClick={saveItem} className={`cursor-pointer p-3 mt-1 `}>
+        <div onClick={deleteItem} className={`cursor-pointer p-3 mt-1 `}>
           <FaRegTrashAlt className="text-2xl" />
         </div>
       </div>

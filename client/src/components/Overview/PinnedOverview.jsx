@@ -30,7 +30,7 @@ const PinnedOverview = ({ items, setItemsShowModal, setEvent }) => {
   };
 
   return (
-    <section className="p-5 h-96 ">
+    <section className="p-5 h-80">
       <div className="font-bold text-lg w-[20rem]">Pinned Items</div>
       {pinnedItems()}
     </section>

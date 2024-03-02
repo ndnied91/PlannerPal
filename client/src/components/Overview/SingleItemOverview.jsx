@@ -8,8 +8,15 @@ import renderer from '../CountdownTimer';
 import Countdown from 'react-countdown';
 import { useState } from 'react';
 import { useGlobalContext } from '../Todo/todoContext';
+import Select from '../Todo/Select';
 
-export const SingleItemOverview = ({ item, style, setShowModal }) => {
+export const SingleItemOverview = ({
+  item,
+  style,
+  setItemsShowModal,
+  userSettings,
+  setUserSettings,
+}) => {
   const { removeItem, updateStatus, updateContent } = useGlobalContext();
 
   const [task, setTask] = useState({
@@ -17,13 +24,18 @@ export const SingleItemOverview = ({ item, style, setShowModal }) => {
     description: item.description,
   });
 
+  const [category, setCategory] = useState(item.category);
+  console.log(category);
+
+  const updateCategory = (e) => setCategory(e);
+
   const [date, setDate] = useState(item.dueDate);
 
   const handleChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const obj = {
@@ -31,10 +43,12 @@ export const SingleItemOverview = ({ item, style, setShowModal }) => {
       title: task.title,
       description: task.description,
       dueDate: date,
+      category,
+      calCode: item.calCode,
     };
 
     updateContent(obj);
-    setShowModal(false);
+    setItemsShowModal(false);
   };
 
   return (
@@ -60,6 +74,16 @@ export const SingleItemOverview = ({ item, style, setShowModal }) => {
               className="cursor-pointer pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
             />
 
+            <Select
+              textPrompt={'Select'}
+              className="relative mt-3 p-3 text-sm font-semibold cursor-pointer w-32  bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              userSettings={userSettings}
+              setUserSettings={setUserSettings}
+              updatable={false}
+              updateCategory={updateCategory}
+              category={category}
+            />
+
             <div className="font-light pt-4 capitalize text-xs text-gray-900">
               <textarea
                 className="cursor-pointer pt-3 text-gray-600 text-sm font-semibold pb-2  border-2 border-gray-200 min-w-60 !w-96  focus:outline-none focus:ring-0 focus:border-blue-500"
@@ -82,7 +106,7 @@ export const SingleItemOverview = ({ item, style, setShowModal }) => {
       <div className={`flex flex-col self-center gap-4 `}>
         <Countdown date={item.dueDate} renderer={renderer} />
 
-        <div className={`flex justify-end w-full`}>
+        <div className={`flex justify-end w-full items-center`}>
           <>
             <button
               className={`btn remove-btn }`}
@@ -98,7 +122,7 @@ export const SingleItemOverview = ({ item, style, setShowModal }) => {
             }`}
             onClick={() => {
               updateStatus(item);
-              setShowModal(false);
+              setItemsShowModal(false);
             }}
           />
         </div>

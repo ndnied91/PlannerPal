@@ -64,6 +64,7 @@ export const TodoAppProvider = ({ children }) => {
       sortBy,
     });
 
+    console.log(item);
     if (item.calCode) {
       try {
         await customFetch.patch(`/cal/update/${item.calCode}`, {

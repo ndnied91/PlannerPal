@@ -10,6 +10,7 @@ import PinnedOverview from './PinnedOverview';
 
 import OverviewModal from './OverviewModal';
 import OverviewNotesModal from './OverviewNotesModal';
+import OverviewCalModal from './OverviewCalModal';
 
 import SearchBox from '../SearchBox/index';
 
@@ -19,7 +20,8 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
   const { items, setItems } = useGlobalContext();
 
   const [showItemsModal, setItemsShowModal] = useState(false); //todos
-  const [showNotesModal, setShowNotesModal] = useState(true); //notes
+  const [showNotesModal, setShowNotesModal] = useState(false); //notes
+  const [showCalModal, setShowCalModal] = useState(false); //notes
   const [event, setEvent] = useState('');
 
   useEffect(() => {
@@ -51,6 +53,8 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
       setEvent(event);
     } else if (pane === 'calendar') {
       console.log('cal');
+      setShowCalModal(true); // Correct way to set showNotesModal state
+      setEvent(event);
     }
   };
 
@@ -111,8 +115,6 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
         </section>
       </section>
 
-      {console.log(event)}
-
       {showNotesModal && (
         <OverviewNotesModal
           setShowNotesModal={setShowNotesModal}
@@ -121,7 +123,16 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
       )}
 
       {showItemsModal && (
-        <OverviewModal setItemsShowModal={setItemsShowModal} event={event} />
+        <OverviewModal
+          setItemsShowModal={setItemsShowModal}
+          event={event}
+          userSettings={userSettings}
+          setUserSettings={setUserSettings}
+        />
+      )}
+
+      {showCalModal && (
+        <OverviewCalModal setShowCalModal={setShowCalModal} event={event} />
       )}
     </div>
   );

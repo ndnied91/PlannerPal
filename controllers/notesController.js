@@ -8,6 +8,8 @@ import {
 import { response } from 'express';
 
 export const createNote = async (req, res) => {
+  console.log('in createNote');
+  console.log(req.body);
   const { _id, body, title, createdBy } = req.body;
 
   const note = await Note.find({ _id });
