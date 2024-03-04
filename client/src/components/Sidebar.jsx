@@ -8,6 +8,7 @@ import { FaGear } from 'react-icons/fa6';
 import { CiLogin } from 'react-icons/ci';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
+import { toast } from 'react-toastify';
 
 const Options = ({ setShowSettingsModal }) => {
   const { userSettings, userContext, setUserSettings, setContextUser } =
@@ -47,14 +48,20 @@ const Options = ({ setShowSettingsModal }) => {
       });
 
       setUserSettings(data.settings);
-    } catch (e) {}
+    } catch (e) {
+      toast.error('Error occurred updating settings, please try again');
+    }
   };
 
   const logoutUser = async () => {
     if (userContext) {
-      await customFetch.post('/auth/logout');
-      setContextUser('');
-      window.location.reload();
+      try {
+        await customFetch.post('/auth/logout');
+        setContextUser('');
+        window.location.reload();
+      } catch (e) {
+        toast.error('Error occurred, please try again');
+      }
     }
   };
 

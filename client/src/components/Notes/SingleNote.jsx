@@ -3,6 +3,7 @@ import React from 'react';
 import parse from 'html-react-parser';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
+import { toast } from 'react-toastify';
 
 const SingleNote = ({
   _id,
@@ -24,7 +25,7 @@ const SingleNote = ({
       setContent('');
       setNoteTitle('');
     } catch (e) {
-      console.log(e);
+      toast.error(e.response.data.msg);
     }
   };
 

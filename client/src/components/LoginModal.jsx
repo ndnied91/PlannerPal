@@ -20,7 +20,6 @@ const Modal = ({ setShowLoginModal, renderRegister, showLoginModal }) => {
     e.preventDefault();
     try {
       const { data } = await customFetch.post('/auth/login', user);
-
       setContextUser(data.user);
       window.location.reload();
       setShowLoginModal(false);

@@ -11,7 +11,6 @@ export const AppProvider = ({ children }) => {
     const getData = async () => {
       try {
         const { data } = await customFetch.get(`/settings/${userContext._id}`);
-
         setUserSettings(...data.userSettings);
       } catch (e) {
         setUserSettings(null);

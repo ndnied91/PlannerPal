@@ -1,14 +1,13 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import React, { useContext, useEffect, useState } from 'react';
-
+import { toast } from 'react-toastify';
 import GlobalContext from '../Calendar/context/GlobalContext';
 import customFetch from '../../utils/customFetch';
 
 const labelsClasses = ['indigo', 'gray', 'green', 'blue', 'red', 'purple'];
 
 export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
-  console.log(selectedEvent);
   const { daySelected } = useContext(GlobalContext);
 
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '');
@@ -50,22 +49,23 @@ export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
 
     if (selectedEvent.calCode) {
       //patch
-      await customFetch.patch(
-        `items/update/${selectedEvent.calCode}`,
-        calendarEvent
-      );
+      try {
+        await customFetch.patch(
+          `items/update/${selectedEvent.calCode}`,
+          calendarEvent
+        );
+      } catch (e) {
+        console.log(e);
+        toast.error('Error occurred with updating event, please try again');
+      }
+
       setShowCalModal(false);
     }
 
     try {
-      const response = await customFetch.patch(
-        `cal/${calendarEvent._id}`,
-        calendarEvent
-      );
-
-      console.log(response);
+      await customFetch.patch(`cal/${calendarEvent._id}`, calendarEvent);
     } catch (e) {
-      console.log(e);
+      toast.error(e.response.data.msg);
     }
 
     setShowCalModal(false);
@@ -88,11 +88,17 @@ export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
             <div>
               <span
                 onClick={async () => {
-                  const { data } = await customFetch.delete(
-                    `cal/${selectedEvent._id}`
-                  );
+                  try {
+                    const { data } = await customFetch.delete(
+                      `cal/${selectedEvent._id}`
+                    );
 
-                  setShowCalModal(false);
+                    setShowCalModal(false);
+                  } catch (e) {
+                    toast.error(
+                      e.response.data.msg || 'Error occurred, please try again'
+                    );
+                  }
                 }}
                 className="material-icons-outlined text-gray-400 cursor-pointer"
               >

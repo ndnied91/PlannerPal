@@ -50,22 +50,29 @@ const EventModal = ({ userContext }) => {
 
     if (selectedEvent && isCalCode) {
       //patch
-      await customFetch.patch(
-        `items/update/${selectedEvent.calCode}`,
-        calendarEvent
-      );
-      setShowEventModal(false);
+      try {
+        await customFetch.patch(
+          `items/update/${selectedEvent.calCode}`,
+          calendarEvent
+        );
+        setShowEventModal(false);
+      } catch (e) {
+        toast.error('Error occurred, please try again');
+      }
     }
 
     if (selectedEvent) {
       //dont todo as well
-      const { data } = await customFetch.patch(
-        `cal/${calendarEvent._id}`,
-        calendarEvent
-      );
-
-      setSavedEvents([...data.items]);
-      setShowEventModal(false);
+      try {
+        const { data } = await customFetch.patch(
+          `cal/${calendarEvent._id}`,
+          calendarEvent
+        );
+        setSavedEvents([...data.items]);
+        setShowEventModal(false);
+      } catch (e) {
+        toast.error('Error occurred, please try again');
+      }
     } else {
       //create
       // if its a new event
@@ -96,12 +103,16 @@ const EventModal = ({ userContext }) => {
             {selectedEvent && (
               <span
                 onClick={async () => {
-                  const { data } = await customFetch.delete(
-                    `cal/${selectedEvent._id}`
-                  );
+                  try {
+                    const { data } = await customFetch.delete(
+                      `cal/${selectedEvent._id}`
+                    );
 
-                  setSavedEvents([...data.items]);
-                  setShowEventModal(false);
+                    setSavedEvents([...data.items]);
+                    setShowEventModal(false);
+                  } catch (e) {
+                    toast.error('Error occurred, please try again');
+                  }
                 }}
                 className="material-icons-outlined text-gray-400 cursor-pointer"
               >

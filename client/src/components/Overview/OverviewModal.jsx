@@ -8,8 +8,6 @@ const OverviewModal = ({
   userSettings,
   setUserSettings,
 }) => {
-  console.log('here');
-  console.log(event);
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>

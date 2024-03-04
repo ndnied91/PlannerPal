@@ -13,10 +13,10 @@ const sortOptions = {
   'Due date': 'dueDate',
 };
 
-async function searchDatabase(db, searchTerm) {
+async function searchDatabase(db, searchTerm, createdBy) {
   try {
     const regex = new RegExp(searchTerm, 'i');
-    const result = await db.find({ title: { $regex: regex } });
+    const result = await db.find({ title: { $regex: regex }, createdBy });
     return result;
   } catch (error) {
     console.error('Error searching database:', error);
@@ -24,10 +24,15 @@ async function searchDatabase(db, searchTerm) {
 }
 
 export const searchItems = async (req, res) => {
+  const createdBy = req.user.userId;
   const searchTerm = req.query.term;
-  const itemsResults = await searchDatabase(Item, searchTerm);
-  const notesResults = await searchDatabase(Notes, searchTerm);
-  const calEventsResults = await searchDatabase(CalEvent, searchTerm);
+  const itemsResults = await searchDatabase(Item, searchTerm, createdBy);
+  const notesResults = await searchDatabase(Notes, searchTerm, createdBy);
+  const calEventsResults = await searchDatabase(
+    CalEvent,
+    searchTerm,
+    createdBy
+  );
 
   res
     .status(StatusCodes.OK)

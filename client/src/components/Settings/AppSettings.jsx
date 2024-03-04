@@ -33,22 +33,34 @@ const AppSettings = ({
       isAddToCal,
     };
 
-    const res = await customFetch.post(`/settings/${userContext._id}`, options);
-    setUserSettings(res.data.settings);
+    try {
+      const res = await customFetch.post(
+        `/settings/${userContext._id}`,
+        options
+      );
+      setUserSettings(res.data.settings);
 
-    if (res.status === 201) {
-      toast.success('Settings updated!');
+      if (res.status === 201) {
+        toast.success('Settings updated!');
 
-      setShowSettingsModal(false);
-    } else {
-      toast.error('Please try again!');
+        setShowSettingsModal(false);
+      } else {
+        toast.error('Please try again!');
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error('Error occurred, please try again');
     }
   };
 
   useEffect(() => {
     const getSettings = async () => {
-      const { data } = await customFetch.get(`/settings/${userContext._id}`);
-      setUserSettings(data.userSettings[0]);
+      try {
+        const { data } = await customFetch.get(`/settings/${userContext._id}`);
+        setUserSettings(data.userSettings[0]);
+      } catch (e) {
+        toast.error('Unable to get settings, please try again');
+      }
     };
 
     getSettings();

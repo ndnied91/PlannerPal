@@ -11,7 +11,6 @@ const SearchBox = ({ renderItem }) => {
   const [searchItemsResults, setSearchItemsResults] = useState([]);
   const [searchNotesResults, setSearchNotesResults] = useState([]);
   const [searchCalEventsResults, setSearchCalEventsResults] = useState([]);
-  const [showModal, setShowModal] = useState(true);
 
   const handleSearch = async () => {
     try {
@@ -40,10 +39,9 @@ const SearchBox = ({ renderItem }) => {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(event) => {
-              console.log('enter pressed');
-              event.keyCode === 13 ? handleSearch() : null;
-            }}
+            onKeyDown={(event) =>
+              event.keyCode === 13 ? handleSearch() : null
+            }
             placeholder="Search..."
             className="w-full px-4 py-2 border-none focus:ring-0"
           />
@@ -60,7 +58,7 @@ const SearchBox = ({ renderItem }) => {
             <span>
               <FaGripLinesVertical className="text-2xl text-gray-300" />{' '}
             </span>
-            <button onClick={handleSearch} className="pr-2">
+            <button onClick={handleSearch} className="pr-2 ">
               <span>
                 <GrSearch className="text-2xl" />{' '}
               </span>
@@ -80,10 +78,9 @@ const SearchBox = ({ renderItem }) => {
               <div
                 key={index}
                 className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                onClick={() => renderItem('todo', result)}
               >
-                <p className="pr-2" onClick={() => renderItem('todo', result)}>
-                  {result.title}
-                </p>
+                <p className="pr-2">{result.title}</p>
               </div>
             ))}
 
@@ -95,13 +92,9 @@ const SearchBox = ({ renderItem }) => {
               <div
                 key={index}
                 className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                onClick={() => renderItem('notes', result)}
               >
-                <div
-                  className="pr-2"
-                  onClick={() => renderItem('notes', result)}
-                >
-                  {parse(result.title)}
-                </div>
+                <div className="pr-2">{parse(result.title)}</div>
               </div>
             ))}
 
@@ -114,15 +107,11 @@ const SearchBox = ({ renderItem }) => {
             {searchCalEventsResults.map((result, index) => (
               <div
                 key={index}
-                className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                className="capitalize p-2 border-b border-gray-200  cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                onClick={() => renderItem('calendar', result)}
               >
                 {searchCalEventsResults.length > 0 ? (
-                  <p
-                    className="pr-2"
-                    onClick={() => renderItem('calendar', result)}
-                  >
-                    {result.title}
-                  </p>
+                  <p className="pr-2">{result.title}</p>
                 ) : null}
               </div>
             ))}

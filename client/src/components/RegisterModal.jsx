@@ -9,9 +9,9 @@ const RegisterModal = ({ setShowRegModal, renderSignIn, showRegModal }) => {
   const { setContextUser } = useGlobalContext();
 
   const [user, setUser] = useState({
-    name: 'Jim Bob',
-    email: 'testing@test.com',
-    password: '12345678',
+    name: '',
+    email: '',
+    password: '',
   });
 
   const handleChange = (e) => {
@@ -21,7 +21,7 @@ const RegisterModal = ({ setShowRegModal, renderSignIn, showRegModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await customFetch.post('/auth/register', user);
+      await customFetch.post('/auth/register', user);
       setContextUser(user);
       setShowRegModal(false);
       toast.success('Registration Successful!');
@@ -42,7 +42,6 @@ const RegisterModal = ({ setShowRegModal, renderSignIn, showRegModal }) => {
 
     try {
       const { data } = await customFetch.post('/auth/login', user);
-
       setContextUser(data.user);
       window.location.reload();
     } catch (error) {

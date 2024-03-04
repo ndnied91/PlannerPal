@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import GlobalContext from './GlobalContext';
 import dayjs from 'dayjs';
 import customFetch from '../../../utils/customFetch';
+import { toast } from 'react-toastify';
 
 var data = [];
 
@@ -32,6 +33,7 @@ export default function ContextWrapper(props) {
         setSavedEvents(response.data.items);
       } catch (e) {
         console.log(e);
+        toast.error('Unable to fetch items, please try again');
       }
     };
 

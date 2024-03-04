@@ -13,6 +13,7 @@ import OverviewNotesModal from './OverviewNotesModal';
 import OverviewCalModal from './OverviewCalModal';
 
 import SearchBox from '../SearchBox/index';
+import { toast } from 'react-toastify';
 
 const container = ({ userSettings, userContext, setUserSettings }) => {
   const [previewEvents, setPreviewEvents] = useState([]); //events set for preview
@@ -36,6 +37,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
         setItems(data.sortedOrder);
       } catch (e) {
         console.log(e);
+        toast.error('Error occurred, please try again');
       }
     };
 
@@ -52,7 +54,6 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
       setShowNotesModal(true); // Correct way to set showNotesModal state
       setEvent(event);
     } else if (pane === 'calendar') {
-      console.log('cal');
       setShowCalModal(true); // Correct way to set showNotesModal state
       setEvent(event);
     }

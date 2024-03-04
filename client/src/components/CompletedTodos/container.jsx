@@ -22,12 +22,17 @@ const container = ({ items, userSettings, setItems }) => {
   const updateDeleted = async (filter) => {
     const deleteItems = filter.map((obj) => obj._id);
 
-    const { data } = await customFetch.post('/items/deleteMany/delete', {
-      ids: deleteItems,
-    });
+    try {
+      const { data } = await customFetch.post('/items/deleteMany/delete', {
+        ids: deleteItems,
+      });
 
-    setItems(data.items);
-    toast(data.message);
+      setItems(data.items);
+      toast.success(data.message);
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.msg);
+    }
   };
 
   return (

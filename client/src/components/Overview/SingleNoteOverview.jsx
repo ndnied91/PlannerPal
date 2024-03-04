@@ -17,7 +17,7 @@ const SingleNoteOverview = ({ setShowNotesModal, item }) => {
       toast.error('Body can not be empty');
     } else {
       try {
-        const response = await customFetch.post('/notes', {
+        await customFetch.post('/notes', {
           createdBy: item.createdBy,
           _id: item._id,
           body, //update from modal
@@ -38,7 +38,7 @@ const SingleNoteOverview = ({ setShowNotesModal, item }) => {
       toast.success('Item updated deleted!');
       setShowNotesModal(false);
     } catch (e) {
-      console.log(e);
+      toast.error(e.response.data.msg || 'Demo Only!');
     }
   };
 

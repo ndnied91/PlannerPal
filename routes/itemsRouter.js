@@ -20,16 +20,18 @@ router.route('/search').get(searchItems); //search all items
 router.route('/').post(checkForTestUser, createItem); //creates all items
 router.route('/filter/:filteredBy').post(getFilteredItems); //get all items
 
-router.route('/delete/:id').post(validateIdParam, deleteItem);
-router.route('/deleteMany/delete').post(deleteItems); //this is deleting from the archives page
+router.route('/delete/:id').post(validateIdParam, checkForTestUser, deleteItem);
+router.route('/deleteMany/delete').post(checkForTestUser, deleteItems); //this is deleting from the archives page
 
 router
   .route('/pinned/:id')
   .patch(validateIdParam, checkForTestUser, updatePinnedItem);
 
-router.route('/:id').patch(validateIdParam, updateItem);
+router.route('/:id').patch(validateIdParam, checkForTestUser, updateItem);
 // .delete(validateIdParam, deleteItem);
 
-router.route('/update/:calCode').patch(updateTodoEventFromCal);
+router
+  .route('/update/:calCode')
+  .patch(checkForTestUser, updateTodoEventFromCal);
 
 export default router;

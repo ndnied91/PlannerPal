@@ -71,7 +71,6 @@ const container = ({
               required: true,
               toolbar: false,
               menubar: false,
-              selector: 'textarea',
               inline_boundaries_selector: 'span',
               placeholder: 'Add title..',
             }}

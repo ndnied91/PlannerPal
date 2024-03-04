@@ -33,6 +33,7 @@ const FilterSelect = ({
 
   useEffect(() => {
     getFilteredItems(currentFilterOption, userSettings.sortBy);
+    setFilteredBy(currentFilterOption);
   }, [currentFilterOption]);
 
   const dropdownRef = useRef(null);
@@ -62,7 +63,6 @@ const FilterSelect = ({
       setCurrentFilterOption('all');
       setFilteredBy('all'); //after deleting filter set back to 'all'
     } catch (e) {
-      console.log(e);
       toast.error(e.response.data.error);
     }
   };
@@ -111,39 +111,65 @@ const FilterSelect = ({
         </div>
         {isDropdownOpen && (
           <div className="absolute top-full left-0  border bg-white shadow w-max">
-            {labelArr.map((option) => {
-              return (
-                <div
-                  key={option}
-                  className={`p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 ${
-                    option === 'add +' ? 'font-bold' : 'font-normal'
-                  }`}
-                  onClick={() => handleSelectOption(option)}
-                >
-                  {option === 'all' || option === 'add +' ? (
-                    <>
+            <div>
+              {labelArr.map((option) => {
+                if (option === 'add +') {
+                  return (
+                    <div
+                      key={option}
+                      className={`p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 ${
+                        option === 'add +' ? 'font-bold' : 'font-normal'
+                      }`}
+                      onClick={() => handleSelectOption(option)}
+                    >
+                      {' '}
                       <p className="capitalize">{option}</p>
                       <button
                         className="px-2 py-1 text-white rounded"
                         onClick={() => handleDeleteClick(option)}
                       ></button>
-                    </>
-                  ) : (
-                    <>
-                      <p className="capitalize">{option}</p>
-                      {updatable && (
-                        <button
-                          className="px-2 py-1 text-gray-900 hover:scale-110 duration-300 rounded"
-                          onClick={() => handleDeleteClick(option)}
-                        >
-                          <FaRegTrashAlt />
-                        </button>
+                    </div>
+                  );
+                }
+              })}
+            </div>
+            <div>
+              {labelArr.map((option) => {
+                if (option !== 'add +') {
+                  return (
+                    <div
+                      key={option}
+                      className={`p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 ${
+                        option === 'add +' ? 'font-bold' : 'font-normal'
+                      }`}
+                      onClick={() => handleSelectOption(option)}
+                    >
+                      {option === 'all' || option === 'add +' ? (
+                        <>
+                          <p className="capitalize">{option}</p>
+                          <button
+                            className="px-2 py-1 text-white rounded"
+                            onClick={() => handleDeleteClick(option)}
+                          ></button>
+                        </>
+                      ) : (
+                        <>
+                          <p className="capitalize">{option}</p>
+                          {updatable && (
+                            <button
+                              className="px-2 py-1 text-gray-900 hover:scale-110 duration-300 rounded"
+                              onClick={() => handleDeleteClick(option)}
+                            >
+                              <FaRegTrashAlt />
+                            </button>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </div>
-              );
-            })}
+                    </div>
+                  );
+                }
+              })}
+            </div>
           </div>
         )}
       </div>

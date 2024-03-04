@@ -45,13 +45,25 @@ const Form = ({ style, text, type, userSettings }) => {
     } else {
       try {
         if (pane !== 'countdown' && e.isAddedToCal) {
-          await customFetch.post('/cal', newItemName);
+          try {
+            await customFetch.post('/cal', newItemName);
+          } catch (e) {
+            toast.error(
+              e.response.data.msg || 'Error occurred, please try again'
+            );
+          }
         }
 
-        await customFetch.post('/items', {
-          todo: newItemName,
-          filteredBy,
-        });
+        try {
+          await customFetch.post('/items', {
+            todo: newItemName,
+            filteredBy,
+          });
+        } catch (e) {
+          toast.error(
+            e.response.data.msg || 'Error occurred, please try again'
+          );
+        }
 
         updateSortedItems(
           userContext._id,
@@ -67,7 +79,6 @@ const Form = ({ style, text, type, userSettings }) => {
           toast.success('Todo Created!');
         }
       } catch (error) {
-        console.log(error);
         toast.error(error?.response?.data?.msg || 'error creating!');
         return error;
       }

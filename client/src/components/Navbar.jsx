@@ -3,6 +3,7 @@ import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
 import LogoutContainer from './LogoutComponent';
 import customFetch from '../utils/customFetch';
+import { toast } from 'react-toastify';
 
 const Navbar = ({ setShowSettingsModal, userContext, setContextUser }) => {
   const [showRegModal, setShowRegModal] = useState(false);
@@ -30,9 +31,13 @@ const Navbar = ({ setShowSettingsModal, userContext, setContextUser }) => {
 
   const logoutUser = async () => {
     if (userContext) {
-      await customFetch.post('/auth/logout');
-      setContextUser('');
-      window.location.reload();
+      try {
+        await customFetch.post('/auth/logout');
+        setContextUser('');
+        window.location.reload();
+      } catch (e) {
+        toast.error('Error occurred, please try again');
+      }
     }
   };
 

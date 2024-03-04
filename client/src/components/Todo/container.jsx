@@ -18,6 +18,7 @@ import {
 import FilterSelect from './FilterSelect.jsx';
 
 import Container from './Select/Container.jsx';
+import { toast } from 'react-toastify';
 
 const MainContainer = ({ userSettings, setUserSettings }) => {
   const {
@@ -74,24 +75,33 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
   };
 
   const updateSortFilter = async (sortBy) => {
-    setSortOptions(sortBy);
-    const { data } = await customFetch.post(`/settings/${userContext._id}`, {
-      sortBy,
-    });
+    try {
+      setSortOptions(sortBy);
+      const { data } = await customFetch.post(`/settings/${userContext._id}`, {
+        sortBy,
+      });
 
-    console.log(data);
-    setUserSettings(data.settings);
+      setUserSettings(data.settings);
+    } catch (e) {
+      console.log(e);
+      toast.error('Error occurred, please try again');
+    }
   };
 
   useEffect(() => {
     const setOrder = async () => {
-      const { data } = await customFetch.post(
-        `items/filter/${userSettings?.currentFilterOption}`,
-        {
-          sortBy: userSettings.sortBy,
-        }
-      );
-      setItems(data.items);
+      try {
+        const { data } = await customFetch.post(
+          `items/filter/${userSettings?.currentFilterOption}`,
+          {
+            sortBy: userSettings.sortBy,
+          }
+        );
+        setItems(data.items);
+      } catch (e) {
+        console.log(e);
+        toast.error('Error occurred, please try again');
+      }
     };
 
     setOrder();

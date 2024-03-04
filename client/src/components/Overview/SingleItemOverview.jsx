@@ -25,7 +25,6 @@ export const SingleItemOverview = ({
   });
 
   const [category, setCategory] = useState(item.category);
-  console.log(category);
 
   const updateCategory = (e) => setCategory(e);
 
@@ -58,7 +57,7 @@ export const SingleItemOverview = ({
           <div>
             <div className="font-bold capitalize">
               <input
-                className="cursor-pointer pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="cursor-pointer capitalize pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
                 name="title"
                 required
                 value={task.title}

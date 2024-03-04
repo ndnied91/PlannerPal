@@ -23,13 +23,21 @@ const FilterPopover = ({ userSettings, setUserSettings }) => {
     } else {
       updatedFilter.push(newItem);
       //send request to update settings to specific user
-      const { data } = await customFetch.post(`/settings/${userContext._id}`, {
-        filterOptions: updatedFilter,
-      });
+      try {
+        const { data } = await customFetch.post(
+          `/settings/${userContext._id}`,
+          {
+            filterOptions: updatedFilter,
+          }
+        );
 
-      setUserSettings(data.settings);
-      setAddNewFilter(false);
-      setFilter('');
+        setUserSettings(data.settings);
+        setAddNewFilter(false);
+        setFilter('');
+      } catch (e) {
+        console.log(e);
+        toast.error('Error occurred, please try again');
+      }
     }
   };
 
