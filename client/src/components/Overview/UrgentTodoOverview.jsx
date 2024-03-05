@@ -17,8 +17,6 @@ const UrgentTodoOverview = ({
     setEvent(i);
   };
 
-  // };
-
   const filterNdSortItems = () => {
     const tempArr = [];
     items.forEach((item) => {

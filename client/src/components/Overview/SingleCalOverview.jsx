@@ -1,4 +1,5 @@
 import DatePicker from 'react-datepicker';
+import { parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -11,6 +12,10 @@ export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
   const { daySelected } = useContext(GlobalContext);
 
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '');
+
+  const [date, setDate] = useState(new Date(selectedEvent.day).toISOString());
+  console.log(new Date(date).getTime()); //format for cal
+  console.log(date); //format for items
 
   const [description, setDescription] = useState(
     selectedEvent ? selectedEvent.description : ''
@@ -43,7 +48,7 @@ export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
       title,
       description,
       label: selectedLabel,
-      day: selectedEvent.day,
+      day: new Date(date).getTime(),
       _id: selectedEvent._id,
     };
 
@@ -64,6 +69,7 @@ export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
 
     try {
       await customFetch.patch(`cal/${calendarEvent._id}`, calendarEvent);
+      toast.success('Event updated!');
     } catch (e) {
       toast.error(e.response.data.msg);
     }
@@ -89,9 +95,7 @@ export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
               <span
                 onClick={async () => {
                   try {
-                    const { data } = await customFetch.delete(
-                      `cal/${selectedEvent._id}`
-                    );
+                    await customFetch.delete(`cal/${selectedEvent._id}`);
 
                     setShowCalModal(false);
                   } catch (e) {
@@ -127,7 +131,15 @@ export const SingleItemOverview = ({ selectedEvent, setShowCalModal }) => {
               <span className="material-icons-outlined text-gray-400">
                 schedule
               </span>
-              <p>{daySelected.format('dddd, MMMM DD')}</p>
+
+              <DatePicker
+                showTimeSelect
+                selected={parseISO(date)}
+                onChange={(date) => setDate(date.toISOString())}
+                dateFormat="MMMM d, yyyy h:mmaa"
+                className="cursor-pointer pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
+              />
+
               <span className="material-icons-outlined text-gray-400 ">
                 segment
               </span>

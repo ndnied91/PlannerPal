@@ -138,13 +138,14 @@ export const updateItem = async (req, res) => {
 
   if (req.body.filteredBy === 'all') {
     const items = await Item.find({ createdBy: req.user.userId }).sort(sortKey);
+    console.log(items);
     res.status(StatusCodes.CREATED).json({ items });
   } else {
     const items = await Item.find({
       createdBy: req.user.userId,
       category: req.body.filteredBy,
     }).sort(sortKey);
-
+    console.log(items);
     res.status(StatusCodes.CREATED).json({ items });
   }
 };
@@ -177,12 +178,14 @@ export const updatePinnedItem = async (req, res) => {
 };
 
 export const updateTodoEventFromCal = async (req, res) => {
-  const item = await Item.updateOne(
+  console.log('in updateTodoEventFromCal');
+  await Item.updateOne(
     { calCode: req.params.calCode },
     {
       $set: {
         description: req.body.description,
         title: req.body.title,
+        dueDate: new Date(req.body.day).toISOString(),
       },
     }
   );

@@ -38,12 +38,14 @@ export const TodoAppProvider = ({ children }) => {
 
   // working for both
   const updateStatus = async (item, sortBy) => {
+    console.log('in updateStatus');
     try {
       const { data } = await customFetch.patch(`/items/${item._id}`, {
         isCompleted: !item.isCompleted,
         filteredBy,
         sortBy,
       });
+
       setItems(data.items);
     } catch (e) {
       toast.error(e.response.data.msg || 'Error occurred, please try again');
@@ -65,12 +67,17 @@ export const TodoAppProvider = ({ children }) => {
   };
 
   const updateContent = async (item, sortBy) => {
+    console.log('in updateContent');
     try {
-      await customFetch.patch(`/items/${item._id}`, {
+      const { data } = await customFetch.patch(`/items/${item._id}`, {
         ...item,
         filteredBy,
         sortBy,
       });
+
+      console.log('data from updateContent');
+      console.log(data);
+      setItems(data.items);
     } catch (e) {
       toast.error(e.response.data.msg || 'Error occurred, please try again');
     }
@@ -95,6 +102,7 @@ export const TodoAppProvider = ({ children }) => {
   };
 
   const setPinnedItem = async (item, sortBy) => {
+    console.log('in setPinnedItem');
     try {
       const { data } = await customFetch.patch(`/items/pinned/${item._id}`, {
         isPinned: !item.isPinned,
@@ -108,6 +116,7 @@ export const TodoAppProvider = ({ children }) => {
   };
 
   const getFilteredItems = async (currentFilterOption, sortBy) => {
+    console.log('in getFilteredItems');
     if (currentFilterOption === 'add +') {
       setAddNewFilter(true); //pop input field to add new filter
     } else {
@@ -119,7 +128,8 @@ export const TodoAppProvider = ({ children }) => {
             sortBy,
           }
         );
-
+        console.log('data from getFilteredItems');
+        console.log(data);
         setItems(data.items);
       } catch (e) {
         toast.error(e.response.data.msg || 'Error occurred, please try again');

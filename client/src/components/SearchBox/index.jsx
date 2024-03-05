@@ -88,15 +88,19 @@ const SearchBox = ({ renderItem }) => {
               <p className="font-bold tracking-wider bg-gray-200 pl-2">Notes</p>
             ) : null}
 
-            {searchNotesResults.map((result, index) => (
-              <div
-                key={index}
-                className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
-                onClick={() => renderItem('notes', result)}
-              >
-                <div className="pr-2">{parse(result.title)}</div>
-              </div>
-            ))}
+            {searchNotesResults.map((result, index) => {
+              if (result.title !== '') {
+                return (
+                  <div
+                    key={index}
+                    className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                    onClick={() => renderItem('notes', result)}
+                  >
+                    <div className="pr-2">{parse(result.title)}</div>
+                  </div>
+                );
+              }
+            })}
 
             {searchCalEventsResults.length > 0 ? (
               <p className="font-bold tracking-wider bg-gray-200 pl-2">

@@ -103,7 +103,7 @@ const FilterSelect = ({
             {currentFilterOption}
           </p>
           <span
-            className="arrow-icon text-gray-600 tracking-widest flex items-center "
+            className="arrow-icon text-gray-600 tracking-widest flex items-center"
             id="icon"
           >
             {renderIcon()}

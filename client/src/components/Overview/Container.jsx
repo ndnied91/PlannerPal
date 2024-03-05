@@ -25,6 +25,8 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
   const [showCalModal, setShowCalModal] = useState(false); //notes
   const [event, setEvent] = useState('');
 
+  console.log(items);
+
   useEffect(() => {
     const setOrder = async () => {
       try {
@@ -63,7 +65,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
     <div className="ml-28 flex flex-wrap p-5">
       <section className="flex justify-between flex-wrap">
         <section className="flex flex-wrap gap-4">
-          <div className="flex w-full " id="sss">
+          <div className="flex w-full">
             <div className="w-1/2">
               <p className="text-3xl font-bold">
                 {' '}
@@ -72,11 +74,11 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
               <p> Manage your tasks and deadlines in one place</p>
             </div>
 
-            <div className="w-3/4 rounded-lg text-end" id="aaa">
+            <div className="w-3/4 rounded-lg text-end">
               <SearchBox renderItem={renderItem} />
             </div>
           </div>
-          <div className="bg-slate-100 rounded-lg shadow-sm p-6  child">
+          <div className="bg-slate-100 rounded-lg shadow-sm p-6 child">
             <SmallCalendarOverview
               setPreviewEvents={setPreviewEvents}
               setPopupPosition={setPopupPosition}
@@ -116,6 +118,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
         </section>
       </section>
 
+      {/* SEARCH MODALS */}
       {showNotesModal && (
         <OverviewNotesModal
           setShowNotesModal={setShowNotesModal}

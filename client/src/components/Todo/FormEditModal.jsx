@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGlobalContext } from './todoContext';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { parseISO } from 'date-fns';
-
 import Select from './Select';
-import OutsideClickHandler from 'react-outside-click-handler';
 
 const FormEditModal = ({
   updateItemsAfterEditTodo,
   userSettings,
   setUserSettings,
+  setShowEditModal,
 }) => {
   const { updateItem, updateContent } = useGlobalContext();
 
@@ -52,6 +51,7 @@ const FormEditModal = ({
     currentItem.updateCalEvent ? (obj['calCode'] = updateItem.calCode) : null;
     updateContent(obj, userSettings.sortBy);
     updateItemsAfterEditTodo(); //trigger update to items sort by
+    setShowEditModal(false);
   };
 
   return (

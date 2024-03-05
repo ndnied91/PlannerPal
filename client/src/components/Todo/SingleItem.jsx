@@ -131,7 +131,6 @@ export const SingleItem = ({
             ? 'flex flex-col self-center gap-4'
             : 'sticky b-0 w-full flex justify-between flex-row-reverse'
         } `}
-        id="dssss"
       >
         {!archivedList ? (
           <>

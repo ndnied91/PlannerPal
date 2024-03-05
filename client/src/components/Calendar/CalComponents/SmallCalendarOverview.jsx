@@ -109,7 +109,7 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
                     <div
                       className="self-center translate-y-[-0.6rem]"
                       onMouseEnter={(e) => previewEvents(e)}
-                      onMouseLeave={(e) => setPreviewEvents([])}
+                      onMouseLeave={() => setPreviewEvents([])}
                     >
                       <LuDot
                         id={`${day.$d}`}

@@ -1,4 +1,4 @@
-import { FaTrashAlt, FaRegCheckCircle, FaFlag } from 'react-icons/fa';
+import { FaTrashAlt, FaRegCheckCircle } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -49,6 +49,8 @@ export const SingleItemOverview = ({
     updateContent(obj);
     setItemsShowModal(false);
   };
+
+  console.log(date);
 
   return (
     <div className={style}>

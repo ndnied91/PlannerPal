@@ -133,7 +133,7 @@ const RegisterModal = ({ setShowRegModal, renderSignIn, showRegModal }) => {
                           </div>
 
                           <section className="flex flex-col gap-5">
-                            <div className="flex" id="asda">
+                            <div className="flex">
                               <button
                                 id="ssss"
                                 className="flex justify-center items-center tracking-widest text-white rounded-md bg-gray-900 px-20 py-2 text-sm font-semibold shadow-sm  ring-gray-300 hover:opacity-90 sm:mt-0 w-full h-12"

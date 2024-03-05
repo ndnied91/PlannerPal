@@ -36,6 +36,7 @@ export const getAllCalEvents = async (req, res) => {
 };
 
 export const updateCalEvent = async (req, res) => {
+  console.log('in updateCalEvent');
   await CalEvent.findOneAndUpdate(
     {
       _id: req.params._id,
@@ -43,10 +44,13 @@ export const updateCalEvent = async (req, res) => {
     req.body
   );
   const items = await CalEvent.find({ createdBy: req.body.createdBy });
+  console.log('items from updateCalEvent', items);
   res.status(StatusCodes.CREATED).json({ items });
 };
 
 export const updateCalEventFromTodo = async (req, res) => {
+  console.log(req.user.userId);
+  console.log('updateCalEventFromTodo');
   const item = await CalEvent.updateOne(
     { calCode: req.params.calCode },
     {
@@ -63,8 +67,8 @@ export const updateCalEventFromTodo = async (req, res) => {
       .status(StatusCodes.PRECONDITION_FAILED)
       .json({ error: 'This calendar event was previously deleted' });
   } else {
-    const items = await CalEvent.find({ createdBy: req.body.createdBy });
-    res.status(StatusCodes.CREATED).json({ items });
+    // const items = await CalEvent.find({ createdBy: req.user.userId });
+    res.status(StatusCodes.CREATED);
   }
 };
 
