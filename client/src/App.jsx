@@ -85,7 +85,7 @@ const App = () => {
         <Global />
       </div>
       <section className="relative">
-        <div className="ml-[20px]">
+        <div className="md:ml-[20px]">
           {userContext && (
             <Sidebar setShowSettingsModal={setShowSettingsModal} />
           )}

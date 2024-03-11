@@ -60,7 +60,7 @@ const UrgentTodoOverview = ({
 
   return (
     <section className="p-5 h-fit">
-      <div className="font-bold text-lg  w-[30rem]">Urgent Tasks</div>
+      <div className="font-bold text-lg  md:w-[30rem]">Urgent Tasks</div>
       <span className="text-sm">Tasks passed and ending in </span>
 
       <span className="font-bold text-xs">

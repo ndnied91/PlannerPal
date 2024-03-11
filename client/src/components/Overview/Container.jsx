@@ -62,82 +62,87 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
   };
 
   return (
-    <div className="ml-28 flex flex-wrap p-5">
-      <section className="flex justify-between flex-wrap">
-        <section className="flex flex-wrap gap-4">
-          <div className="flex w-full">
-            <div className="w-1/2">
-              <p className="text-3xl font-bold">
+    <div className="md:ml-28 flex flex-wrap md:p-5 ">
+      <section className="">
+        <section className="flex flex-wrap">
+          <div className="flex w-full flex-col md:flex-row ">
+            <div className="md:w-1/2 mb-4 md:mb-0 ">
+              <p className="text-3xl font-bold m-4 md:m-0 flex justify-start md:justify-start">
                 {' '}
                 Welcome, {userContext.name}!
               </p>
-              <p> Manage your tasks and deadlines in one place</p>
+              <p className="m-4 md:m-0">
+                {' '}
+                Manage your tasks and deadlines in one place
+              </p>
             </div>
 
-            <div className="w-3/4 rounded-lg text-end">
+            <div className="md:w-3/4 rounded-lg text-end m-4 md:m-0">
               <SearchBox renderItem={renderItem} />
             </div>
           </div>
-          <div className="bg-slate-100 rounded-lg shadow-sm p-6 child">
-            <SmallCalendarOverview
-              setPreviewEvents={setPreviewEvents}
-              setPopupPosition={setPopupPosition}
-            />
-          </div>
-          <div>
-            <PreviewModal
-              previewEvents={previewEvents}
-              popupPosition={popupPosition}
-            />
-          </div>
-          {/* countdown details  */}
-          <div className="bg-slate-100 rounded-lg shadow-sm  overflow-scroll child">
-            <UrgentTodoOverview
-              items={items}
-              userSettings={userSettings}
-              setItemsShowModal={setItemsShowModal}
-              setEvent={setEvent}
-            />
-          </div>
-          <div className="bg-slate-100 rounded-lg shadow-sm  overflow-scroll child">
-            <PriorityTodoOverview
-              items={items}
-              userSettings={userSettings}
-              setItemsShowModal={setItemsShowModal}
-              setEvent={setEvent}
-            />
-          </div>
-          <div className="bg-slate-100 rounded-lg shadow-sm  overflow-scroll child">
-            <PinnedOverview
-              items={items}
-              userSettings={userSettings}
-              setItemsShowModal={setItemsShowModal}
-              setEvent={setEvent}
-            />
-          </div>
+
+          <section className="h-full w-screen md:w-auto flex flex-col md:flex-row md:flex-wrap md:gap-4">
+            <div className="bg-slate-100 m-4 p-4 md:b-0 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto ">
+              <SmallCalendarOverview
+                setPreviewEvents={setPreviewEvents}
+                setPopupPosition={setPopupPosition}
+              />
+            </div>
+            <div>
+              <PreviewModal
+                previewEvents={previewEvents}
+                popupPosition={popupPosition}
+              />
+            </div>
+            <div className="bg-slate-100 m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto">
+              <UrgentTodoOverview
+                items={items}
+                userSettings={userSettings}
+                setItemsShowModal={setItemsShowModal}
+                setEvent={setEvent}
+              />
+            </div>
+            <div className="bg-slate-100 m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto">
+              <PriorityTodoOverview
+                items={items}
+                userSettings={userSettings}
+                setItemsShowModal={setItemsShowModal}
+                setEvent={setEvent}
+              />
+            </div>
+            <div className="bg-slate-100 m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto">
+              <PinnedOverview
+                items={items}
+                userSettings={userSettings}
+                setItemsShowModal={setItemsShowModal}
+                setEvent={setEvent}
+              />
+            </div>
+          </section>
         </section>
+
+        {/* SEARCH MODALS */}
+        {showNotesModal && (
+          <OverviewNotesModal
+            setShowNotesModal={setShowNotesModal}
+            event={event}
+          />
+        )}
+
+        {showItemsModal && (
+          <OverviewModal
+            setItemsShowModal={setItemsShowModal}
+            event={event}
+            userSettings={userSettings}
+            setUserSettings={setUserSettings}
+          />
+        )}
+
+        {showCalModal && (
+          <OverviewCalModal setShowCalModal={setShowCalModal} event={event} />
+        )}
       </section>
-
-      {/* SEARCH MODALS */}
-      {showNotesModal && (
-        <OverviewNotesModal
-          setShowNotesModal={setShowNotesModal}
-          event={event}
-        />
-      )}
-
-      {showItemsModal && (
-        <OverviewModal
-          setItemsShowModal={setItemsShowModal}
-          event={event}
-          userSettings={userSettings}
-          setUserSettings={setUserSettings}
-        />
-      )}
-
-      {showCalModal && (
-        <OverviewCalModal setShowCalModal={setShowCalModal} event={event} />
-      )}
     </div>
   );
   // }

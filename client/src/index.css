@@ -169,7 +169,6 @@ form h4 {
 
 .sidebar{
   row-gap: 1rem;
-  display: flex;
   justify-content: space-evenly;
   z-index: 1
 }
