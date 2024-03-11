@@ -78,7 +78,7 @@ const Options = ({ setShowSettingsModal }) => {
 
   return (
     <main className="">
-      <section className="md:hidden ">
+      <section className="md:hidden">
         <MobileNavbar
           links={links}
           userSettings={userSettings}
