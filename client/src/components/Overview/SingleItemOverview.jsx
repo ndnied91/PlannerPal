@@ -77,7 +77,7 @@ export const SingleItemOverview = ({
 
             <Select
               textPrompt={'Select'}
-              className="relative mt-3 p-3 text-sm font-semibold cursor-pointer w-32  bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="relative mt-14 p-3 text-sm font-semibold cursor-pointer w-32 bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               userSettings={userSettings}
               setUserSettings={setUserSettings}
               updatable={false}
@@ -87,7 +87,7 @@ export const SingleItemOverview = ({
 
             <div className="font-light pt-4 capitalize text-xs text-gray-900">
               <textarea
-                className="cursor-pointer pt-3 text-gray-600 text-sm font-semibold pb-2  border-2 border-gray-200 min-w-60 !w-96  focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="cursor-pointer pt-3 text-gray-600 text-sm font-semibold pb-2  border-2 border-gray-200 md:min-w-60 md:!w-96 focus:outline-none focus:ring-0 focus:border-blue-500"
                 name="description"
                 required
                 value={task.description}
@@ -104,7 +104,7 @@ export const SingleItemOverview = ({
         </section>
       </form>
 
-      <div className={`flex flex-col self-center gap-4 `}>
+      <div className="flex flex-col self-center gap-4">
         <Countdown date={item.dueDate} renderer={renderer} />
 
         <div className={`flex justify-end w-full items-center`}>

@@ -62,9 +62,9 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
   };
 
   return (
-    <div className="md:ml-28 flex flex-wrap md:p-5 ">
+    <div className="md:ml-28 flex flex-wrap md:p-5">
       <section className="">
-        <section className="flex flex-wrap">
+        <section className="flex flex-wrap ">
           <div className="flex w-full flex-col md:flex-row ">
             <div className="md:w-1/2 mb-4 md:mb-0 ">
               <p className="text-3xl font-bold m-4 md:m-0 flex justify-start md:justify-start">

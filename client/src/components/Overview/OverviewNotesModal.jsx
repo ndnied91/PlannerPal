@@ -12,13 +12,13 @@ const OverviewNotesModal = ({ setShowNotesModal, event }) => {
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto ">
-        <div className="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0 ">
+        <div className="flex min-h-full items-center justify-center text-center sm:items-center sm:p-0 ">
           <div
             className={` transition ease-in ${
               setShowNotesModal
                 ? 'opacity-100 translate-y-[0rem] duration-300'
                 : 'opacity-0 translate-y-[-5rem]'
-            } relative transform overflow-hidden  bg-white text-left shadow-xl sm:my-8 w-[38rem] self-center`}
+            } relative transform overflow-hidden  bg-white text-left shadow-xl sm:my-8 md:w-[38rem] self-center`}
           >
             <div className=" px-4 py-3 flex justify-end !pb-2 bg-slate-100">
               <button onClick={() => setShowNotesModal(false)} type="button">
