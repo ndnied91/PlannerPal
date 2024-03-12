@@ -3,6 +3,7 @@ import NoteAside from './NoteAside';
 import NoteEditor from './NoteEditor';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
+import { isMobile } from 'react-device-detect';
 
 const container = ({ userContext }) => {
   const [notes, setNotes] = useState([]);
@@ -55,30 +56,68 @@ const container = ({ userContext }) => {
     setSelectedNote('');
   };
 
+  console.log(selectedNote);
+
   return (
-    <div className="pl-32 pt-5">
-      <aside className="flex">
-        <NoteAside
-          notes={notes.sort((a, b) => b.createdAt.localeCompare(a.createdAt))}
-          setSelectedNote={setSelectedNote}
-          setNotes={setNotes}
-          updatePosition={updatePosition}
-          selectedNote={selectedNote}
-          isDisabled={isDisabled}
-          setIsDisabled={setIsDisabled}
-          setContent={setContent}
-          setNoteTitle={setNoteTitle}
-        />
-        <NoteEditor
-          updateNotesArr={updateNotesArr}
-          {...selectedNote}
-          setIsDisabled={setIsDisabled}
-          setSelectedNote={setSelectedNote}
-          noteTitle={noteTitle}
-          setNoteTitle={setNoteTitle}
-          content={content}
-          setContent={setContent}
-        />
+    <div className="md:pl-32 pt-5">
+      <aside className="md:flex">
+        {!isMobile && (
+          <div className="">
+            <NoteAside
+              notes={notes.sort((a, b) =>
+                b.createdAt.localeCompare(a.createdAt)
+              )}
+              setSelectedNote={setSelectedNote}
+              setNotes={setNotes}
+              updatePosition={updatePosition}
+              selectedNote={selectedNote}
+              isDisabled={isDisabled}
+              setIsDisabled={setIsDisabled}
+              setContent={setContent}
+              setNoteTitle={setNoteTitle}
+            />
+          </div>
+        )}
+
+        {!isMobile && (
+          <NoteEditor
+            updateNotesArr={updateNotesArr}
+            {...selectedNote}
+            setIsDisabled={setIsDisabled}
+            setSelectedNote={setSelectedNote}
+            noteTitle={noteTitle}
+            setNoteTitle={setNoteTitle}
+            content={content}
+            setContent={setContent}
+          />
+        )}
+
+        {isMobile && selectedNote === undefined ? (
+          <NoteAside
+            notes={notes.sort((a, b) => b.createdAt.localeCompare(a.createdAt))}
+            setSelectedNote={setSelectedNote}
+            setNotes={setNotes}
+            updatePosition={updatePosition}
+            selectedNote={selectedNote}
+            isDisabled={isDisabled}
+            setIsDisabled={setIsDisabled}
+            setContent={setContent}
+            setNoteTitle={setNoteTitle}
+          />
+        ) : null}
+
+        {isMobile && selectedNote !== undefined ? (
+          <NoteEditor
+            updateNotesArr={updateNotesArr}
+            {...selectedNote}
+            setIsDisabled={setIsDisabled}
+            setSelectedNote={setSelectedNote}
+            noteTitle={noteTitle}
+            setNoteTitle={setNoteTitle}
+            content={content}
+            setContent={setContent}
+          />
+        ) : null}
       </aside>
     </div>
   );

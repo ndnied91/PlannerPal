@@ -44,7 +44,7 @@ const FilterPopover = ({ userSettings, setUserSettings }) => {
   return (
     <div className="text-xs font-normal flex flex-row justify-center mr-2">
       <input
-        className="rounded-sm  !border-gray-300"
+        className="rounded-sm w-40 !border-gray-300"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         placeholder="Add new filter"

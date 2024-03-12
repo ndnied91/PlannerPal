@@ -63,7 +63,7 @@ const container = ({ items, userSettings, setItems }) => {
         </p>
       </div>
 
-      <div className="flex gap-1 flex-wrap mt-20 ml-32 mr-32">
+      <div className="flex gap-1 flex-wrap mt-5 md:mt-20 md:ml-32 md:mr-32">
         {items.map((item) => {
           if (item.isCompleted) {
             return (
@@ -75,7 +75,7 @@ const container = ({ items, userSettings, setItems }) => {
                   item={item}
                   archivedList
                   style={
-                    'p-5 bg-zinc-100 rounded-md shadow-2xl m-2 max-w-56 min-w-48 min-h-44 max-h-48 opacity-70 hover:opacity-100 duration-300'
+                    'p-5 bg-zinc-100 rounded-md shadow-2xl m-2 md:max-w-56 md:min-w-48 md:min-h-44 md:max-h-48 opacity-70 hover:opacity-100 duration-300'
                   }
                   type={'trash'}
                 />

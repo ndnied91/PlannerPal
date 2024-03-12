@@ -49,6 +49,7 @@ const FilterSelect = ({
   };
 
   const handleDeleteClick = async (option) => {
+    if (option === 'all') return;
     const filtered = userSettings.filterOptions.filter(
       (item) => item !== option
     );
@@ -148,7 +149,7 @@ const FilterSelect = ({
                         <>
                           <p className="capitalize">{option}</p>
                           <button
-                            className="px-2 py-1 text-white rounded"
+                            className="px-2 py-1 text-white rounded absolute z-20"
                             onClick={() => handleDeleteClick(option)}
                           ></button>
                         </>

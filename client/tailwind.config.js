@@ -14,6 +14,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        xs: '700px',
+        'ms-mm': { min: '1024px', max: '1480px' },
+      },
+
       fontFamily: {
         sans: ['Open Sans'],
       },

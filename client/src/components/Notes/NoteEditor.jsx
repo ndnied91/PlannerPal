@@ -16,7 +16,7 @@ const NoteEditor = ({
   const selectedNote = { body, _id, title };
 
   return (
-    <div className="m-4 w-148 p-4">
+    <div className="md:m-4 md:p-4">
       <Container
         {...selectedNote}
         updateNotesArr={updateNotesArr}

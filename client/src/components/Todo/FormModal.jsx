@@ -93,7 +93,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
             : 'opacity-0 translate-y-2 invisible duration-50'
         }`}
       >
-        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
           <OutsideClickHandler
             onOutsideClick={() => {
               setShowModal(false);
@@ -106,8 +106,8 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
               });
             }}
           >
-            <div className="relative transform overflow-visible  bg-slate-00 text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center w-[32rem]">
-              <div className="font-bold text-4xl p-2 pt-0 pb-0 flex justify-end items-center bg-gray-100">
+            <div className="relative transform overflow-visible  bg-slate-00 text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center w-[20rem] md:w-[32rem]">
+              <div className="font-bold text-4xl p-2 pt-0 pb-0 flex justify-end items-center bg-gray-100 ">
                 <button
                   onClick={() => setShowModal(false)}
                   type="button"
@@ -118,14 +118,14 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
               </div>
 
               <div className="bg-white 100 px-4 pb-4 !pt-4 sm:p-6 sm:pb-4">
-                <section className="flex justify-around capitalize mb-4 ">
+                <section className="flex justify-around capitalize items-stretch gap-4 mb-4 ">
                   <div
                     onClick={() => setCurrentPane('todo')}
                     className={`${
                       currentPane === 'todo'
-                        ? 'bg-white font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
-                        : 'bg-white text-gray-400 border hover:bg-gray-100 duration-200'
-                    } w-1/3 h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300  `}
+                        ? 'bg-white text-sm font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
+                        : 'bg-white text-sm  text-gray-400 border hover:bg-gray-100 duration-200'
+                    } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300  `}
                   >
                     {' '}
                     todo
@@ -133,9 +133,9 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                   <div
                     className={`${
                       currentPane === 'countdown'
-                        ? 'bg-white font-semibold tracking-wider text-gray-800 border  rounded-sm hover:bg-gray-100 duration-200'
-                        : 'bg-white text-gray-400 border rounded-sm hover:bg-gray-100 duration-200'
-                    } w-1/3 h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300   `}
+                        ? 'bg-white text-sm font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
+                        : 'bg-white text-sm text-gray-400 border rounded-sm hover:bg-gray-100 duration-200'
+                    } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300   `}
                     onClick={() => setCurrentPane('countdown')}
                   >
                     {' '}
@@ -202,7 +202,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                     </div>
 
                     {/* cal */}
-                    <section className=" flex justify-center gap-20 mt-5">
+                    <section className=" flex justify-center gap-10 md:gap-20 mt-5">
                       {currentPane === 'todo' ? (
                         <div className="pb-5 items-baseline block">
                           <label

@@ -13,9 +13,9 @@ const NoteAside = ({
   setNoteTitle,
 }) => {
   return (
-    <div className="bg-slate-100 min-w-48 h-[85vh] max-h-fit overflow-scroll">
+    <div className="bg-slate-100 min-w-48 h-auto md:h-[85vh] overflow-scroll m-3 md:m-0">
       <button
-        className={`w-full bg-slate-400 p-5 border-b-2 border-slate-400 flex justify-center items-center cursor-pointer  ${
+        className={`w-full bg-slate-400 p-5 border-b-2 border-slate-400 flex justify-center items-center cursor-pointer mb-3 ${
           isDisabled
             ? 'disabled:opacity-40 disabled:cursor-default'
             : 'hover:bg-slate-500'
@@ -38,7 +38,8 @@ const NoteAside = ({
           setNoteTitle('');
         }}
       >
-        <p className="text-xl pl-2 ">
+        <p className="text-xl pl-2 flex justify-center items-center">
+          <span className="font-bold tracking-wide mr-2">Add Note</span>
           <FaPlus />
         </p>
       </button>

@@ -94,7 +94,7 @@ const FormEditModal = ({
                   />
                 </div>
                 {/* time */}
-                <div className="mb-4 ">
+                <div className="mb-4 flex flex-col justify-start">
                   <label className="block text-gray-700 text-sm font-bold mb-2 ">
                     {/* Due */}
                   </label>

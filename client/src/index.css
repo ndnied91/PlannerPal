@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@screen ms-mm {
+  .bodyyy:{
+    background-color: #f6ad55; /* Custom color for xl2 breakpoint */
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1480px) {
+  .custom-class {
+    display: block;
+  }
+}
+
+.react-datepicker{
+  display: flex;
+}
 
 /* @import 'tailwindcss/base';
 @import 'tailwindcss/components';
@@ -201,6 +216,7 @@ form h4 {
 }
 
 
+
 .react-datepicker__triangle{
   display: none;
 }
@@ -227,7 +243,8 @@ form h4 {
   .react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
-    width: 70%;
+    width: 100%;
+    float: left;
 }
 
 
