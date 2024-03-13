@@ -59,17 +59,27 @@ export default function SmallCalendar() {
 
   return (
     <div className="mt-9">
-      <header className="flex justify-between">
+      <header className="flex justify-between ">
         <p className="text-gray-500 font-bold">
           {dayjs(new Date(dayjs().year(), currentMonthIdx)).format('MMMM YYYY')}
         </p>
         <div>
-          <button onClick={handlePrevMonth}>
+          <button
+            onClick={() => {
+              handlePrevMonth();
+              setDaySelected(null);
+            }}
+          >
             <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
               chevron_left
             </span>
           </button>
-          <button onClick={handleNextMonth}>
+          <button
+            onClick={() => {
+              handleNextMonth();
+              setDaySelected(null);
+            }}
+          >
             <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
               chevron_right
             </span>
@@ -97,7 +107,7 @@ export default function SmallCalendar() {
                   {day.format('D')}
 
                   {renderDot(day) ? (
-                    <p className="h-5 flex items-end">
+                    <p className="h-5 flex justify-center md:items-center">
                       <LuDot className="text-3xl text-red-700" />
                     </p>
                   ) : null}

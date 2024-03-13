@@ -13,7 +13,7 @@ const EditModal = ({
       <div className="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity z-10"></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex items-center justify-center p-4 text-center sm:items-center sm:p-0 h-full">
-          <div className="transform  bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center overflow-visible w-[20rem] md:w-[32rem]">
+          <div className="transform  bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center overflow-visible w-full md:w-[32rem]">
             <div className="font-bold text-4xl p-2 pt-0 pb-0 flex justify-between items-center bg-gray-100">
               <p className="text-sm ml-1 pt-1 text-gray-600 tracking-widest">
                 Edit

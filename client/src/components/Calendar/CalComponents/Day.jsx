@@ -42,8 +42,9 @@ const Day = ({ day, rowIdx }) => {
       </header>
 
       <div
-        className="flex-1 cursor-pointer text-sm font-thiner tracking-tight"
+        className="flex-1 cursor-pointer text-sm font-thinner tracking-tight"
         onClick={() => {
+          console.log(day);
           setDaySelected(day); //responsible for showing the modal when day is clicked
           setShowEventModal(true);
         }}

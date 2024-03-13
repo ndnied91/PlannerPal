@@ -106,7 +106,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
               });
             }}
           >
-            <div className="relative transform overflow-visible  bg-slate-00 text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center w-[20rem] md:w-[32rem]">
+            <div className="relative transform overflow-visible  bg-slate-00 text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center w-full md:w-[32rem]">
               <div className="font-bold text-4xl p-2 pt-0 pb-0 flex justify-end items-center bg-gray-100 ">
                 <button
                   onClick={() => setShowModal(false)}
@@ -125,7 +125,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                       currentPane === 'todo'
                         ? 'bg-white text-sm font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
                         : 'bg-white text-sm  text-gray-400 border hover:bg-gray-100 duration-200'
-                    } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300  `}
+                    } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300`}
                   >
                     {' '}
                     todo

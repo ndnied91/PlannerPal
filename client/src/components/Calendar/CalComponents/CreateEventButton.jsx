@@ -8,7 +8,7 @@ export default function CreateEventButton() {
   return (
     <button
       onClick={() => setShowEventModal(true)}
-      className="border p-2 rounded-full flex items-center shadow-lg hover:shadow-md w-52"
+      className="border p-2 rounded-lg flex items-center shadow-lg hover:shadow-md w-52 "
     >
       <span className="pl-3 pr-7 flex justify-center w-full items-center">
         <FaCalendarPlus className="w-7 h-7 text-gray-500" />
