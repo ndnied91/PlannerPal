@@ -54,8 +54,8 @@ export const SingleItemOverview = ({
 
   return (
     <div className={style}>
-      <form onSubmit={handleSubmit}>
-        <section className="todoInfo text-gray-900 ">
+      <form onSubmit={handleSubmit} className="">
+        <section className="todoInfo text-gray-900">
           <div>
             <div className="font-bold capitalize">
               <input
@@ -72,7 +72,7 @@ export const SingleItemOverview = ({
               selected={parseISO(date)}
               onChange={(date) => setDate(date.toISOString())}
               dateFormat="MMMM d, yyyy h:mmaa"
-              className="cursor-pointer pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="absolute cursor-pointer pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
             />
 
             <Select
@@ -104,7 +104,7 @@ export const SingleItemOverview = ({
         </section>
       </form>
 
-      <div className="flex flex-col self-center gap-4">
+      <div className="flex flex-col self-end gap-4 absolute right-4">
         <Countdown date={item.dueDate} renderer={renderer} />
 
         <div className={`flex justify-end w-full items-center`}>

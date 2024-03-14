@@ -337,8 +337,6 @@ form h4 {
   display: none;
 }
 
-
-
 .css-z2hyoe-ItemComponent.evc32pp0:nth-child(1){
   background: lightgray;
 }
@@ -347,7 +345,6 @@ form h4 {
 .react-dropdown-select-item.css-z2hyoe-ItemComponent.evc32pp0{
   text-transform: capitalize;
 }
-
 
 
 .overlay {
@@ -362,26 +359,14 @@ form h4 {
   align-items: center;
 }
 
-
-
-
-
-
-
 .absolute.top-full.left-0.w-full.border.bg-white.shadow > div:nth-child(1){
   /* background: #F4F4F5; */
   font-weight: bold;
 }
 
-
-
 .child {
   flex: 1 0 27%; 
 }
-
-
-
-
 
 .fixed.inset-0.z-10.w-screen.overflow-y-auto > div > div > div:nth-child(2) > div > div > div:nth-child(2){
   height: 55px !important;
