@@ -20,6 +20,8 @@ const FilterPopover = ({ userSettings, setUserSettings }) => {
 
     if (arrayContainsObject(updatedFilter, newItem)) {
       toast.error('Category already exists');
+    } else if (newItem.length === 0) {
+      toast.error("Category can't be blank");
     } else {
       updatedFilter.push(newItem);
       //send request to update settings to specific user

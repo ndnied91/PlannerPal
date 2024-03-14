@@ -111,7 +111,7 @@ const FilterSelect = ({
           </span>
         </div>
         {isDropdownOpen && (
-          <div className="absolute top-full left-0  border bg-white shadow w-max">
+          <div className="absolute top-full left-0  border bg-white shadow w-max z-30">
             <div>
               {labelArr.map((option) => {
                 if (option === 'add +') {

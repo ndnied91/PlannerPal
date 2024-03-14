@@ -45,19 +45,38 @@ const SingleNote = ({
     setSelectedNote({ _id, body, title });
   };
 
+  const renderDate = (createdAt) => {
+    const date = new Date(createdAt);
+    const formattedDate = date.toLocaleString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: '2-digit',
+    });
+    const dateWithoutCommas = formattedDate.replace(/,/g, '');
+
+    const time = new Date(createdAt).toLocaleTimeString('en-US');
+
+    return (
+      <div className="flex flex-col mt-1">
+        <span className="text-xs">{dateWithoutCommas} </span>
+        <span className="text-xxs">{time} </span>
+      </div>
+    );
+  };
+
   return (
     <div
       className={` ${
         selectedNote?._id === _id ? 'bg-slate-300' : ' bg-slate-200'
-      }   w-full p-5 border-b-2 border-slate-400 flex justify-center items-center cursor-pointer hover:bg-slate-300`}
+      }   w-full p-5 pt-3 pb-3 border-b-2 border-slate-400 flex justify-center items-center cursor-pointer hover:bg-slate-300`}
       onClick={handleClick}
     >
       <div className="flex items-center w-full justify-between">
         <div className="flex flex-col">
-          <span className="capitalize text-sm">{renderTitle(title)}</span>
-          <p className="text-xs text-gray-700">
-            {new Date(createdAt).toLocaleTimeString('en-US')}{' '}
-          </p>
+          <span className="capitalize text-sm font-bold tracking-wider">
+            {renderTitle(title)}
+          </span>
+          <div className="text-xs text-gray-700">{renderDate(createdAt)}</div>
         </div>
         {/* date */}
         <span>

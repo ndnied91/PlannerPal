@@ -22,7 +22,6 @@ const container = ({ userContext }) => {
       {showEventModal ? <EventModal userContext={userContext} /> : null}
 
       <CalendarHeader />
-
       <div className="flex flex-col md:flex-row flex-1">
         <Sidebar />
 
@@ -31,7 +30,4 @@ const container = ({ userContext }) => {
     </div>
   );
 };
-
 export default container;
-
-// https://www.youtube.com/watch?v=KUKyTRYGrnU

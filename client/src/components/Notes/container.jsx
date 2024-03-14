@@ -92,6 +92,8 @@ const container = ({ userContext }) => {
           />
         )}
 
+        {console.log(notes)}
+
         {isMobile && selectedNote === undefined ? (
           <NoteAside
             notes={notes.sort((a, b) => b.createdAt.localeCompare(a.createdAt))}

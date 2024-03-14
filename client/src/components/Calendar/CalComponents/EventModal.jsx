@@ -106,7 +106,7 @@ const EventModal = ({ userContext }) => {
       <div className="h-screen w-screen fixed left-0 top-0 flex justify-center items-center z-20 ">
         <div
           ref={modalRef}
-          className="bg-white rounded-lg shadow-2xl w-full max-w-screen-md m-2"
+          className="bg-white m-4 shadow-2xl w-full max-w-screen-md md:m-2"
         >
           <form
             onSubmit={handleSubmit}

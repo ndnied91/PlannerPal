@@ -20,8 +20,6 @@ const container = ({
 }) => {
   const [loading, setLoading] = useState(true);
 
-  // const width = isMobile ?
-
   useEffect(() => {
     setContent(body);
     setNoteTitle(title);
@@ -98,6 +96,8 @@ const container = ({
               inline_boundaries_selector: 'span',
               height: 500,
               placeholder: 'Add title..',
+              resize: false,
+              content_style: 'body { overflow: hidden; }',
             }}
             onEditorChange={(newText) => setNoteTitle(newText)}
             onKeyDown={handleKeyPress}

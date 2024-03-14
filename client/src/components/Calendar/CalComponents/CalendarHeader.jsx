@@ -17,6 +17,7 @@ const CalendarHeader = () => {
 
   const handleReset = () => {
     setMonthIndex(dayjs().month());
+    setDaySelected(dayjs());
   };
 
   return (
@@ -26,7 +27,7 @@ const CalendarHeader = () => {
       </button>
       <button className="">
         <span
-          className="material-icons-outlined cursor-pointer text-gray-600 mx-2"
+          className="material-icons-outlined cursor-pointer text-gray-600 mx-2 "
           onClick={() => {
             handlePrevMonth();
             setDaySelected(null);

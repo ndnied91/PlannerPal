@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import CreateEventButton from './CreateEventButton';
 import SmallCalendar from './SmallCalendar';
 import Labels from './Labels';
@@ -10,9 +10,18 @@ const Sidebar = () => {
     useContext(GlobalContext);
 
   const renderItems = () => {
-    let date = new Date(daySelected).getTime();
+    const formattedDate = new Date(daySelected)
+      .toLocaleString('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+      })
+      .replace(/,/g, '');
+
     return savedEvents.map((i) => {
-      if (i.day === date) {
+      let eventDate = new Date(i.day).toString();
+
+      if (eventDate.includes(formattedDate)) {
         const time = new Date(i.day);
         const hours = time.getUTCHours();
         const minutes = time.getUTCMinutes();
@@ -23,6 +32,7 @@ const Sidebar = () => {
 
         return (
           <div
+            key={i._id}
             className="bg-slate-300 p-3 flex text-sm justify-between"
             onClick={() => {
               setSelectedEvent(i);

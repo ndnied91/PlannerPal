@@ -46,9 +46,15 @@ export default function SmallCalendar() {
   }
   const renderDot = (day) => {
     return tempArr.some((i) => {
-      let savedEventDate = new Date(i.day);
+      const savedEventDate = new Date(i.day)
+        .toLocaleString('en-US', {
+          month: 'short',
+          day: '2-digit',
+          year: 'numeric',
+        })
+        .replace(/,/g, '');
 
-      if (day.$d.toString() == savedEventDate.toString()) {
+      if (day.$d.toString().includes(savedEventDate)) {
         tempArr = tempArr.filter(
           (item) => new Date(item.day).toString() !== savedEventDate.toString()
         );

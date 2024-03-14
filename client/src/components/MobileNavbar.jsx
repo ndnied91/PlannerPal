@@ -35,7 +35,7 @@ const MobileNavbar = ({ links, userSettings, updateSelectedPane }) => {
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
               {links.map(({ id, text, icon }) => (
-                <div className="flex ">
+                <div className="flex " key={id}>
                   <li key={id} className="list-none flex flex-row w-full">
                     <button
                       onClick={() => {

@@ -63,6 +63,8 @@ const SingleNoteOverview = ({ setShowNotesModal, item }) => {
             toolbar: false,
             menubar: false,
             inline_boundaries_selector: 'span',
+            resize: false,
+            content_style: 'body { overflow: hidden; }',
           }}
           onEditorChange={(e) => setTitle(e)}
           onKeyDown={handleKeyPress}
