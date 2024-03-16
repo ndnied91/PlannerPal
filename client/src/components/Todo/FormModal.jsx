@@ -114,7 +114,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
               });
             }}
           >
-            <div className="relative transform  overflow-visible text-left transition-all sm:max-w-4xl w-screen p-4 md:w-[32rem]">
+            <div className="relative transform overflow-visible transition-all w-96 md:w-[32rem]">
               <div className="font-bold text-4xl p-2 pt-0 pb-0 flex justify-end items-center bg-gray-100 ">
                 <button
                   onClick={() => setShowModal(false)}
