@@ -11,7 +11,7 @@ const MobileNavbar = ({ links, userSettings, updateSelectedPane }) => {
         <nav className="bg-gray-950">
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              <div className="absolute inset-y-0 left-0 flex items-center">
                 <button
                   onClick={() => setIsOpen(!isOpen)}
                   className="inline-flex items-center justify-center p-2 rounded-md text-white transition-colors duration-300"
@@ -31,7 +31,7 @@ const MobileNavbar = ({ links, userSettings, updateSelectedPane }) => {
           <div
             className={`${
               isOpen ? 'block max-h-screen' : 'max-h-0'
-            } sm:hidden transition-max-height duration-300 ease-in-out overflow-hidden`}
+            }  transition-max-height duration-300 ease-in-out overflow-hidden`}
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
               {links.map(({ id, text, icon }) => (
