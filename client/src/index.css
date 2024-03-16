@@ -375,3 +375,54 @@ form h4 {
 .overflow-hidden {
   overflow: hidden;
 }
+
+
+
+
+
+
+/* Custom styles for the calendar container */
+
+.custom-datepicker-wrapper {
+  width: 100% !important;
+}
+
+.custom-calendar-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Custom styles for the calendar */
+.custom-calendar-container .react-datepicker {
+  font-family: Arial, sans-serif;
+}
+
+/* Custom styles for the calendar header */
+.custom-calendar-container .react-datepicker__header {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Custom styles for the calendar day */
+.custom-calendar-container .react-datepicker__day {
+  color: #333;
+}
+
+/* Custom styles for the selected day */
+.custom-calendar-container .react-datepicker__day--selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Custom styles for the today button */
+.custom-calendar-container .react-datepicker__today-button {
+  background-color: transparent;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+}
+
+
+/* Add more styles as needed */

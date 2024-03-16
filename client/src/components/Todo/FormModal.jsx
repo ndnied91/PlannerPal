@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { IoMdClose } from 'react-icons/io';
 
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 import OutsideClickHandler from 'react-outside-click-handler';
 import { useGlobalContext } from './todoContext';
@@ -83,10 +83,6 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
 
   const updateCategory = (e) => {
     setCategory(e);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDatePickerOpen(false);
   };
 
   return (
@@ -185,21 +181,25 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                     {/* time */}
 
                     <div className="dropdowns">
-                      <div
-                        onMouseLeave={handleMouseLeave}
-                        className="flex flex-col max-w-fit"
-                      >
+                      <div className="flex flex-col max-w-fit">
                         <DatePicker
                           showTimeSelect
                           selected={date}
                           required
                           placeholderText="Due date.."
-                          className="text-gray-600 text-sm font-semibold pb-3 pt-3 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                          className="text-gray-600 text-sm font-semibold pb-3 pt-3 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                           onChange={(date) => setDate(date)}
                           dateFormat="MMMM d, yyyy h:mmaa"
                           open={isDatePickerOpen}
                           onFocus={() => setIsDatePickerOpen(true)}
                           onClose={() => setIsDatePickerOpen(false)}
+                          calendarContainer={({ className, children }) => (
+                            <div
+                              className={`custom-calendar-container ${className}`}
+                            >
+                              {children}
+                            </div>
+                          )}
                         />
                       </div>
                       {/* here */}
