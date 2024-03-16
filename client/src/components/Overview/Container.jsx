@@ -126,6 +126,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
         {showNotesModal && (
           <OverviewNotesModal
             setShowNotesModal={setShowNotesModal}
+            showNotesModal={showNotesModal}
             event={event}
           />
         )}
@@ -133,6 +134,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
         {showItemsModal && (
           <OverviewModal
             setItemsShowModal={setItemsShowModal}
+            showItemsModal={showItemsModal}
             event={event}
             userSettings={userSettings}
             setUserSettings={setUserSettings}
@@ -140,7 +142,11 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
         )}
 
         {showCalModal && (
-          <OverviewCalModal setShowCalModal={setShowCalModal} event={event} />
+          <OverviewCalModal
+            setShowCalModal={setShowCalModal}
+            showCalModal={showCalModal}
+            event={event}
+          />
         )}
       </section>
     </div>

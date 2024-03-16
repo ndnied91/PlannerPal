@@ -4,6 +4,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 const OverviewModal = ({
   setItemsShowModal,
+  showItemsModal,
   event,
   userSettings,
   setUserSettings,
@@ -34,8 +35,9 @@ const OverviewModal = ({
             >
               <SingleItemOverview
                 item={event}
-                style={'flex  items-center p-5 bg-white justify-between'}
+                style={'flex items-center p-5 bg-white justify-between'}
                 setItemsShowModal={setItemsShowModal}
+                showItemsModal={showItemsModal}
                 userSettings={userSettings}
                 setUserSettings={setUserSettings}
               />

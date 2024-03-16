@@ -6,7 +6,7 @@ import { parseISO } from 'date-fns';
 
 import renderer from '../CountdownTimer';
 import Countdown from 'react-countdown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGlobalContext } from '../Todo/todoContext';
 import Select from '../Todo/Select';
 
@@ -14,10 +14,23 @@ export const SingleItemOverview = ({
   item,
   style,
   setItemsShowModal,
+  showItemsModal,
   userSettings,
   setUserSettings,
 }) => {
   const { removeItem, updateStatus, updateContent } = useGlobalContext();
+
+  useEffect(() => {
+    if (showItemsModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showItemsModal]);
 
   const [task, setTask] = useState({
     title: item.title,

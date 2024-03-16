@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { toast } from 'react-toastify';
 import '../Notes/RichMediaEditor/style.css';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
-const SingleNoteOverview = ({ setShowNotesModal, item }) => {
+const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
   const [body, setBody] = useState(item.body);
   const [title, setTitle] = useState(item.title);
+
+  useEffect(() => {
+    if (showNotesModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showNotesModal]);
 
   const saveItem = async () => {
     if (title === undefined && body === undefined) {

@@ -4,9 +4,7 @@ import { MdOutlineClose } from 'react-icons/md';
 import OutsideClickHandler from 'react-outside-click-handler';
 import SingleNoteOverview from './SingleNoteOverview';
 
-import { toast } from 'react-toastify';
-
-const OverviewNotesModal = ({ setShowNotesModal, event }) => {
+const OverviewNotesModal = ({ setShowNotesModal, showNotesModal, event }) => {
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
@@ -34,6 +32,7 @@ const OverviewNotesModal = ({ setShowNotesModal, event }) => {
               <SingleNoteOverview
                 item={event}
                 setShowNotesModal={setShowNotesModal}
+                showNotesModal={showNotesModal}
               />
             </OutsideClickHandler>
           </div>

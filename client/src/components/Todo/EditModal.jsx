@@ -1,16 +1,30 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import { IoMdClose } from 'react-icons/io';
 import FormEditModal from './FormEditModal';
+import React, { useEffect } from 'react';
 
 const EditModal = ({
   setShowEditModal,
   userSettings,
   setUserSettings,
   updateItemsAfterEditTodo,
+  showEditModal,
 }) => {
+  useEffect(() => {
+    if (showEditModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showEditModal]);
+
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity z-10"></div>
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-40 transition-opacity z-10"></div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex items-center justify-center p-4 text-center sm:items-center sm:p-0 h-full">
           <div className="transform  bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center overflow-visible w-full md:w-[32rem]">
@@ -43,5 +57,3 @@ const EditModal = ({
 };
 
 export default EditModal;
-
-import React from 'react';

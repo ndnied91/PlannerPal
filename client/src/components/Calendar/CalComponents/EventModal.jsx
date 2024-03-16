@@ -6,8 +6,13 @@ import { toast } from 'react-toastify';
 const labelsClasses = ['indigo', 'gray', 'green', 'blue', 'red', 'purple'];
 
 const EventModal = ({ userContext }) => {
-  const { setShowEventModal, daySelected, selectedEvent, setSavedEvents } =
-    useContext(GlobalContext);
+  const {
+    setShowEventModal,
+    showEventModal,
+    daySelected,
+    selectedEvent,
+    setSavedEvents,
+  } = useContext(GlobalContext);
 
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '');
   const [description, setDescription] = useState(
@@ -49,6 +54,18 @@ const EventModal = ({ userContext }) => {
       document.removeEventListener('keydown', listener);
     };
   }, []);
+
+  useEffect(() => {
+    if (showEventModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showEventModal]);
 
   const handleSubmit = async (e) => {
     if (title.length === 0) return;

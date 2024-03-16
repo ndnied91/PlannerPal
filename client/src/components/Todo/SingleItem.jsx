@@ -179,6 +179,7 @@ export const SingleItem = ({
           {showEditModal && userSettings ? (
             <EditModal
               setShowEditModal={setShowEditModal}
+              showEditModal={showEditModal}
               userSettings={userSettings}
               setUserSettings={setUserSettings}
               updateItemsAfterEditTodo={updateItemsAfterEditTodo}

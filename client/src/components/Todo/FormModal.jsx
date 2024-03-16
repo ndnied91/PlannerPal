@@ -13,6 +13,18 @@ import Select from './Select';
 import { useEffect } from 'react';
 
 const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showModal]);
+
   const { filteredBy } = useGlobalContext();
   const [date, setDate] = useState('');
   const [category, setCategory] = useState(filteredBy);
@@ -87,13 +99,13 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
         } `}
       ></div>
       <div
-        className={`fixed inset-0 z-10 w-screen overflow-y-auto ${
+        className={`fixed inset-0 z-10 m-4 m:w-screen overflow-y-auto ${
           showModal
             ? 'opacity-100 translate-y-0 duration-50'
             : 'opacity-0 translate-y-2 invisible duration-50'
         }`}
       >
-        <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+        <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0 ">
           <OutsideClickHandler
             onOutsideClick={() => {
               setShowModal(false);
@@ -106,7 +118,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
               });
             }}
           >
-            <div className="relative transform overflow-visible  bg-slate-00 text-left shadow-xl transition-all sm:my-8 sm:max-w-4xl self-center w-full md:w-[32rem]">
+            <div className="relative transform  overflow-visible text-left transition-all sm:max-w-4xl w-screen p-4 md:w-[32rem]">
               <div className="font-bold text-4xl p-2 pt-0 pb-0 flex justify-end items-center bg-gray-100 ">
                 <button
                   onClick={() => setShowModal(false)}
@@ -249,7 +261,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
 
                     <div className="flex justify-center">
                       <button
-                        className="block w-96 text-white text-center rounded-md bg-gray-800 px-3 py-2 h-12 text-sm font-semibold shadow-sm hover:opacity-90 sm:mt-0 tracking-widest"
+                        className="block m:w-96 w-full text-white text-center rounded-md bg-gray-800 px-3 py-2 h-12 text-sm font-semibold shadow-sm hover:opacity-90 sm:mt-0 tracking-widest"
                         type="submit"
                       >
                         {currentPane === 'todo'
