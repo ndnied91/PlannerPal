@@ -83,7 +83,7 @@ const container = ({
         {/* title */}
         <div className={`mx-4 md:m-0 ${!loading ? 'block' : 'hidden'}`}>
           <Editor
-            apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
+            apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
             value={noteTitle}
             id="title"
             init={{
@@ -105,7 +105,7 @@ const container = ({
           {/* title */}
 
           <Editor
-            apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
+            apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
             value={content}
             className="w-min"
             init={{

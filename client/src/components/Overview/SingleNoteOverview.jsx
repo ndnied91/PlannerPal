@@ -52,7 +52,7 @@ const SingleNoteOverview = ({ setShowNotesModal, item }) => {
     <div className="p-4">
       <div className="">
         <Editor
-          apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
+          apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
           value={title}
           id="title"
           init={{
@@ -70,7 +70,7 @@ const SingleNoteOverview = ({ setShowNotesModal, item }) => {
           onKeyDown={handleKeyPress}
         />
         <Editor
-          apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
+          apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
           value={body}
           init={{
             height: 200,
