@@ -46,10 +46,7 @@ const Select = ({
   };
 
   return (
-    <div
-      className="custom-dropdown-container tracking-wider text-sm font-normal pr-2 text-justify"
-      id="sdfsdfs"
-    >
+    <div className="custom-dropdown-container tracking-wider text-sm font-normal text-justify">
       <div
         className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}

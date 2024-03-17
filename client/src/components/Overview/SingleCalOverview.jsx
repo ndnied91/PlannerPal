@@ -89,10 +89,10 @@ const SingleItemOverview = ({
 
   return (
     <section>
-      <div className="fixed left-0 top-0 flex text-center w-screen h-screen justify-center items-center bg-gray-400 bg-opacity-50">
+      <div className="fixed left-0 top-0 flex text-left w-screen h-screen justify-center items-center bg-gray-400 bg-opacity-50">
         <div
           ref={modalRef}
-          className="bg-white shadow-2xl m-4 md:m-0 md:max-w-[38rem] w-full max-h-full overflow-y-auto"
+          className="bg-white shadow-2xl md:m-0 md:max-w-[38rem] w-max-h-full overflow-y-auto w-screen h-screen md:h-fit "
         >
           <form
             onSubmit={handleSubmit}
@@ -101,8 +101,8 @@ const SingleItemOverview = ({
             }}
             className=""
           >
-            <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
-              <span className="material-icons-outlined text-gray-400">
+            <header className="bg-gray-100 px-4 py-2 flex justify-between items-center ">
+              <span className="material-icons-outlined text-gray-400 ">
                 drag_handle
               </span>
               <div>
@@ -129,8 +129,8 @@ const SingleItemOverview = ({
                 </button>
               </div>
             </header>
-            <div className="p-3 customMax">
-              <div className="items-end gap-y-7">
+            <div className="p-3 customMax mt-[5%] md:mt-0">
+              <div className="grid grid-cols-1/5 items-end gap-y-7">
                 <div></div>
                 <input
                   type="text"
@@ -189,10 +189,10 @@ const SingleItemOverview = ({
                     : ''}
                 </div>
               </div>
-              <footer className="flex justify-end border-t pt-4">
+              <footer className="flex justify-center mt-10 md:mt-0 md:justify-end border-t pt-4">
                 <button
                   type="submit"
-                  className="bg-gray-800 hover:bg-blue-600 px-6 py-2 rounded text-white "
+                  className="bg-gray-800 hover:bg-blue-600 px-6 py-2 rounded text-white w-11/12 md:w-fit"
                 >
                   Update
                 </button>

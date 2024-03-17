@@ -93,20 +93,46 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
             className="fixed inset-0 bg-gray-500 bg-opacity-75 z-0"
             onClick={() => setShowModal(false)}
           ></div>
-          <div className="relative z-10 bg-white w-full max-w-xl rounded-md shadow-lg p-4 m-4">
+          <div className="relative z-10 bg-white h-full  md:h-fit w-full max-w-xl rounded-md shadow-lg ">
             <OutsideClickHandler onOutsideClick={() => setShowModal(false)}>
-              <div className="flex justify-end">
+              <div className="flex justify-end bg-slate-200 h-12 pr-2">
                 <button
                   onClick={() => setShowModal(false)}
                   type="button"
-                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none "
                 >
                   <IoMdClose className="text-2xl" />
                 </button>
               </div>
-              <div className="mt-4">
+
+              <section className="flex m-4 gap-2 mt-[20%] md:mt-8">
+                <div
+                  onClick={() => setCurrentPane('todo')}
+                  className={`${
+                    currentPane === 'todo'
+                      ? 'bg-white text-sm capitalize font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
+                      : 'bg-white text-sm capitalize  text-gray-400 border hover:bg-gray-100 duration-200'
+                  } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300`}
+                >
+                  {' '}
+                  todo
+                </div>
+                <div
+                  className={`${
+                    currentPane === 'countdown'
+                      ? 'bg-white text-sm capitalize font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
+                      : 'bg-white text-sm capitalize text-gray-400 border rounded-sm hover:bg-gray-100 duration-200'
+                  } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300   `}
+                  onClick={() => setCurrentPane('countdown')}
+                >
+                  {' '}
+                  countdown
+                </div>
+              </section>
+
+              <div className="">
                 {/* Your modal content here */}
-                <form onSubmit={handleSubmit} className="mt-4">
+                <form onSubmit={handleSubmit} className="p-4 ">
                   <div className="mb-4">
                     <input
                       className="pt-3 text-gray-600 text-md font-semibold pb-2 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"

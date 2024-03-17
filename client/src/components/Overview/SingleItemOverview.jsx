@@ -67,12 +67,12 @@ export const SingleItemOverview = ({
 
   return (
     <div className={style}>
-      <form onSubmit={handleSubmit} className="">
-        <section className="todoInfo text-gray-900">
+      <form onSubmit={handleSubmit} className="mt-[10%] md:mt-0">
+        <section className="text-gray-900">
           <div>
-            <div className="font-bold capitalize">
+            <div className="font-bold capitalize ">
               <input
-                className="cursor-pointer capitalize pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="cursor-pointer w-full capitalize pt-3 mb-4 text-gray-600 text-sm font-semibold pb-2 border-2 border-gray-200 md:min-w-96 focus:outline-none focus:ring-0 focus:border-blue-500"
                 name="title"
                 required
                 value={task.title}
@@ -85,7 +85,7 @@ export const SingleItemOverview = ({
               selected={parseISO(date)}
               required
               placeholderText="Due date.."
-              className="text-gray-600 text-sm font-semibold pb-3 pt-3 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="text-gray-600 text-sm font-semibold pb-3 pt-3 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={(date) => setDate(date.toISOString())}
               dateFormat="MMMM d, yyyy h:mmaa"
               calendarContainer={({ className, children }) => (
@@ -97,7 +97,7 @@ export const SingleItemOverview = ({
 
             <Select
               textPrompt={'Select'}
-              className="relative mt-14 p-3 text-sm font-semibold cursor-pointer w-32 bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="relative mt-14 p-3 w-full text-sm  font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               userSettings={userSettings}
               setUserSettings={setUserSettings}
               updatable={false}
@@ -107,7 +107,7 @@ export const SingleItemOverview = ({
 
             <div className="font-light pt-4 capitalize text-xs text-gray-900">
               <textarea
-                className="cursor-pointer pt-3 text-gray-600 text-sm font-semibold pb-2  border-2 border-gray-200 md:min-w-60 md:!w-96 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="cursor-pointer pt-3 text-gray-600 text-sm font-semibold pb-2  border-2 border-gray-200 w-full focus:outline-none focus:ring-0 focus:border-blue-500"
                 name="description"
                 required
                 value={task.description}

@@ -4,9 +4,13 @@ import { toast } from 'react-toastify';
 import '../Notes/RichMediaEditor/style.css';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
+import { useRef } from 'react';
 const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
   const [body, setBody] = useState(item.body);
   const [title, setTitle] = useState(item.title);
+
+  const [editorHeight, setEditorHeight] = useState('400px'); // Default height for desktop
+  const isMobile = window.innerWidth < 768; // Assuming 768px is the breakpoint for mobile devices
 
   useEffect(() => {
     if (showNotesModal) {
@@ -19,6 +23,20 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
       document.body.style.overflow = 'auto';
     };
   }, [showNotesModal]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newHeight = isMobile ? 400 : 200; // Adjust the heights as needed
+      setEditorHeight(newHeight);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMobile]);
 
   const saveItem = async () => {
     if (title === undefined && body === undefined) {
@@ -61,7 +79,7 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-screen md:h-fit w-screen md:w-fit">
       <div className="">
         <Editor
           apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
@@ -85,7 +103,7 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
           apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
           value={body}
           init={{
-            height: 200,
+            height: editorHeight,
             menubar: false,
             placeholder: 'Add text here..',
           }}
