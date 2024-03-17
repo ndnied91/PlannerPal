@@ -83,9 +83,16 @@ export const SingleItemOverview = ({
             <DatePicker
               showTimeSelect
               selected={parseISO(date)}
+              required
+              placeholderText="Due date.."
+              className="text-gray-600 text-sm font-semibold pb-3 pt-3 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={(date) => setDate(date.toISOString())}
               dateFormat="MMMM d, yyyy h:mmaa"
-              className="absolute cursor-pointer pt-3 border-0 text-gray-600 text-sm font-semibold pb-2  border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
+              calendarContainer={({ className, children }) => (
+                <div className={`custom-calendar-container ${className}`}>
+                  {children}
+                </div>
+              )}
             />
 
             <Select

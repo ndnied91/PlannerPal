@@ -130,7 +130,7 @@ const SingleItemOverview = ({
               </div>
             </header>
             <div className="p-3 customMax">
-              <div className="grid grid-cols-1/5 items-end gap-y-7">
+              <div className="items-end gap-y-7">
                 <div></div>
                 <input
                   type="text"
@@ -149,8 +149,14 @@ const SingleItemOverview = ({
                   selected={new Date(date)}
                   onChange={(date) => setDate(date.toISOString())}
                   dateFormat="MMMM d, yyyy h:mmaa"
-                  className="cursor-pointer pt-3 border-0 text-gray-600 text-sm font-semibold pb-2 border-b-2 border-gray-200 !w-60 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  calendarContainer={({ className, children }) => (
+                    <div className={`custom-calendar-container ${className}`}>
+                      {children}
+                    </div>
+                  )}
                 />
+
                 <span className="material-icons-outlined text-gray-400">
                   segment
                 </span>
