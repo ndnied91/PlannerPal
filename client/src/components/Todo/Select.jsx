@@ -46,7 +46,10 @@ const Select = ({
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider text-sm font-normal pr-2 ">
+    <div
+      className="custom-dropdown-container tracking-wider text-sm font-normal pr-2 text-justify"
+      id="sdfsdfs"
+    >
       <div
         className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
@@ -56,10 +59,7 @@ const Select = ({
           <p className="capitalize tracking-wider text-gray-700">
             {selectedOption}
           </p>
-          <span
-            className="arrow-icon text-gray-600 tracking-widest flex items-center "
-            id="icon"
-          >
+          <span className="arrow-icon text-gray-600 tracking-widest flex !items-start">
             {renderIcon()}
           </span>
         </div>
@@ -70,7 +70,7 @@ const Select = ({
                 return (
                   <div
                     key={option}
-                    className="p-2  items-center cursor-pointer hover:bg-gray-100 "
+                    className="p-2 items-start cursor-pointer hover:bg-gray-100 "
                     onClick={() => handleSelectOption(option)}
                   >
                     <p className="capitalize">{option}</p>

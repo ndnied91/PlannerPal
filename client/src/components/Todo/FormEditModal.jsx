@@ -55,7 +55,7 @@ const FormEditModal = ({
   };
 
   return (
-    <div className="bg-white px-4 pb-4 !pt-0 sm:p-6 sm:pb-4 h-fit">
+    <div className="bg-white px-4 pb-4 !pt-0 sm:p-6 sm:pb-4 h-fit bg-red-300">
       <div className="modalClass">
         <div className="mt-3 text-center sm:mt-0 sm:text-left">
           <div className="mt-2">

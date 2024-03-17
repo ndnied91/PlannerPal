@@ -92,7 +92,7 @@ const SingleItemOverview = ({
       <div className="fixed left-0 top-0 flex text-center w-screen h-screen justify-center items-center bg-gray-400 bg-opacity-50">
         <div
           ref={modalRef}
-          className="bg-white shadow-2xl  m-4 md:m-0 md:max-w-[38rem] w-full max-h-full overflow-y-auto"
+          className="bg-white shadow-2xl m-4 md:m-0 md:max-w-[38rem] w-full max-h-full overflow-y-auto"
         >
           <form
             onSubmit={handleSubmit}

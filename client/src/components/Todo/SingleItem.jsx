@@ -7,7 +7,6 @@ import {
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { useGlobalContext } from './todoContext';
 import { RiPushpinLine, RiUnpinLine } from 'react-icons/ri';
-import OutsideClickHandler from 'react-outside-click-handler';
 
 import EditModal from './EditModal';
 import renderer from '../CountdownTimer';
