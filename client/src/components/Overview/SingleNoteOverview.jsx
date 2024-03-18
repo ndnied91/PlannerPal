@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import '../Notes/RichMediaEditor/style.css';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
-import { useRef } from 'react';
+
 const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
   const [body, setBody] = useState(item.body);
   const [title, setTitle] = useState(item.title);
@@ -62,15 +62,15 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
     }
   };
 
-  const deleteItem = async () => {
-    try {
-      await customFetch.delete(`notes/${item._id}`);
-      toast.success('Item updated deleted!');
-      setShowNotesModal(false);
-    } catch (e) {
-      toast.error(e.response.data.msg || 'Demo Only!');
-    }
-  };
+  // const deleteItem = async () => {
+  //   try {
+  //     await customFetch.delete(`notes/${item._id}`);
+  //     toast.success('Item updated deleted!');
+  //     setShowNotesModal(false);
+  //   } catch (e) {
+  //     toast.error(e.response.data.msg || 'Demo Only!');
+  //   }
+  // };
 
   const handleKeyPress = (e) => {
     if (e.keyCode === 13) {
@@ -110,15 +110,12 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
           onEditorChange={(e) => setBody(e)}
         />
       </div>
-      <div className="float-right p-2 flex items-center">
+      <div className="float-right p-2 flex items-center w-full md:w-fit ">
         <div
           onClick={saveItem}
-          className={`cursor-pointer text-sm outline outline-2 tracking-wider outline-gray-600 rounded-md w-fit flex items-center h-10 p-1 `}
+          className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer"
         >
           Update
-        </div>
-        <div onClick={deleteItem} className={`cursor-pointer p-3 mt-1 `}>
-          <FaRegTrashAlt className="text-2xl" />
         </div>
       </div>
     </div>

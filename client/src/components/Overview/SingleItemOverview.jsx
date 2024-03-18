@@ -70,7 +70,7 @@ export const SingleItemOverview = ({
       <form onSubmit={handleSubmit} className="mt-[10%] md:mt-0">
         <section className="text-gray-900">
           <div>
-            <div className="font-bold capitalize ">
+            <div className="font-bold capitalize">
               <input
                 className="cursor-pointer w-full capitalize pt-3 mb-4 text-gray-600 text-sm font-semibold pb-2 border-2 border-gray-200 md:min-w-96 focus:outline-none focus:ring-0 focus:border-blue-500"
                 name="title"
@@ -85,9 +85,10 @@ export const SingleItemOverview = ({
               selected={parseISO(date)}
               required
               placeholderText="Due date.."
-              className="text-gray-600 text-sm font-semibold pb-3 pt-3 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              // className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={(date) => setDate(date.toISOString())}
               dateFormat="MMMM d, yyyy h:mmaa"
+              className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               calendarContainer={({ className, children }) => (
                 <div className={`custom-calendar-container ${className}`}>
                   {children}
@@ -97,7 +98,7 @@ export const SingleItemOverview = ({
 
             <Select
               textPrompt={'Select'}
-              className="relative mt-14 p-3 w-full text-sm  font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="relative mt-14 p-3 text-sm  font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               userSettings={userSettings}
               setUserSettings={setUserSettings}
               updatable={false}

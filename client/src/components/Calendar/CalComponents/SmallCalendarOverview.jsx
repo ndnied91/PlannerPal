@@ -12,15 +12,13 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
     setCurrentMonth(getMonth(currentMonthIdx));
   }, [currentMonthIdx]);
 
-  const {
-    monthIndex,
-    setSmallCalendarMonth,
-    setDaySelected,
-    daySelected,
-    savedEvents,
-  } = useContext(GlobalContext);
+  const { monthIndex, daySelected, savedEvents } = useContext(GlobalContext);
 
   let tempArr = savedEvents;
+
+  useEffect(() => {
+    console.log('triggered update via savedEvents');
+  }, [savedEvents]);
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);
@@ -45,14 +43,21 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
       return '';
     }
   }
+
   const renderDot = (day) => {
     return tempArr.some((i) => {
-      let savedEventDate = new Date(i.day);
-      if (day.$d.toString() == savedEventDate.toString()) {
-        tempArr = tempArr.filter((item) => {
-          return new Date(item.day).toString() !== savedEventDate.toString();
-        });
+      const savedEventDate = new Date(i.day)
+        .toLocaleString('en-US', {
+          month: 'short',
+          day: '2-digit',
+          year: 'numeric',
+        })
+        .replace(/,/g, '');
 
+      if (day.$d.toString().includes(savedEventDate)) {
+        tempArr = tempArr.filter(
+          (item) => new Date(item.day).toString() !== savedEventDate.toString()
+        );
         return true;
       }
     });

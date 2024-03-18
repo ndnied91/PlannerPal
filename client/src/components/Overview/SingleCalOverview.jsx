@@ -12,7 +12,7 @@ const SingleItemOverview = ({
   setShowCalModal,
   showCalModal,
 }) => {
-  const { daySelected } = useContext(GlobalContext);
+  const { daySelected, setSavedEvents } = useContext(GlobalContext);
   const modalRef = useRef(null);
 
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '');
@@ -65,10 +65,11 @@ const SingleItemOverview = ({
 
     if (selectedEvent.calCode) {
       try {
-        await customFetch.patch(
+        const response = await customFetch.patch(
           `items/update/${selectedEvent.calCode}`,
           calendarEvent
         );
+        console.log(response);
       } catch (e) {
         console.log(e);
         toast.error('Error occurred with updating event, please try again');
@@ -78,7 +79,12 @@ const SingleItemOverview = ({
     }
 
     try {
-      await customFetch.patch(`cal/${calendarEvent._id}`, calendarEvent);
+      const { data } = await customFetch.patch(
+        `cal/${calendarEvent._id}`,
+        calendarEvent
+      );
+
+      setSavedEvents(data.items);
       toast.success('Event updated!');
     } catch (e) {
       toast.error(e.response.data.msg);
@@ -99,12 +105,8 @@ const SingleItemOverview = ({
             onKeyDown={(event) => {
               event.keyCode === 13 ? handleSubmit(event) : null;
             }}
-            className=""
           >
-            <header className="bg-gray-100 px-4 py-2 flex justify-between items-center ">
-              <span className="material-icons-outlined text-gray-400 ">
-                drag_handle
-              </span>
+            <header className="bg-gray-100 px-4 py-2 flex justify-end items-center">
               <div>
                 <span
                   onClick={async () => {
@@ -129,21 +131,18 @@ const SingleItemOverview = ({
                 </button>
               </div>
             </header>
-            <div className="p-3 customMax mt-[5%] md:mt-0">
-              <div className="grid grid-cols-1/5 items-end gap-y-7">
-                <div></div>
+            <div className="p-3 customMax mt-[20%] md:mt-0">
+              <div className="flex flex-col items-start">
                 <input
                   type="text"
                   name="title"
                   placeholder="Add title"
                   value={title}
                   required
-                  className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className="text-gray-600 text-xl font-semibold mb-4 pb-2 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <span className="material-icons-outlined text-gray-400">
-                  schedule
-                </span>
+
                 <DatePicker
                   showTimeSelect
                   selected={new Date(date)}
@@ -157,27 +156,22 @@ const SingleItemOverview = ({
                   )}
                 />
 
-                <span className="material-icons-outlined text-gray-400">
-                  segment
-                </span>
                 <input
                   type="text"
                   name="description"
                   placeholder="Add a description"
                   value={description}
-                  className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className="pt-3 text-gray-600 pb-2 mt-3 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setDescription(e.target.value)}
                 />
-                <span className="material-icons-outlined text-gray-400 mb-3">
-                  bookmark_border
-                </span>
+
                 <div className="flex gap-x-2 mb-3">
                   {!selectedEvent.calCode
                     ? labelsClasses.map((lblClass, i) => (
                         <span
                           key={i}
                           onClick={() => setSelectedLabel(lblClass)}
-                          className={`bg-${lblClass}-500 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer`}
+                          className={`bg-${lblClass}-500 w-6 h-6 mt-3 rounded-full flex items-center justify-center cursor-pointer`}
                         >
                           {selectedLabel === lblClass && (
                             <span className="material-icons-outlined text-white text-sm">
@@ -189,10 +183,10 @@ const SingleItemOverview = ({
                     : ''}
                 </div>
               </div>
-              <footer className="flex justify-center mt-10 md:mt-0 md:justify-end border-t pt-4">
+              <footer className="flex justify-center mt-10 md:mt-0 md:justify-end md:border-t md:pt-4">
                 <button
                   type="submit"
-                  className="bg-gray-800 hover:bg-blue-600 px-6 py-2 rounded text-white w-11/12 md:w-fit"
+                  className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white md:w-fit cursor-pointer"
                 >
                   Update
                 </button>

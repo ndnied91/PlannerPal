@@ -245,6 +245,7 @@ form h4 {
 .react-datepicker__input-container input {
     width: 100%;
     float: left;
+    margin-bottom: 2px;
 }
 
 
@@ -392,6 +393,7 @@ form h4 {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  width: fit-content;
 }
 
 /* Custom styles for the calendar */

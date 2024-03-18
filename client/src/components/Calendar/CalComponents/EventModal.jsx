@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import GlobalContext from '../context/GlobalContext';
 import customFetch from '../../../utils/customFetch';
 import { toast } from 'react-toastify';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const labelsClasses = ['indigo', 'gray', 'green', 'blue', 'red', 'purple'];
 
@@ -9,12 +11,16 @@ const EventModal = ({ userContext }) => {
   const {
     setShowEventModal,
     showEventModal,
-    daySelected,
     selectedEvent,
     setSavedEvents,
+    daySelected,
   } = useContext(GlobalContext);
 
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '');
+  const [date, setDate] = useState(
+    selectedEvent ? new Date(selectedEvent?.day).toISOString() : daySelected
+  );
+
   const [description, setDescription] = useState(
     selectedEvent ? selectedEvent.description : ''
   );
@@ -76,7 +82,7 @@ const EventModal = ({ userContext }) => {
       title,
       description,
       label: selectedLabel,
-      day: daySelected.valueOf(),
+      day: new Date(date).getTime(),
       _id: selectedEvent ? selectedEvent._id : null,
     };
 
@@ -123,19 +129,16 @@ const EventModal = ({ userContext }) => {
       <div className="h-screen w-screen fixed left-0 top-0 flex justify-center items-center z-20 ">
         <div
           ref={modalRef}
-          className="bg-white m-4 shadow-2xl w-full max-w-screen-md md:m-2"
+          className="bg-white h-screen md:h-fit md:shadow-2xl w-full max-w-screen-md md:m-2"
         >
           <form
             onSubmit={handleSubmit}
             onKeyDown={(event) => {
               event.keyCode === 13 ? handleSubmit(event) : null;
             }}
-            className="bg-white rounded-lg shadow-2xl"
+            className="bg-white rounded-lg md:shadow-2xl"
           >
-            <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
-              <span className="material-icons-outlined text-gray-400">
-                drag_handle
-              </span>
+            <header className="bg-gray-100 px-4 py-2 flex justify-end items-center">
               <div>
                 {selectedEvent && (
                   <span
@@ -164,7 +167,7 @@ const EventModal = ({ userContext }) => {
               </div>
             </header>
             <div className="p-3 customMax">
-              <div className="grid grid-cols-1/5 items-end gap-y-7">
+              <div className="flex flex-col items-start gap-y-7">
                 <div></div>
                 <input
                   type="text"
@@ -175,13 +178,26 @@ const EventModal = ({ userContext }) => {
                   className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <span className="material-icons-outlined text-gray-400">
+                {/* <span className="material-icons-outlined text-gray-400">
                   schedule
-                </span>
-                <p>{daySelected.format('dddd, MMMM DD')}</p>
+                </span> */}
+
+                <DatePicker
+                  showTimeSelect
+                  selected={new Date(date)}
+                  onChange={(date) => setDate(date.toISOString())}
+                  dateFormat="MMMM d, yyyy h:mmaa"
+                  className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  calendarContainer={({ className, children }) => (
+                    <div className={`custom-calendar-container ${className}`}>
+                      {children}
+                    </div>
+                  )}
+                />
+                {/* 
                 <span className="material-icons-outlined text-gray-400 ">
                   segment
-                </span>
+                </span> */}
                 <input
                   type="text"
                   name="description"
@@ -190,9 +206,9 @@ const EventModal = ({ userContext }) => {
                   className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setDescription(e.target.value)}
                 />
-                <span className="material-icons-outlined text-gray-400 mb-3">
+                {/* <span className="material-icons-outlined text-gray-400 mb-3">
                   bookmark_border
-                </span>
+                </span> */}
                 <div className="flex gap-x-2 mb-3">
                   {labelsClasses.map((lblClass, i) => (
                     <span

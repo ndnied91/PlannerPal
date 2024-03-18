@@ -25,8 +25,6 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
   const [showCalModal, setShowCalModal] = useState(false); //notes
   const [event, setEvent] = useState('');
 
-  console.log(items);
-
   useEffect(() => {
     const setOrder = async () => {
       try {

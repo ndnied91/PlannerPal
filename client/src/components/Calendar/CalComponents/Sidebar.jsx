@@ -20,15 +20,14 @@ const Sidebar = () => {
 
     return savedEvents.map((i) => {
       let eventDate = new Date(i.day).toString();
+      console.log(eventDate);
 
       if (eventDate.includes(formattedDate)) {
-        const time = new Date(i.day);
-        const hours = time.getUTCHours();
-        const minutes = time.getUTCMinutes();
-        const period = hours >= 12 ? 'PM' : 'AM';
-        const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
-        const formattedMinutes = minutes.toString().padStart(2, '0');
-        const formattedTime = `${formattedHours}:${formattedMinutes} ${period}`;
+        const dateObj = new Date(i.day);
+        const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+        const formattedTime = dateObj.toLocaleString('en-US', options);
+
+        console.log(formattedTime);
 
         return (
           <div
