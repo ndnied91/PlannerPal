@@ -354,7 +354,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
           </div>
 
           <Form
-            style={`mb-4 md:mb-0 cursor-pointer text-xl bg-neutral tracking-widest text-white p-4 w-56 md:w-[24rem] rounded-lg hover:shadow-xl hover:bg-gray-950 duration-300`}
+            style={`mb-4 md:mb-0 cursor-pointer text-xl bg-primary tracking-widest text-white p-4 w-56 md:w-[24rem] rounded-lg hover:shadow-xl hover:bg-gray-950 duration-300`}
             text={'Add item'}
             userSettings={userSettings}
             setUserSettings={setUserSettings}
