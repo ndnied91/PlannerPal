@@ -8,18 +8,21 @@ const PreviewModal = ({ previewEvents, popupPosition }) => {
       {popupPosition !== '' ? (
         <div
           style={{
-            top: upDown + 70,
-            left: leftRight,
+            top: upDown + 80,
+            left: leftRight + 20,
           }}
-          className={`z-50 h-16 capitalize w-fit rounded-md shadow-md bg-slate-300 duration-300 absolute p-5 ${
+          className={`capitalize w-fit rounded-md shadow-md bg-red-100 duration-300 absolute p-5 ${
             previewEvents.length > 0 ? 'opacity-100' : 'opacity-0 invisible'
           }`}
         >
-          <div className="animate-pulse flex space-x-4">
+          <div className="animate-pulse flex flex-col space-y-4 ">
             {previewEvents.map((item) => {
               return (
                 <div key={item._id}>
-                  <Popover>{item.title}</Popover>
+                  <Popover className="">
+                    {' '}
+                    <div className="text-sm tracking-wide">- {item.title}</div>
+                  </Popover>
                 </div>
               );
             })}

@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import GlobalContext from '../context/GlobalContext';
 import { getMonth } from '../../../utils/util';
 import { LuDot } from 'react-icons/lu';
-import PreviewModal from './PreviewModal';
 
 export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
   const [currentMonthIdx, setCurrentMonthIdx] = useState(dayjs().month());
@@ -15,10 +14,6 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
   const { monthIndex, daySelected, savedEvents } = useContext(GlobalContext);
 
   let tempArr = savedEvents;
-
-  useEffect(() => {
-    console.log('triggered update via savedEvents');
-  }, [savedEvents]);
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);
@@ -67,9 +62,21 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
     let position = { upDown: e.clientY - 150, leftRight: e.clientX };
 
     setPopupPosition(position);
-    let filteredEvents = savedEvents.filter(
-      (user) => new Date(user.day).toString() === e.target.id
-    );
+    let filteredEvents = savedEvents.filter((user) => {
+      const savedEventDate = new Date(user.day).toLocaleString('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+      });
+
+      const targetDate = new Date(e.target.id).toLocaleString('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+      });
+
+      return savedEventDate === targetDate;
+    });
     setPreviewEvents(filteredEvents);
   };
 
