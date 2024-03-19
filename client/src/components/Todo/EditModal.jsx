@@ -90,9 +90,9 @@ const EditModal = ({
                 <IoMdClose className="text-2xl m-1" />
               </button>
             </div>
-            <div className="h-full mt-[20%] md:mt-0 px-4 pb-4 !pt-0 sm:p-12 sm:pb-8 ">
+            <div className="h-full mt-[5%] md:mt-0 px-4 pb-4 !pt-0 sm:p-12 sm:pb-8 ">
               <div className="">
-                <div className="mt-3 text-center sm:mt-0 sm:text-left h-full">
+                <div className="mt-3 sm:mt-0 sm:text-left h-full">
                   <div className="mt-2">
                     <div className="align-center">
                       <form onSubmit={handleSubmit}>

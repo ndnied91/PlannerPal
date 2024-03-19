@@ -4,11 +4,11 @@ import { toast } from 'react-toastify';
 import { IoMdClose } from 'react-icons/io';
 
 import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import { isMobile } from 'react-device-detect';
 
 import OutsideClickHandler from 'react-outside-click-handler';
 import { useGlobalContext } from './todoContext';
-
 import Select from './Select';
 import { useEffect } from 'react';
 
@@ -47,8 +47,8 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
       });
     }
   }, []);
+
   const [currentPane, setCurrentPane] = useState('todo');
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handleChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value });
@@ -93,8 +93,10 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
             className="fixed inset-0 bg-gray-500 bg-opacity-75 z-0"
             onClick={() => setShowModal(false)}
           ></div>
-          <div className="relative z-10 bg-white h-full  md:h-fit w-full max-w-xl rounded-md shadow-lg ">
-            <OutsideClickHandler onOutsideClick={() => setShowModal(false)}>
+          <div className="relative z-10 bg-white h-full md:h-fit w-full max-w-xl rounded-md shadow-lg ">
+            <OutsideClickHandler
+              onOutsideClick={() => (!isMobile ? setShowModal(false) : null)}
+            >
               <div className="flex justify-end bg-slate-200 h-12 pr-2">
                 <button
                   onClick={() => setShowModal(false)}
@@ -105,7 +107,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                 </button>
               </div>
 
-              <section className="flex m-4 gap-2 mt-[20%] md:mt-8">
+              <section className="flex m-4 gap-2 mt-[5%] md:mt-8">
                 <div
                   onClick={() => setCurrentPane('todo')}
                   className={`${
@@ -161,25 +163,16 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                   <div className="dropdowns">
                     <div className="flex flex-col w-max">
                       <DatePicker
-                        showTimeSelect
                         selected={date}
                         required
-                        placeholderText="Due date.."
-                        className="text-gray-600 text-sm font-semibold pb-3 pt-3 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        showTimeSelect
+                        placeholderText="Add a due date"
                         onChange={(date) => setDate(date)}
                         dateFormat="MMMM d, yyyy h:mmaa"
-                        open={isDatePickerOpen}
-                        onFocus={() => setIsDatePickerOpen(true)}
-                        onClose={() => setIsDatePickerOpen(false)}
-                        calendarContainer={({ className, children }) => (
-                          <div
-                            className={`custom-calendar-container ${className}`}
-                          >
-                            {children}
-                          </div>
-                        )}
+                        className="pt-3 text-gray-600 text-sm font-semibold pb-2 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                       />
                     </div>
+
                     <div className="flex items-center">
                       <Select
                         textPrompt={'Select'}

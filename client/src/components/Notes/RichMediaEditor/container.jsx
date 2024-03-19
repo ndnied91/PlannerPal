@@ -19,6 +19,22 @@ const container = ({
   setSelectedNote,
 }) => {
   const [loading, setLoading] = useState(true);
+  const [editorHeight, setEditorHeight] = useState('400px'); // Default height for desktop
+  const isMobile = window.innerWidth < 768; // Assuming 768px is the breakpoint for mobile devices
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newHeight = isMobile ? 400 : 200; // Adjust the heights as needed
+      setEditorHeight(newHeight);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMobile]);
 
   useEffect(() => {
     setContent(body);
@@ -109,7 +125,7 @@ const container = ({
             value={content}
             className="w-min"
             init={{
-              height: 500,
+              height: editorHeight,
               width: !isMobile ? 1200 : undefined,
               resize: 'both',
               autoresize: true,

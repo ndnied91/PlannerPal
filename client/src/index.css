@@ -213,6 +213,7 @@ form h4 {
 .react-datepicker-popper{
   position: relative !important;
   transform: unset !important;
+  width: max-content;
 }
 
 
@@ -425,6 +426,3 @@ form h4 {
   border: none;
   cursor: pointer;
 }
-
-
-/* Add more styles as needed */
