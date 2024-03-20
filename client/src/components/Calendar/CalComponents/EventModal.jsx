@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { MdOutlineClose } from 'react-icons/md';
+
 const labelsClasses = ['indigo', 'gray', 'green', 'blue', 'red', 'purple'];
 
 const EventModal = ({ userContext }) => {
@@ -138,8 +141,8 @@ const EventModal = ({ userContext }) => {
             }}
             className="bg-white rounded-lg md:shadow-2xl"
           >
-            <header className="bg-gray-100 px-4 py-2 flex justify-end items-center">
-              <div>
+            <header className="bg-gray-100 px-2 py-2 flex justify-end items-center ">
+              <div className="flex items-center">
                 {selectedEvent && (
                   <span
                     onClick={async () => {
@@ -156,65 +159,79 @@ const EventModal = ({ userContext }) => {
                     }}
                     className="material-icons-outlined text-gray-400 cursor-pointer"
                   >
-                    delete
+                    <FaRegTrashAlt className="cursor-pointer text-2xl text-gray-950 " />
                   </span>
                 )}
                 <button onClick={() => setShowEventModal(false)}>
-                  <span className="material-icons-outlined text-gray-400">
-                    close
-                  </span>
+                  <MdOutlineClose className="cursor-pointer text-3xl text-gray-950 " />
                 </button>
               </div>
             </header>
-            <div className="p-3 customMax">
-              <div className="flex flex-col items-start gap-y-7">
-                <div></div>
+            <div className="p-3 mt-[10%] md:mt-0">
+              <div className="flex flex-col items-start">
+                <div
+                  htmlFor="title"
+                  className="text-sm font-bold text-gray-400"
+                >
+                  Title
+                </div>
                 <input
                   type="text"
                   name="title"
                   placeholder="Add title"
                   value={title}
                   required
-                  className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className="text-gray-600 text-sm mb-4 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                {/* <span className="material-icons-outlined text-gray-400">
-                  schedule
-                </span> */}
 
-                <DatePicker
-                  showTimeSelect
-                  selected={new Date(date)}
-                  onChange={(date) => setDate(date.toISOString())}
-                  dateFormat="MMMM d, yyyy h:mmaa"
-                  className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                  calendarContainer={({ className, children }) => (
-                    <div className={`custom-calendar-container ${className}`}>
-                      {children}
-                    </div>
-                  )}
-                />
-                {/* 
-                <span className="material-icons-outlined text-gray-400 ">
-                  segment
-                </span> */}
+                <div>
+                  <div
+                    htmlFor="title"
+                    className="text-sm font-bold text-gray-400"
+                  >
+                    Due Date
+                  </div>
+                  <DatePicker
+                    showTimeSelect
+                    selected={new Date(date)}
+                    onChange={(date) => setDate(date.toISOString())}
+                    dateFormat="MMMM d, yyyy h:mmaa"
+                    className="text-gray-600 cursor-pointer text-sm border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                    calendarContainer={({ className, children }) => (
+                      <div className={`custom-calendar-container ${className}`}>
+                        {children}
+                      </div>
+                    )}
+                  />
+                </div>
+
+                <div
+                  htmlFor="title"
+                  className="text-sm font-bold text-gray-400 mt-3"
+                >
+                  Description
+                </div>
                 <input
                   type="text"
                   name="description"
                   placeholder="Add a description"
                   value={description}
-                  className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className="text-gray-600 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setDescription(e.target.value)}
                 />
-                {/* <span className="material-icons-outlined text-gray-400 mb-3">
-                  bookmark_border
-                </span> */}
-                <div className="flex gap-x-2 mb-3">
+                <div className="flex gap-x-2 mb-3 mt-3">
+                  <div
+                    htmlFor="title"
+                    className="text-sm font-bold text-gray-400 mt-3"
+                  >
+                    Label
+                  </div>
                   {labelsClasses.map((lblClass, i) => (
                     <span
                       key={i}
                       onClick={() => setSelectedLabel(lblClass)}
-                      className={`bg-${lblClass}-500 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer`}
+                      className={`bg-${lblClass}-500 w-6 h-6 mt-3 rounded-full flex items-center justify-center cursor-pointer`}
                     >
                       {selectedLabel === lblClass && (
                         <span className="material-icons-outlined text-white text-sm">
@@ -243,7 +260,7 @@ const EventModal = ({ userContext }) => {
               <footer className="flex justify-end border-t pt-4">
                 <button
                   type="submit"
-                  className="bg-gray-800 hover:bg-blue-600 px-6 py-2 rounded text-white "
+                  className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white md:w-fit cursor-pointer"
                 >
                   Save
                 </button>

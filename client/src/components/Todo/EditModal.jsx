@@ -6,7 +6,7 @@ import { parseISO } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useGlobalContext } from './todoContext';
-import OutsideClickHandler from 'react-outside-click-handler';
+import { MdOutlineClose } from 'react-icons/md';
 
 const EditModal = ({
   setShowEditModal,
@@ -73,7 +73,7 @@ const EditModal = ({
   return (
     <>
       {showEditModal && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-40 ">
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-10">
           <div
             ref={modalRef}
             className="bg-white w-full md:max-w-4xl h-screen md:w-fit md:h-fit"
@@ -87,7 +87,7 @@ const EditModal = ({
                 onClick={() => setShowEditModal(false)}
                 type="button"
               >
-                <IoMdClose className="text-2xl m-1" />
+                <MdOutlineClose className="text-2xl m-1 text-gray-950" />
               </button>
             </div>
             <div className="h-full mt-[5%] md:mt-0 px-4 pb-4 !pt-0 sm:p-12 sm:pb-8 ">
@@ -98,7 +98,7 @@ const EditModal = ({
                       <form onSubmit={handleSubmit}>
                         {/* title */}
                         <div className="mb-4">
-                          <label className="block text-gray-700 text-sm font-bold mb-2">
+                          <label className="text-sm font-bold text-gray-400 float-left">
                             Title
                           </label>
                           <input
@@ -113,8 +113,8 @@ const EditModal = ({
                           />
                         </div>
                         {/* description */}
-                        <div className="mb-4">
-                          <label className="block text-gray-700 text-sm font-bold mb-2">
+                        <div className="mb-1">
+                          <label className="text-sm font-bold text-gray-400 float-left">
                             Description
                           </label>
                           <textarea
@@ -130,8 +130,8 @@ const EditModal = ({
                         </div>
                         {/* time */}
                         <div className="mb-4 flex flex-col justify-start">
-                          <label className="block text-gray-700 text-sm font-bold mb-2">
-                            Due
+                          <label className="text-sm font-bold text-gray-400 float-left">
+                            Due Date
                           </label>
                           <DatePicker
                             showTimeSelect
@@ -142,7 +142,7 @@ const EditModal = ({
                           />
                           <Select
                             textPrompt={'Select'}
-                            className="relative mt-3 p-3 text-sm font-semibold cursor-pointer w-32  bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                            className="relative p-3 text-sm font-semibold cursor-pointer w-32  bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                             userSettings={userSettings}
                             setUserSettings={setUserSettings}
                             updatable={false}

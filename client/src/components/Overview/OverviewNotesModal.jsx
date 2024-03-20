@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { MdOutlineClose } from 'react-icons/md';
 import OutsideClickHandler from 'react-outside-click-handler';
 import SingleNoteOverview from './SingleNoteOverview';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import customFetch from '../../utils/customFetch';
-import { GrClose } from 'react-icons/gr';
+import { MdOutlineClose } from 'react-icons/md';
+{
+}
 
 const OverviewNotesModal = ({ setShowNotesModal, showNotesModal, event }) => {
   const deleteItem = async () => {
@@ -40,13 +41,13 @@ const OverviewNotesModal = ({ setShowNotesModal, showNotesModal, event }) => {
               <div className="px-4 py-3 flex justify-end !pb-2 bg-slate-100">
                 <div className="flex items-center justify-center gap-2">
                   <button onClick={deleteItem} className={`cursor-pointer `}>
-                    <FaRegTrashAlt className="text-xl text-gray-600" />
+                    <FaRegTrashAlt className="text-2xl text-gray-950" />
                   </button>
                   <button
                     onClick={() => setShowNotesModal(false)}
                     type="button"
                   >
-                    <GrClose className="text-xl text-gray-600" />
+                    <MdOutlineClose className="text-3xl text-gray-950" />
                   </button>
                 </div>
               </div>

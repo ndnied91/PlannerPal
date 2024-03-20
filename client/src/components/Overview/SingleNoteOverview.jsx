@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { toast } from 'react-toastify';
 import '../Notes/RichMediaEditor/style.css';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
 
 const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
@@ -61,16 +60,6 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
       }
     }
   };
-
-  // const deleteItem = async () => {
-  //   try {
-  //     await customFetch.delete(`notes/${item._id}`);
-  //     toast.success('Item updated deleted!');
-  //     setShowNotesModal(false);
-  //   } catch (e) {
-  //     toast.error(e.response.data.msg || 'Demo Only!');
-  //   }
-  // };
 
   const handleKeyPress = (e) => {
     if (e.keyCode === 13) {

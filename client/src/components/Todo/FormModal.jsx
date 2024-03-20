@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
-import { IoMdClose } from 'react-icons/io';
+import { MdOutlineClose } from 'react-icons/md';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -103,7 +103,7 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                   type="button"
                   className="text-gray-500 hover:text-gray-700 focus:outline-none "
                 >
-                  <IoMdClose className="text-2xl" />
+                  <MdOutlineClose className="text-2xl" />
                 </button>
               </div>
 
@@ -134,8 +134,14 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
 
               <div className="">
                 {/* Your modal content here */}
-                <form onSubmit={handleSubmit} className="p-4 ">
+                <form onSubmit={handleSubmit} className="p-4">
                   <div className="mb-4">
+                    <div
+                      htmlFor="title "
+                      className="text-sm font-bold text-gray-400 float-left"
+                    >
+                      Title
+                    </div>
                     <input
                       className="pt-3 text-gray-600 text-md font-semibold pb-2 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                       id="currentTitle"
@@ -143,18 +149,24 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                       name="currentTitle"
                       maxLength="20"
                       value={currentItem.currentTitle}
-                      placeholder="Title"
+                      placeholder="Add a title.."
                       required
                       onChange={(e) => handleChange(e)}
                     />
                   </div>
                   <div className="mb-2">
+                    <div
+                      htmlFor="title"
+                      className="text-sm font-bold text-gray-400 float-left"
+                    >
+                      Description
+                    </div>
                     <textarea
                       className="pt-3 text-gray-600 text-md font-semibold w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                       id="description"
                       type="textarea"
                       name="description"
-                      placeholder="Description"
+                      placeholder="Add a description.."
                       required
                       value={currentItem.description}
                       onChange={handleChange}
@@ -162,56 +174,66 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                   </div>
                   <div className="dropdowns">
                     <div className="flex flex-col w-max">
+                      <div
+                        htmlFor="title"
+                        className="text-sm font-bold text-gray-400  flex"
+                      >
+                        Due Date
+                      </div>
                       <DatePicker
                         selected={date}
                         required
                         showTimeSelect
-                        placeholderText="Add a due date"
+                        placeholderText="Add a due date.."
                         onChange={(date) => setDate(date)}
                         dateFormat="MMMM d, yyyy h:mmaa"
-                        className="pt-3 text-gray-600 text-sm font-semibold pb-2 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        className="text-gray-600 text-sm font-semibold pb-2 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                       />
                     </div>
 
                     <div className="flex items-center">
                       <Select
                         textPrompt={'Select'}
-                        className="relative mt-3 p-3 text-sm font-semibold cursor-pointer bg-white w-32 border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        className="relative p-3 text-sm font-semibold cursor-pointer bg-white w-32 border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                         userSettings={userSettings}
                         updateCategory={updateCategory}
                       />
                     </div>
                   </div>
                   <section className=" flex justify-center gap-10 md:gap-20 mt-5">
-                    <div className="pb-5 items-baseline block">
-                      <label
-                        className="pt-3 text-gray-600 text-sm font-semibold pb-2  pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
-                        htmlFor="isAddedToCal"
-                      >
-                        Add to Cal?
-                      </label>
-                      <input
-                        className="bg-white"
-                        type="checkbox"
-                        name="isAddedToCal"
-                        checked={currentItem.isAddedToCal}
-                        onChange={handleCheckboxChange}
-                      />
-                    </div>
-                    <div className="pb-2">
-                      <label
-                        className="pt-3 text-gray-600 text-sm font-semibold pb-2  pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
-                        htmlFor="isAddedToCal"
-                      >
-                        Add to Priority?
-                      </label>
-                      <input
-                        type="checkbox"
-                        name="isPriority"
-                        checked={currentItem.isPriority}
-                        onChange={handleCheckboxChange}
-                      />
-                    </div>
+                    {currentPane === 'todo' ? (
+                      <>
+                        <div className="pb-5 items-baseline block">
+                          <label
+                            className="pt-3 text-gray-600 text-sm font-semibold pb-2  pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
+                            htmlFor="isAddedToCal"
+                          >
+                            Add to Cal?
+                          </label>
+                          <input
+                            className="bg-white"
+                            type="checkbox"
+                            name="isAddedToCal"
+                            checked={currentItem.isAddedToCal}
+                            onChange={handleCheckboxChange}
+                          />
+                        </div>
+                        <div className="pb-2">
+                          <label
+                            className="pt-3 text-gray-600 text-sm font-semibold pb-2  pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
+                            htmlFor="isAddedToCal"
+                          >
+                            Add to Priority?
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="isPriority"
+                            checked={currentItem.isPriority}
+                            onChange={handleCheckboxChange}
+                          />
+                        </div>
+                      </>
+                    ) : null}
                   </section>
                   <div className="flex justify-center">
                     <button

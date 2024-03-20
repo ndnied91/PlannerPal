@@ -285,7 +285,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
             <section className="flex flex-col md:justify-center md:items-center">
               <div className="xs:flex sm:flex flex-col md:flex-row flex gap-1 md:gap-4 lg:grow md:self-stretch mb-2 ">
                 {/* normal list */}
-                <div className="pb-5 bg-zinc-100 lg:min-w-[28rem] rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0">
+                <div className="pb-5 bg-slate-100 lg:min-w-[28rem] rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0">
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-3 items-start ">
                     <div>
                       <span>Normal List</span>
@@ -313,12 +313,12 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
                       </div>
                     </section>
                   </div>
-                  <div className="pb-5 bg-zinc-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
+                  <div className="pb-5 bg-slate-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
                     <div>{renderPinned('normal')}</div>
                     {sortOptions ? renderSortedArray('normal') : null}
                   </div>
                 </div>
-                <div className="bg-zinc-100 rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0">
+                <div className="bg-slate-100 rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0">
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5 mb-5">
                     {renderTitle() ? (
                       'High Priority List'
@@ -328,7 +328,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
                       </div>
                     )}
                   </div>
-                  <div className="pt-5 pb-5 bg-zinc-100 lg:min-w-[28rem] pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
+                  <div className="pt-5 pb-5 bg-slate-100 lg:min-w-[28rem] pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
                     <div>{renderPinned()}</div>
                     <div>{renderSortedArray()}</div>
                   </div>
@@ -354,7 +354,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
           </div>
 
           <Form
-            style={`mb-4 md:mb-0 cursor-pointer text-xl bg-primary tracking-widest text-white p-4 w-56 md:w-[24rem] rounded-lg hover:shadow-xl hover:bg-gray-950 duration-300`}
+            style={`mb-4 md:mb-0 cursor-pointer text-xl bg-gray-800 tracking-widest text-white p-4 w-56 md:w-[24rem] rounded-lg hover:shadow-xl hover:bg-gray-950 duration-300`}
             text={'Add item'}
             userSettings={userSettings}
             setUserSettings={setUserSettings}

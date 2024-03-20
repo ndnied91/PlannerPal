@@ -86,7 +86,7 @@ const Form = ({ style, text, type, userSettings }) => {
   };
 
   return (
-    <div className="text-center mt-4">
+    <div className="text-center mt-4 mb-10">
       <button
         className={style}
         onClick={() => {

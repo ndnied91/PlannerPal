@@ -13,3 +13,8 @@ form > div.block > div:nth-child(2){
   height: 55px !important;
   margin-bottom: 3px;
 }
+
+
+.p-4.h-screen.md\:h-fit.w-screen.md\:w-fit > div:nth-child(1) > div:nth-child(2){
+  height: 55px !important;
+}

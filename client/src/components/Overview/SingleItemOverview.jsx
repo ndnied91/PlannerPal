@@ -1,9 +1,7 @@
 import { FaTrashAlt, FaRegCheckCircle } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
 import { parseISO } from 'date-fns';
-
 import renderer from '../CountdownTimer';
 import Countdown from 'react-countdown';
 import { useEffect, useState } from 'react';
@@ -70,9 +68,12 @@ export const SingleItemOverview = ({
       <form onSubmit={handleSubmit} className="mt-[10%] md:mt-0">
         <section className="text-gray-900">
           <div>
+            <div htmlFor="title" className="text-sm font-bold text-gray-400">
+              Title
+            </div>
             <div className="font-bold capitalize">
               <input
-                className="cursor-pointer w-full capitalize pt-3 mb-4 text-gray-600 text-sm font-semibold pb-2 border-2 border-gray-200 md:min-w-96 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="cursor-pointer w-full capitalize pt-3 text-gray-600 text-sm font-semibold pb-2 border border-gray-200 md:min-w-96 focus:outline-none focus:ring-0 focus:border-blue-500"
                 name="title"
                 required
                 value={task.title}
@@ -80,15 +81,20 @@ export const SingleItemOverview = ({
               />
             </div>
 
+            <div
+              htmlFor="title"
+              className="text-sm font-bold mt-4 text-gray-400"
+            >
+              Due Date
+            </div>
             <DatePicker
               showTimeSelect
               selected={parseISO(date)}
               required
               placeholderText="Due date.."
-              // className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={(date) => setDate(date.toISOString())}
               dateFormat="MMMM d, yyyy h:mmaa"
-              className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="text-gray-600 cursor-pointer text-sm font-semibold pb-3 pt-3 border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               calendarContainer={({ className, children }) => (
                 <div className={`custom-calendar-container ${className}`}>
                   {children}
@@ -96,19 +102,27 @@ export const SingleItemOverview = ({
               )}
             />
 
-            <Select
-              textPrompt={'Select'}
-              className="relative mt-14 p-3 text-sm  font-semibold cursor-pointer bg-white border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-              userSettings={userSettings}
-              setUserSettings={setUserSettings}
-              updatable={false}
-              updateCategory={updateCategory}
-              category={category}
-            />
+            <div className="mt-12">
+              <Select
+                textPrompt={'Select'}
+                className="relative p-3 text-sm font-semibold cursor-pointer bg-white border-solid border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                userSettings={userSettings}
+                setUserSettings={setUserSettings}
+                updatable={false}
+                updateCategory={updateCategory}
+                category={category}
+              />
+            </div>
 
-            <div className="font-light pt-4 capitalize text-xs text-gray-900">
+            <div
+              htmlFor="title"
+              className="text-sm font-bold mt-4 text-gray-400"
+            >
+              Description
+            </div>
+            <div className="font-light  capitalize text-xs text-gray-900">
               <textarea
-                className="cursor-pointer pt-3 text-gray-600 text-sm font-semibold pb-2  border-2 border-gray-200 w-full focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="cursor-pointer pt-3 mb-2 text-gray-600 text-sm font-semibold pb-2  border border-gray-200 w-full focus:outline-none focus:ring-0 focus:border-blue-500"
                 name="description"
                 required
                 value={task.description}
@@ -117,9 +131,9 @@ export const SingleItemOverview = ({
             </div>
             <button
               type="submit"
-              className="bg-gray-600 text-white p-2 text-sm tracking-wider mt-2"
+              className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer"
             >
-              Update Content
+              Update
             </button>
           </div>
         </section>
@@ -134,7 +148,7 @@ export const SingleItemOverview = ({
               className={`btn remove-btn }`}
               onClick={() => removeItem(item)}
             >
-              <FaTrashAlt className=" text-3xl hover:text-4xl duration-300" />
+              <FaTrashAlt className=" text-3xl text-gray-950 hover:text-4xl duration-300" />
             </button>
           </>
 

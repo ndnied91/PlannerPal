@@ -426,3 +426,14 @@ form h4 {
   border: none;
   cursor: pointer;
 }
+
+
+
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 14px;
+  opacity: 60%;
+  font-weight: 400;
+  font-style: italic;
+}

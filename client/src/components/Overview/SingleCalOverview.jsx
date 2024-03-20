@@ -4,6 +4,8 @@ import GlobalContext from '../Calendar/context/GlobalContext';
 import customFetch from '../../utils/customFetch';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { MdOutlineClose } from 'react-icons/md';
 
 const labelsClasses = ['indigo', 'gray', 'green', 'blue', 'red', 'purple'];
 
@@ -12,7 +14,7 @@ const SingleItemOverview = ({
   setShowCalModal,
   showCalModal,
 }) => {
-  const { daySelected, setSavedEvents } = useContext(GlobalContext);
+  const { setSavedEvents } = useContext(GlobalContext);
   const modalRef = useRef(null);
 
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '');
@@ -107,65 +109,86 @@ const SingleItemOverview = ({
             }}
           >
             <header className="bg-gray-100 px-4 py-2 flex justify-end items-center">
-              <div>
-                <span
-                  onClick={async () => {
-                    try {
-                      await customFetch.delete(`cal/${selectedEvent._id}`);
-                      setShowCalModal(false);
-                    } catch (e) {
-                      toast.error(
-                        e.response.data.msg ||
-                          'Error occurred, please try again'
-                      );
-                    }
-                  }}
-                  className="material-icons-outlined text-gray-400 cursor-pointer"
-                >
-                  delete
-                </span>
-                <button onClick={() => setShowCalModal(false)}>
-                  <span className="material-icons-outlined text-gray-400">
-                    close
-                  </span>
-                </button>
+              <div
+                onClick={async () => {
+                  try {
+                    await customFetch.delete(`cal/${selectedEvent._id}`);
+                    setShowCalModal(false);
+                  } catch (e) {
+                    toast.error(
+                      e.response.data.msg || 'Error occurred, please try again'
+                    );
+                  }
+                }}
+              >
+                {' '}
+                <FaRegTrashAlt className="cursor-pointer text-2xl text-gray-950" />
               </div>
+
+              <button onClick={() => setShowCalModal(false)}>
+                <MdOutlineClose className="cursor-pointer text-3xl text-gray-950" />
+              </button>
             </header>
-            <div className="p-3 customMax mt-[20%] md:mt-0">
+            <div className="p-3 mt-[10%] md:mt-0">
               <div className="flex flex-col items-start">
+                <div
+                  htmlFor="title"
+                  className="text-sm font-bold text-gray-400"
+                >
+                  Title
+                </div>
                 <input
                   type="text"
                   name="title"
                   placeholder="Add title"
                   value={title}
                   required
-                  className="text-gray-600 text-xl font-semibold mb-4 pb-2 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className="text-gray-600 text-sm  mb-4 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setTitle(e.target.value)}
                 />
+                <div className="">
+                  <div
+                    htmlFor="title"
+                    className="text-sm font-bold text-gray-400"
+                  >
+                    Due Date
+                  </div>
+                  <DatePicker
+                    showTimeSelect
+                    selected={new Date(date)}
+                    onChange={(date) => setDate(date.toISOString())}
+                    dateFormat="MMMM d, yyyy h:mmaa"
+                    className="text-gray-600 cursor-pointer text-sm border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                    calendarContainer={({ className, children }) => (
+                      <div className={`custom-calendar-container ${className}`}>
+                        {children}
+                      </div>
+                    )}
+                  />
+                </div>
 
-                <DatePicker
-                  showTimeSelect
-                  selected={new Date(date)}
-                  onChange={(date) => setDate(date.toISOString())}
-                  dateFormat="MMMM d, yyyy h:mmaa"
-                  className="text-gray-600 text-sm font-semibold pb-3 pt-3  border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                  calendarContainer={({ className, children }) => (
-                    <div className={`custom-calendar-container ${className}`}>
-                      {children}
-                    </div>
-                  )}
-                />
-
+                <div
+                  htmlFor="title"
+                  className="text-sm font-bold text-gray-400 mt-3"
+                >
+                  Description
+                </div>
                 <input
                   type="text"
                   name="description"
                   placeholder="Add a description"
                   value={description}
-                  className="pt-3 text-gray-600 pb-2 mt-3 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className="text-gray-600 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                   onChange={(e) => setDescription(e.target.value)}
                 />
 
-                <div className="flex gap-x-2 mb-3">
+                <div className="flex gap-x-2 mb-3 mt-3">
+                  <div
+                    htmlFor="title"
+                    className="text-sm font-bold text-gray-400 mt-3"
+                  >
+                    Label
+                  </div>
                   {!selectedEvent.calCode
                     ? labelsClasses.map((lblClass, i) => (
                         <span

@@ -46,13 +46,16 @@ const Select = ({
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider text-sm font-normal text-justify">
+    <div className="custom-dropdown-container tracking-wider text-sm font-normal text-justify ">
+      <div htmlFor="title" className="text-sm font-bold pt-3 text-gray-400">
+        Category
+      </div>
       <div
         className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         ref={dropdownRef}
       >
-        <div className="flex justify-between">
+        <div className="flex justify-between ">
           <p className="capitalize tracking-wider text-gray-700">
             {selectedOption}
           </p>
