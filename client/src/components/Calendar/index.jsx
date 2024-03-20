@@ -7,7 +7,6 @@ import Month from './CalComponents/Month';
 import GlobalContext from './context/GlobalContext';
 import EventModal from './CalComponents/EventModal';
 import { isMobile } from 'react-device-detect';
-import OutsideClickHandler from 'react-outside-click-handler';
 
 const container = ({ userContext }) => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
@@ -18,7 +17,7 @@ const container = ({ userContext }) => {
   }, [monthIndex]);
 
   return (
-    <div className="md:ml-32 h-[85vh] flex flex-col ml-5 mr-5 pt-5">
+    <div className="md:ml-32 h-[85vh] flex flex-col ml-5 mr-5 pt-5 ">
       {showEventModal ? <EventModal userContext={userContext} /> : null}
 
       <CalendarHeader />

@@ -10,6 +10,7 @@ import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import { toast } from 'react-toastify';
 import MobileNavbar from './MobileNavbar';
+import Colorshift from './Settings/ColorShift/Colorshift';
 
 const Options = ({ setShowSettingsModal }) => {
   const { userSettings, userContext, setUserSettings, setContextUser } =
@@ -98,6 +99,11 @@ const Options = ({ setShowSettingsModal }) => {
             }`}
           >
             PlannerPal
+          </div>
+
+          <div className="flex justify-center">
+            {' '}
+            <Colorshift />{' '}
           </div>
           <ul
             className={`text-grey-600 links duration-200 w-[90px] p-3 ${

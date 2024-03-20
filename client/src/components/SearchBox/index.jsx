@@ -34,7 +34,7 @@ const SearchBox = ({ renderItem }) => {
           setSearchCalEventsResults([]);
         }}
       >
-        <div className="flex border-2 border-gray-300 ">
+        <div className="flex border-2 border-gray-300 bg-clip-text">
           <input
             type="text"
             value={searchTerm}
@@ -43,7 +43,7 @@ const SearchBox = ({ renderItem }) => {
               event.keyCode === 13 ? handleSearch() : null
             }
             placeholder="Search..."
-            className="w-full px-4 py-2 border-none focus:ring-0"
+            className="w-full px-4 py-2 border-none focus:ring-0 bg-clip-text"
           />
           <div className="flex items-center">
             <span>

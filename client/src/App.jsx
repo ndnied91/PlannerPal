@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import customFetch from './utils/customFetch';
 import { useGlobalContext } from './context';
-
 import Sidebar from './components/Sidebar';
 import { TodoAppProvider } from './components/Todo/todoContext';
 
