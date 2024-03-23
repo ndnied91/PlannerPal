@@ -4,7 +4,11 @@ import GlobalContext from '../context/GlobalContext';
 import { getMonth } from '../../../utils/util';
 import { LuDot } from 'react-icons/lu';
 
-export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
+export default function SmallCalendar({
+  setPreviewEvents,
+  setPopupPosition,
+  isDarkTheme,
+}) {
   const [currentMonthIdx, setCurrentMonthIdx] = useState(dayjs().month());
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   useEffect(() => {
@@ -83,17 +87,29 @@ export default function SmallCalendar({ setPreviewEvents, setPopupPosition }) {
   return (
     <div className="">
       <header className="flex justify-between">
-        <p className="text-gray-500 font-bold pb-2">
+        <p
+          className={`${
+            isDarkTheme ? 'text-gray-100' : 'text-gray-500'
+          } font-bold pb-2`}
+        >
           {dayjs(new Date(dayjs().year(), currentMonthIdx)).format('MMMM YYYY')}
         </p>
         <div>
           <button onClick={handlePrevMonth}>
-            <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
+            <span
+              className={`${
+                isDarkTheme ? 'text-gray-100' : 'text-gray-600'
+              } material-icons-outlined cursor-pointer mx-2`}
+            >
               chevron_left
             </span>
           </button>
           <button onClick={handleNextMonth}>
-            <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
+            <span
+              className={`${
+                isDarkTheme ? 'text-gray-100' : 'text-gray-600'
+              } material-icons-outlined cursor-pointer mx-2`}
+            >
               chevron_right
             </span>
           </button>

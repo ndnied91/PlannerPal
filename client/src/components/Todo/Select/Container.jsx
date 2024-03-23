@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { useGlobalContext } from '../todoContext';
 
 const Container = ({
   placeholderText,
@@ -8,6 +7,7 @@ const Container = ({
   setValue,
   defaultValue,
   setShowSortModal,
+  isDarkTheme,
 }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -34,10 +34,14 @@ const Container = ({
   }, []);
 
   return (
-    <div className="custom-dropdown-container tracking-normal w-24 text-xs text-gray-500 bg-white mt-2">
+    <div
+      className={`${
+        isDarkTheme ? 'bg-gray-100 text-black font-normal' : 'bg-white'
+      } custom-dropdown-container tracking-normal w-24 text-xs mt-2 rounded-md `}
+    >
       <OutsideClickHandler onOutsideClick={() => setShowSortModal(false)}>
         <div
-          className="relative border p-2 cursor-pointer bg-white"
+          className="relative  p-2 cursor-pointer "
           onClick={() => setDropdownOpen(!isDropdownOpen)}
           ref={dropdownRef}
         >
@@ -51,11 +55,15 @@ const Container = ({
           </div>
 
           {isDropdownOpen && (
-            <div className="absolute top-full left-0 w-full border bg-white shadow z-50">
+            <div
+              className={`${
+                isDarkTheme ? 'bg-slate-300 border-slate-300' : 'bg-white'
+              } absolute top-full left-0 w-full border shadow z-50`}
+            >
               {list.map((option, idx) => (
                 <div
                   key={idx}
-                  className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
+                  className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100"
                   onClick={() => handleSelectOption(option)}
                 >
                   {option}

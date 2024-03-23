@@ -20,7 +20,7 @@ import FilterSelect from './FilterSelect.jsx';
 import Container from './Select/Container.jsx';
 import { toast } from 'react-toastify';
 
-const MainContainer = ({ userSettings, setUserSettings }) => {
+const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
   const {
     items,
     setItems,
@@ -70,6 +70,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
         defaultValue={sortOptions}
         className="text-sm font-normal"
         setShowSortModal={setShowSortModal}
+        isDarkTheme={isDarkTheme}
       />
     );
   };
@@ -120,10 +121,15 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
             <div className="pt-4" key={item._id}>
               <SingleItem
                 item={item}
-                style={'flex items-center p-5 bg-white rounded-md shadow-2xl'}
+                style={`${
+                  isDarkTheme
+                    ? 'bg-gray-500 text-slate-100'
+                    : 'bg-white text-gray-950'
+                }  flex items-center p-5 rounded-md shadow-2xl `}
                 userSettings={userSettings}
                 setUserSettings={setUserSettings}
                 updateItemsAfterEditTodo={updateItemsAfterEditTodo}
+                isDarkTheme={isDarkTheme}
               />
             </div>
           );
@@ -141,9 +147,14 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
             <div className="pt-4" key={item._id}>
               <SingleItem
                 item={item}
-                style={'flex items-center p-5 bg-white rounded-md shadow-2xl'}
+                style={`${
+                  isDarkTheme
+                    ? 'bg-gray-500 text-slate-100'
+                    : 'bg-white text-gray-950'
+                }  flex items-center p-5 rounded-md shadow-2xl `}
                 userSettings={userSettings}
                 updateItemsAfterEditTodo={updateItemsAfterEditTodo}
+                isDarkTheme={isDarkTheme}
               />
             </div>
           );
@@ -162,10 +173,15 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
         <div className="pt-4" key={item._id}>
           <SingleItem
             item={item}
-            style={'flex items-center p-5 bg-white rounded-md shadow-2xl '}
+            style={`${
+              isDarkTheme
+                ? 'bg-gray-500 text-slate-100'
+                : 'bg-white text-gray-950'
+            }  flex items-center p-5 rounded-md shadow-2xl `}
             type={'countdown'}
             userSettings={userSettings}
             updateItemsAfterEditTodo={updateItemsAfterEditTodo}
+            isDarkTheme={isDarkTheme}
           />
         </div>
       );
@@ -213,9 +229,14 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
           <div className="pt-4" key={result._id}>
             <SingleItem
               item={result}
-              style={`flex items-center p-5 bg-white rounded-md shadow-2xl`}
+              style={`${
+                isDarkTheme
+                  ? 'bg-gray-500 text-slate-100'
+                  : 'bg-white text-gray-950'
+              }  flex items-center p-5 rounded-md shadow-2xl`}
               userSettings={userSettings}
               updateItemsAfterEditTodo={updateItemsAfterEditTodo}
+              isDarkTheme={isDarkTheme}
             />
           </div>
         );
@@ -230,10 +251,10 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
           {showCompleted ? 'Archive' : ' Current'}
         </div>
 
-        <div className="flex md:items-end  items-center">
+        <div className="flex md:items-end  items-center w-30">
           {!addNewFilter && (
             <FilterSelect
-              className="relative p-2 cursor-pointer bg-gray-100 border-solid rounded-md"
+              className="bg-gray-100 relative p-2 cursor-pointer border-solid rounded-t-md"
               textPrompt={'Filter'}
               showFilterIcon={true}
               updatable={true}
@@ -241,6 +262,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
               setUserSettings={setUserSettings}
               setFilteredBy={setFilteredBy}
               category={userSettings.currentFilterOption}
+              isDarkTheme={isDarkTheme}
             />
           )}
 
@@ -258,6 +280,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
                 <FilterPopover
                   userSettings={userSettings}
                   setUserSettings={setUserSettings}
+                  isDarkTheme={isDarkTheme}
                 />
               </div>
             </OutsideClickHandler>
@@ -277,6 +300,7 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
           items={items}
           setItems={setItems}
           userSettings={userSettings}
+          isDarkTheme={isDarkTheme}
         />
       ) : (
         <>
@@ -285,7 +309,11 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
             <section className="flex flex-col md:justify-center md:items-center">
               <div className="xs:flex sm:flex flex-col md:flex-row flex gap-1 md:gap-4 lg:grow md:self-stretch mb-2 ">
                 {/* normal list */}
-                <div className="pb-5 bg-slate-100 lg:min-w-[28rem] rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0">
+                <div
+                  className={`${
+                    isDarkTheme ? 'bg-neutral-800' : 'bg-slate-100'
+                  } pb-5 lg:min-w-[28rem] rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0`}
+                >
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-3 items-start ">
                     <div>
                       <span>Normal List</span>
@@ -313,12 +341,20 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
                       </div>
                     </section>
                   </div>
-                  <div className="pb-5 bg-slate-100 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
+                  <div
+                    className={`${
+                      isDarkTheme ? 'bg-neutral-800' : 'bg-slate-100'
+                    } pb-5 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl`}
+                  >
                     <div>{renderPinned('normal')}</div>
                     {sortOptions ? renderSortedArray('normal') : null}
                   </div>
                 </div>
-                <div className="bg-slate-100 rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0">
+                <div
+                  className={`  ${
+                    isDarkTheme ? 'bg-neutral-800' : 'bg-slate-100'
+                  } rounded-xl pt-3 grow ml-4 mr-4 md:mr-0 md:ml-0`}
+                >
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-5 mb-5">
                     {renderTitle() ? (
                       'High Priority List'
@@ -328,7 +364,11 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
                       </div>
                     )}
                   </div>
-                  <div className="pt-5 pb-5 bg-slate-100 lg:min-w-[28rem] pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl">
+                  <div
+                    className={` ${
+                      isDarkTheme ? 'bg-neutral-800' : 'bg-slate-100'
+                    } pt-5 pb-5 lg:min-w-[28rem] pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl`}
+                  >
                     <div>{renderPinned()}</div>
                     <div>{renderSortedArray()}</div>
                   </div>
@@ -337,14 +377,22 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
             </section>
             {isCountDown() && (
               <section className="mb-2 ml-4 mr-4 md:ml-0 md:mr-0">
-                <div className="bg-slate-200 rounded-xl pt-3 h-full lg:min-w-[28rem]">
+                <div
+                  className={` ${
+                    isDarkTheme ? 'bg-neutral-700' : 'bg-slate-200'
+                  }  rounded-xl pt-3 h-full lg:min-w-[28rem]`}
+                >
                   <div className="font-bold tracking-widest text-lg pl-5 flex justify-between pr-3">
                     <span>Background Countdowns</span>
                     <span className="w-max flex items-center">
                       <FcNumericalSorting12 className="text-2xl mb-3" />
                     </span>
                   </div>
-                  <div className="pt-8 pb-5 bg-slate-200 pl-5 pr-5 overflow-scroll rounded-xl">
+                  <div
+                    className={` ${
+                      isDarkTheme ? 'bg-neutral-700' : 'bg-slate-200'
+                    } pt-8 pb-5 pl-5 pr-5 overflow-scroll rounded-xl`}
+                  >
                     <div>{renderPinned('countdown')}</div>
                     {renderCountdown()}
                   </div>
@@ -354,10 +402,15 @@ const MainContainer = ({ userSettings, setUserSettings }) => {
           </div>
 
           <Form
-            style={`mb-4 md:mb-0 cursor-pointer bg-secondary text-xl bg-gray-800 tracking-widest text-white p-4 w-56 md:w-[24rem] rounded-lg hover:shadow-xl hover:bg-gray-950 duration-300`}
+            style={`${
+              isDarkTheme
+                ? 'bg-gray-600 hover:bg-gray-700'
+                : 'bg-gray-800 hover:bg-gray-950'
+            } mb-4 md:mb-0 cursor-pointer bg-secondary text-xl tracking-widest text-white p-4 w-56 md:w-[24rem] rounded-lg hover:shadow-xl duration-300`}
             text={'Add item'}
             userSettings={userSettings}
             setUserSettings={setUserSettings}
+            isDarkTheme={isDarkTheme}
           />
         </>
       )}

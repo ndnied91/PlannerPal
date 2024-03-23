@@ -13,6 +13,7 @@ const SingleItemOverview = ({
   selectedEvent,
   setShowCalModal,
   showCalModal,
+  isDarkTheme,
 }) => {
   const { setSavedEvents } = useContext(GlobalContext);
   const modalRef = useRef(null);
@@ -97,10 +98,12 @@ const SingleItemOverview = ({
 
   return (
     <section>
-      <div className="fixed left-0 top-0 flex text-left w-screen h-screen justify-center items-center bg-gray-400 bg-opacity-50">
+      <div className="fixed left-0 top-0 flex text-left w-screen h-screen justify-center items-center">
         <div
           ref={modalRef}
-          className="bg-white shadow-2xl md:m-0 md:max-w-[38rem] w-max-h-full overflow-y-auto w-screen h-screen md:h-fit "
+          className={`${
+            isDarkTheme ? 'bg-neutral-900' : 'bg-white'
+          }  shadow-2xl md:m-0 md:max-w-[38rem] w-max-h-full overflow-y-auto w-screen h-screen md:h-fit `}
         >
           <form
             onSubmit={handleSubmit}
@@ -108,7 +111,11 @@ const SingleItemOverview = ({
               event.keyCode === 13 ? handleSubmit(event) : null;
             }}
           >
-            <header className="bg-gray-100 px-4 py-2 flex justify-end items-center">
+            <header
+              className={`${
+                isDarkTheme ? 'bg-gray-950' : 'bg-slate-100'
+              } px-4 py-2 flex justify-end items-center`}
+            >
               <div
                 onClick={async () => {
                   try {
@@ -122,11 +129,18 @@ const SingleItemOverview = ({
                 }}
               >
                 {' '}
-                <FaRegTrashAlt className="cursor-pointer text-2xl text-gray-950" />
+                <FaRegTrashAlt
+                  className={`${
+                    isDarkTheme ? 'text-gray-100' : 'text-gray-700'
+                  } cursor-pointer text-2xl `}
+                />
               </div>
 
               <button onClick={() => setShowCalModal(false)}>
-                <MdOutlineClose className="cursor-pointer text-3xl text-gray-950" />
+                <MdOutlineClose
+                  className={`text-3xl
+                  ${isDarkTheme ? 'text-gray-100' : 'text-gray-700'} `}
+                />
               </button>
             </header>
             <div className="p-3 mt-[10%] md:mt-0">
@@ -143,29 +157,36 @@ const SingleItemOverview = ({
                   placeholder="Add title"
                   value={title}
                   required
-                  className="text-gray-600 text-sm  mb-4 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className={` ${
+                    isDarkTheme
+                      ? 'text-slate-50 border-none bg-neutral-700'
+                      : 'text-gray-600 border-gray-200'
+                  } pl-3 cursor-pointer rounded-sm w-full capitalize pt-2 text-sm font-semibold pb-2 border md:min-w-96 `}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <div className="">
-                  <div
-                    htmlFor="title"
-                    className="text-sm font-bold text-gray-400"
-                  >
-                    Due Date
-                  </div>
-                  <DatePicker
-                    showTimeSelect
-                    selected={new Date(date)}
-                    onChange={(date) => setDate(date.toISOString())}
-                    dateFormat="MMMM d, yyyy h:mmaa"
-                    className="text-gray-600 cursor-pointer text-sm border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                    calendarContainer={({ className, children }) => (
-                      <div className={`custom-calendar-container ${className}`}>
-                        {children}
-                      </div>
-                    )}
-                  />
+
+                <div
+                  htmlFor="title"
+                  className="text-sm font-bold text-gray-400 mt-3"
+                >
+                  Due Date
                 </div>
+                <DatePicker
+                  showTimeSelect
+                  selected={new Date(date)}
+                  onChange={(date) => setDate(date.toISOString())}
+                  dateFormat="MMMM d, yyyy h:mmaa"
+                  className={`${
+                    isDarkTheme
+                      ? 'bg-neutral-700 text-slate-50'
+                      : 'text-gray-600 border-gray-200 border'
+                  } rounded-sm cursor-pointer text-sm font-semibold pb-3 pt-3 pl-3`}
+                  calendarContainer={({ className, children }) => (
+                    <div className={`custom-calendar-container ${className}`}>
+                      {children}
+                    </div>
+                  )}
+                />
 
                 <div
                   htmlFor="title"
@@ -178,7 +199,11 @@ const SingleItemOverview = ({
                   name="description"
                   placeholder="Add a description"
                   value={description}
-                  className="text-gray-600 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className={` ${
+                    isDarkTheme
+                      ? 'text-slate-50 border-none bg-neutral-700'
+                      : 'text-gray-600 border-gray-200'
+                  } pl-3 cursor-pointer rounded-sm w-full capitalize pt-2 mb-2 text-sm font-semibold pb-2 border md:min-w-96 `}
                   onChange={(e) => setDescription(e.target.value)}
                 />
 

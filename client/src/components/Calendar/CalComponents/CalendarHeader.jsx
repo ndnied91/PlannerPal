@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import GlobalContext from '../context/GlobalContext';
 import dayjs from 'dayjs';
 
-const CalendarHeader = () => {
+const CalendarHeader = ({ isDarkTheme }) => {
   const { monthIndex, setMonthIndex, setDaySelected } =
     useContext(GlobalContext);
 
@@ -22,12 +22,21 @@ const CalendarHeader = () => {
 
   return (
     <header className="px-4 py-2 flex items-center justify-center md:justify-start">
-      <button className="border rounded py-2 px-4 mr-5" onClick={handleReset}>
+      <button
+        className={`${
+          isDarkTheme
+            ? 'bg-neutral-500 border-neutral-500 hover:opacity-90 duration-200'
+            : null
+        }  border rounded-md py-2 px-4 mr-5`}
+        onClick={handleReset}
+      >
         Today
       </button>
       <button className="">
         <span
-          className="material-icons-outlined cursor-pointer text-gray-600 mx-2 "
+          className={`${
+            isDarkTheme ? 'text-gray-100' : 'text-gray-600'
+          } material-icons-outlined cursor-pointer mx-2`}
           onClick={() => {
             handlePrevMonth();
             setDaySelected(null);
@@ -36,7 +45,9 @@ const CalendarHeader = () => {
           chevron_left
         </span>
         <span
-          className="material-icons-outlined cursor-pointer text-gray-600 mx-2"
+          className={`${
+            isDarkTheme ? 'text-gray-100' : 'text-gray-600'
+          } material-icons-outlined cursor-pointer mx-2`}
           onClick={() => {
             handleNextMonth();
             setDaySelected(null);
@@ -46,7 +57,11 @@ const CalendarHeader = () => {
         </span>
       </button>
 
-      <h2 className="ml-4 text-lg text-gray-500 font-bold">
+      <h2
+        className={`${
+          isDarkTheme ? 'text-slate-50' : 'text-gray-500'
+        } ml-4 text-lg font-bold`}
+      >
         {dayjs(new Date(dayjs().year(), monthIndex)).format('MMM YYYY')}
       </h2>
     </header>

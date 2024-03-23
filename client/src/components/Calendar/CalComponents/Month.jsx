@@ -1,9 +1,13 @@
 import React from 'react';
 import Day from './Day';
 
-const Month = ({ month }) => {
+const Month = ({ month, isDarkTheme }) => {
   return (
-    <div className="flex-1 grid grid-cols-7 grid-rows-5">
+    <div
+      className={`${
+        isDarkTheme ? 'bg-neutral-700 divide-neutral-500' : 'bg-white'
+      } flex-1 grid grid-cols-7 grid-rows-5 `}
+    >
       {month.map((row, i) => (
         <React.Fragment key={i}>
           {row.map((day, idx) => (

@@ -12,6 +12,7 @@ const FilterSelect = ({
   setFilteredBy,
   className,
   textPrompt,
+  isDarkTheme,
 }) => {
   var labelArr = [];
 
@@ -93,7 +94,7 @@ const FilterSelect = ({
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider min-w-24 w-32 text-sm font-normal pr-2 ">
+    <div className="custom-dropdown-container tracking-wider min-w-24 w-32 text-sm font-normal pr-2">
       <div
         className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
@@ -104,21 +105,29 @@ const FilterSelect = ({
             {currentFilterOption}
           </p>
           <span
-            className="arrow-icon text-gray-600 tracking-widest flex items-center"
+            className="arrow-icon text-gray-600 tracking-widest flex items-center "
             id="icon"
           >
             {renderIcon()}
           </span>
         </div>
         {isDropdownOpen && (
-          <div className="absolute top-full left-0  border bg-white shadow w-max z-30">
+          <div
+            className={` ${
+              isDarkTheme
+                ? 'bg-gray-100 text-black border-gray-100'
+                : 'bg-white border-white'
+            } text-xs absolute top-full rounded-b shadow z-30 w-max`}
+          >
             <div>
               {labelArr.map((option) => {
                 if (option === 'add +') {
                   return (
                     <div
                       key={option}
-                      className={`p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 ${
+                      className={`${
+                        isDarkTheme ? 'hover:bg-gray-400' : 'hover:bg-gray-100'
+                      } p-2 flex justify-between items-center cursor-pointer  ${
                         option === 'add +' ? 'font-bold' : 'font-normal'
                       }`}
                       onClick={() => handleSelectOption(option)}
@@ -140,7 +149,9 @@ const FilterSelect = ({
                   return (
                     <div
                       key={option}
-                      className={`p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 ${
+                      className={`  ${
+                        isDarkTheme ? 'hover:bg-gray-400' : 'hover:bg-gray-100'
+                      }    p-2 flex justify-between items-center cursor-pointer ${
                         option === 'add +' ? 'font-bold' : 'font-normal'
                       }`}
                       onClick={() => handleSelectOption(option)}
@@ -161,7 +172,13 @@ const FilterSelect = ({
                               className="px-2 py-1 text-gray-900 hover:scale-110 duration-300 rounded"
                               onClick={() => handleDeleteClick(option)}
                             >
-                              <FaRegTrashAlt />
+                              <FaRegTrashAlt
+                                className={`${
+                                  isDarkTheme
+                                    ? 'text-gray-950'
+                                    : 'text-gray-950'
+                                } `}
+                              />
                             </button>
                           )}
                         </>

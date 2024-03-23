@@ -6,7 +6,7 @@ import { FaGripLinesVertical } from 'react-icons/fa';
 import { RxCross2 } from 'react-icons/rx';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-const SearchBox = ({ renderItem }) => {
+const SearchBox = ({ renderItem, isDarkTheme }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchItemsResults, setSearchItemsResults] = useState([]);
   const [searchNotesResults, setSearchNotesResults] = useState([]);
@@ -69,15 +69,29 @@ const SearchBox = ({ renderItem }) => {
         {searchItemsResults.length > 0 ||
         searchNotesResults.length > 0 ||
         searchCalEventsResults.length > 0 ? (
-          <div className="absolute z-10 w-full flex-col text-justify max-h-64 overflow-scroll border-t-0 border-2 bg-white border-gray-300 rounded-b-l shadow-md">
+          <div
+            className={`${
+              isDarkTheme ? 'bg-neutral-800' : 'bg-white'
+            }  absolute z-10 w-full flex-col text-justify max-h-64 overflow-scroll border-t-0 border-2 border-gray-300 rounded-b-l shadow-md`}
+          >
             {searchItemsResults.length > 0 ? (
-              <p className="font-bold tracking-wider bg-gray-200 pl-2">Items</p>
+              <p
+                className={`font-bold tracking-wider ${
+                  isDarkTheme ? 'bg-gray-950' : 'bg-gray-200'
+                }  pl-2`}
+              >
+                Items
+              </p>
             ) : null}
 
             {searchItemsResults.map((result, index) => (
               <div
                 key={index}
-                className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                className={`capitalize p-2 border-b  cursor-pointer hover:scale-[1.005] hover:pr-2 ${
+                  isDarkTheme
+                    ? 'border-gray-600 hover:bg-gray-600'
+                    : 'border-gray-200 hover:bg-gray-200'
+                } duration-200`}
                 onClick={() => renderItem('todo', result)}
               >
                 <p className="pr-2">{result.title}</p>
@@ -85,7 +99,13 @@ const SearchBox = ({ renderItem }) => {
             ))}
 
             {searchNotesResults.length > 0 ? (
-              <p className="font-bold tracking-wider bg-gray-200 pl-2">Notes</p>
+              <p
+                className={`font-bold tracking-wider ${
+                  isDarkTheme ? 'bg-gray-950' : 'bg-gray-200'
+                }  pl-2`}
+              >
+                Notes
+              </p>
             ) : null}
 
             {searchNotesResults.map((result, index) => {
@@ -93,7 +113,11 @@ const SearchBox = ({ renderItem }) => {
                 return (
                   <div
                     key={index}
-                    className="capitalize p-2 border-b border-gray-200 cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                    className={`capitalize p-2 border-b  cursor-pointer hover:scale-[1.005] hover:pr-2 ${
+                      isDarkTheme
+                        ? 'border-gray-600 hover:bg-gray-600'
+                        : 'border-gray-200 hover:bg-gray-200'
+                    } duration-200`}
                     onClick={() => renderItem('notes', result)}
                   >
                     <div className="pr-2">{parse(result.title)}</div>
@@ -103,7 +127,11 @@ const SearchBox = ({ renderItem }) => {
             })}
 
             {searchCalEventsResults.length > 0 ? (
-              <p className="font-bold tracking-wider bg-gray-200 pl-2">
+              <p
+                className={`font-bold tracking-wider ${
+                  isDarkTheme ? 'bg-gray-950' : 'bg-gray-200'
+                }  pl-2`}
+              >
                 Calendar
               </p>
             ) : null}
@@ -111,7 +139,11 @@ const SearchBox = ({ renderItem }) => {
             {searchCalEventsResults.map((result, index) => (
               <div
                 key={index}
-                className="capitalize p-2 border-b border-gray-200  cursor-pointer hover:scale-[1.005] hover:pr-2 hover:bg-gray-200 duration-200"
+                className={`capitalize p-2 border-b  cursor-pointer hover:scale-[1.005] hover:pr-2 ${
+                  isDarkTheme
+                    ? 'border-gray-600 hover:bg-gray-600'
+                    : 'border-gray-200 hover:bg-gray-200'
+                } duration-200`}
                 onClick={() => renderItem('calendar', result)}
               >
                 {searchCalEventsResults.length > 0 ? (

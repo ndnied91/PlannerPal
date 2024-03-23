@@ -6,6 +6,7 @@ const Select = ({
   category,
   className,
   textPrompt,
+  isDarkTheme,
 }) => {
   var labelArr = [];
 
@@ -46,8 +47,13 @@ const Select = ({
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider text-sm font-normal text-justify ">
-      <div htmlFor="title" className="text-sm font-bold pt-3 text-gray-400">
+    <div className="custom-dropdown-container tracking-wider text-sm font-normal text-justify w-full">
+      <div
+        htmlFor="title"
+        className={`${
+          isDarkTheme ? 'text-slate-200' : 'text-gray-400'
+        } text-sm font-bold pt-3 `}
+      >
         Category
       </div>
       <div
@@ -56,21 +62,35 @@ const Select = ({
         ref={dropdownRef}
       >
         <div className="flex justify-between ">
-          <p className="capitalize tracking-wider text-gray-700">
+          <p
+            className={`${
+              isDarkTheme ? 'text-slate-50' : 'text-gray-700'
+            } capitalize tracking-wider`}
+          >
             {selectedOption}
           </p>
-          <span className="arrow-icon text-gray-600 tracking-widest flex !items-start">
+          <span
+            className={`${
+              isDarkTheme ? 'text-slate-50' : 'text-gray-600'
+            } arrow-icon  tracking-widest flex !items-start`}
+          >
             {renderIcon()}
           </span>
         </div>
         {isDropdownOpen && (
-          <div className="absolute top-full left-0 w-full border bg-white shadow">
+          <div
+            className={`${
+              isDarkTheme ? 'bg-neutral-500' : 'bg-white border'
+            } absolute top-full left-0 w-full  shadow`}
+          >
             {labelArr.map((option) => {
               if (option !== 'add +') {
                 return (
                   <div
                     key={option}
-                    className="p-2 items-start cursor-pointer hover:bg-gray-100 "
+                    className={` ${
+                      isDarkTheme ? 'hover:bg-neutral-400' : 'hover:bg-gray-100'
+                    } p-2 items-start cursor-pointer `}
                     onClick={() => handleSelectOption(option)}
                   >
                     <p className="capitalize">{option}</p>

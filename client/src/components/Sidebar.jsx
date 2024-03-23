@@ -10,9 +10,9 @@ import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import { toast } from 'react-toastify';
 import MobileNavbar from './MobileNavbar';
-import Colorshift from './Settings/ColorShift/Colorshift';
+import ThemeToggle from './Settings/ThemeToggle';
 
-const Options = ({ setShowSettingsModal }) => {
+const Options = ({ setShowSettingsModal, isDarkTheme }) => {
   const { userSettings, userContext, setUserSettings, setContextUser } =
     useGlobalContext();
   const [hoveredOver, setHoveredOver] = useState(false);
@@ -89,7 +89,9 @@ const Options = ({ setShowSettingsModal }) => {
 
       <section>
         <div
-          className="hidden md:flex sidebar fixed top-0 left-0 w-24 h-full bg-slate-300  justify-center flex-col transition-all ease-in-out hover:w-52 duration-500"
+          className={`${
+            isDarkTheme ? 'bg-neutral-800' : 'bg-slate-300'
+          } hidden md:flex sidebar fixed top-0 left-0 w-24 h-full justify-center flex-col transition-all ease-in-out hover:w-52 duration-500`}
           onMouseOver={() => setHoveredOver(true)}
           onMouseOut={() => setHoveredOver(false)}
         >
@@ -103,7 +105,7 @@ const Options = ({ setShowSettingsModal }) => {
 
           <div className="flex justify-center">
             {' '}
-            <Colorshift />{' '}
+            <ThemeToggle />{' '}
           </div>
           <ul
             className={`text-grey-600 links duration-200 w-[90px] p-3 ${
@@ -119,20 +121,22 @@ const Options = ({ setShowSettingsModal }) => {
                       hoveredOver ? 'duration-100 ' : 'duration-100'
                     }`}
                   >
-                    {icon}
                     <div
-                      className={`pl-1 ${
+                      className={`pl-1 flex items-center gap-3 ${
                         text === userSettings?.selectedPane
-                          ? '!text-gray-900 font-bold'
+                          ? `${
+                              isDarkTheme ? 'text-blue-600' : 'text-red-700'
+                            } font-bold `
                           : null
                       } `}
                     >
+                      <span> {icon} </span>
                       <div>
                         <p
                           className={`hover:scale-105 duration-300 transition-all ease-in-out ${
                             hoveredOver
                               ? 'opacity-100 visible duration-100'
-                              : 'opacity-0 invisible duration-100'
+                              : 'opacity-0 invisible  duration-100'
                           } `}
                         >
                           {text}

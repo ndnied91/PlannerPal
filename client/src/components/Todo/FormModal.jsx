@@ -12,7 +12,14 @@ import { useGlobalContext } from './todoContext';
 import Select from './Select';
 import { useEffect } from 'react';
 
-const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
+const FormModal = ({
+  sendToServer,
+  setShowModal,
+  userSettings,
+  showModal,
+  isDarkTheme,
+}) => {
+  console.log(isDarkTheme);
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = 'hidden';
@@ -90,20 +97,31 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
       {showModal && (
         <div className="fixed inset-0 z-50 flex justify-center items-center">
           <div
-            className="fixed inset-0 bg-gray-500 bg-opacity-75 z-0"
+            className={`fixed inset-0 bg-gray-500 bg-opacity-75 z-0`}
             onClick={() => setShowModal(false)}
           ></div>
-          <div className="relative z-10 bg-white h-full md:h-fit w-full max-w-xl rounded-md shadow-lg ">
+          <div
+            className={` ${
+              isDarkTheme ? 'bg-neutral-900' : 'bg-white'
+            } relative z-10 h-full md:h-fit w-full max-w-xl rounded-md shadow-lg `}
+          >
             <OutsideClickHandler
               onOutsideClick={() => (!isMobile ? setShowModal(false) : null)}
             >
-              <div className="flex justify-end bg-slate-200 h-12 pr-2">
+              <div
+                className={`${
+                  isDarkTheme ? 'bg-gray-950' : 'bg-slate-200'
+                } flex justify-end h-12 pr-2`}
+              >
                 <button
                   onClick={() => setShowModal(false)}
                   type="button"
                   className="text-gray-500 hover:text-gray-700 focus:outline-none "
                 >
-                  <MdOutlineClose className="text-2xl" />
+                  <MdOutlineClose
+                    className={`cursor-pointer text-3xl
+                  ${isDarkTheme ? 'text-gray-100' : 'text-neutral-800'} `}
+                  />
                 </button>
               </div>
 
@@ -112,8 +130,16 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                   onClick={() => setCurrentPane('todo')}
                   className={`${
                     currentPane === 'todo'
-                      ? 'bg-white text-sm capitalize font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
-                      : 'bg-white text-sm capitalize  text-gray-400 border hover:bg-gray-100 duration-200'
+                      ? `${
+                          isDarkTheme
+                            ? 'bg-neutral-600 hover:bg-gray-500 text-gray-100'
+                            : 'bg-white hover:bg-gray-100 text-gray-800'
+                        }  text-sm capitalize font-semibold tracking-wider border rounded-sm duration-200`
+                      : `${
+                          isDarkTheme
+                            ? 'bg-neutral-600 hover:bg-gray-500 text-gray-500'
+                            : 'bg-white text-gray-400 hover:bg-gray-100'
+                        } text-sm capitalize border duration-200`
                   } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300`}
                 >
                   {' '}
@@ -122,9 +148,17 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                 <div
                   className={`${
                     currentPane === 'countdown'
-                      ? 'bg-white text-sm capitalize font-semibold tracking-wider text-gray-800 border rounded-sm hover:bg-gray-100 duration-200'
-                      : 'bg-white text-sm capitalize text-gray-400 border rounded-sm hover:bg-gray-100 duration-200'
-                  } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300   `}
+                      ? `${
+                          isDarkTheme
+                            ? 'bg-neutral-600 hover:bg-gray-500 text-gray-100'
+                            : 'bg-white text-gray-800 hover:bg-gray-100'
+                        }  text-sm capitalize font-semibold tracking-wider border rounded-sm duration-200`
+                      : `${
+                          isDarkTheme
+                            ? 'bg-neutral-600 hover:bg-gray-500 text-gray-500 text-sm'
+                            : 'bg-white hover:bg-gray-100 text-gray-400 '
+                        }  capitalize border rounded-sm duration-200`
+                  } w-full h-10 text-center flex justify-center items-center cursor-pointer hover:opacity-90 duration-300`}
                   onClick={() => setCurrentPane('countdown')}
                 >
                   {' '}
@@ -132,18 +166,24 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                 </div>
               </section>
 
-              <div className="">
+              <div>
                 {/* Your modal content here */}
                 <form onSubmit={handleSubmit} className="p-4">
                   <div className="mb-4">
                     <div
-                      htmlFor="title "
-                      className="text-sm font-bold text-gray-400 float-left"
+                      htmlFor="title"
+                      className={`${
+                        isDarkTheme ? 'text-slate-200' : 'text-gray-400'
+                      } text-sm font-bold flex`}
                     >
                       Title
                     </div>
                     <input
-                      className="pt-3 text-gray-600 text-md font-semibold pb-2 w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                      className={` ${
+                        isDarkTheme
+                          ? 'text-slate-50 border-none bg-neutral-700'
+                          : 'text-gray-600 border-gray-200'
+                      } pl-3 cursor-pointer rounded-sm w-full capitalize pt-2 text-sm font-semibold pb-2 border md:min-w-96 `}
                       id="currentTitle"
                       type="text"
                       name="currentTitle"
@@ -157,12 +197,18 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                   <div className="mb-2">
                     <div
                       htmlFor="title"
-                      className="text-sm font-bold text-gray-400 float-left"
+                      className={`${
+                        isDarkTheme ? 'text-slate-200' : 'text-gray-400'
+                      } text-sm font-bold flex`}
                     >
                       Description
                     </div>
                     <textarea
-                      className="pt-3 text-gray-600 text-md font-semibold w-full border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                      className={` ${
+                        isDarkTheme
+                          ? 'text-slate-50 border-none bg-neutral-700'
+                          : 'text-gray-600 border-gray-200'
+                      } pl-3 cursor-pointer rounded-sm w-full capitalize pt-3 text-sm font-semibold pb-2 border md:min-w-96 `}
                       id="description"
                       type="textarea"
                       name="description"
@@ -172,11 +218,13 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="dropdowns">
-                    <div className="flex flex-col w-max">
+                  <div className="flex flex-col">
+                    <div className="contents">
                       <div
-                        htmlFor="title"
-                        className="text-sm font-bold text-gray-400  flex"
+                        htmlFor="dueDate"
+                        className={`${
+                          isDarkTheme ? 'text-slate-200' : 'text-gray-400'
+                        } text-sm font-bold flex`}
                       >
                         Due Date
                       </div>
@@ -187,16 +235,25 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                         placeholderText="Add a due date.."
                         onChange={(date) => setDate(date)}
                         dateFormat="MMMM d, yyyy h:mmaa"
-                        className="text-gray-600 text-sm font-semibold pb-2 !w-60 border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        className={`${
+                          isDarkTheme
+                            ? 'bg-neutral-700 text-slate-50'
+                            : 'text-gray-600 border-gray-200 border'
+                        } rounded-sm cursor-pointer text-sm font-semibold pb-3 pt-3 pl-3`}
                       />
                     </div>
 
                     <div className="flex items-center">
                       <Select
                         textPrompt={'Select'}
-                        className="relative p-3 text-sm font-semibold cursor-pointer bg-white w-32 border-solid border-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        className={`${
+                          isDarkTheme
+                            ? 'bg-neutral-700'
+                            : 'border-gray-200 border'
+                        } relative p-3 text-sm font-semibold cursor-pointer`}
                         userSettings={userSettings}
                         updateCategory={updateCategory}
+                        isDarkTheme={isDarkTheme}
                       />
                     </div>
                   </div>
@@ -205,7 +262,9 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                       <>
                         <div className="pb-5 items-baseline block">
                           <label
-                            className="pt-3 text-gray-600 text-sm font-semibold pb-2  pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
+                            className={`${
+                              isDarkTheme ? 'text-slate-50' : 'text-gray-600'
+                            } pt-3  text-sm font-semibold pb-2 pr-2 focus:outline-none`}
                             htmlFor="isAddedToCal"
                           >
                             Add to Cal?
@@ -220,7 +279,9 @@ const FormModal = ({ sendToServer, setShowModal, userSettings, showModal }) => {
                         </div>
                         <div className="pb-2">
                           <label
-                            className="pt-3 text-gray-600 text-sm font-semibold pb-2  pr-2 focus:outline-none focus:ring-0 focus:border-blue-500"
+                            className={`${
+                              isDarkTheme ? 'text-slate-50' : 'text-gray-600'
+                            } pt-3  text-sm font-semibold pb-2 pr-2 focus:outline-none`}
                             htmlFor="isAddedToCal"
                           >
                             Add to Priority?

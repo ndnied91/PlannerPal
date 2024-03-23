@@ -18,3 +18,12 @@ form > div.block > div:nth-child(2){
 .p-4.h-screen.md\:h-fit.w-screen.md\:w-fit > div:nth-child(1) > div:nth-child(2){
   height: 55px !important;
 }
+
+
+  .tox-edit-area__iframe{
+    background-color: #F1F5F9 !important;
+  }
+  
+  .tox-tinymce{
+  border: none !important;  
+  }

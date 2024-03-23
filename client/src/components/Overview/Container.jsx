@@ -15,7 +15,12 @@ import OverviewCalModal from './OverviewCalModal';
 import SearchBox from '../SearchBox/index';
 import { toast } from 'react-toastify';
 
-const container = ({ userSettings, userContext, setUserSettings }) => {
+const container = ({
+  userSettings,
+  userContext,
+  setUserSettings,
+  isDarkTheme,
+}) => {
   const [previewEvents, setPreviewEvents] = useState([]); //events set for preview
   const [popupPosition, setPopupPosition] = useState(''); //when hovering over small cal
   const { items, setItems } = useGlobalContext();
@@ -76,45 +81,66 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
             </div>
 
             <div className="md:w-3/4 rounded-lg text-end m-4 md:m-0">
-              <SearchBox renderItem={renderItem} />
+              <SearchBox renderItem={renderItem} isDarkTheme={isDarkTheme} />
             </div>
           </div>
 
           <section className="h-full w-screen md:w-auto flex flex-col md:flex-row md:flex-wrap md:gap-4">
-            <div className="bg-slate-100 m-4 p-4 md:b-0 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto ">
+            <div
+              className={`${
+                isDarkTheme ? 'bg-neutral-900' : 'bg-slate-100'
+              }  m-4 p-4 md:b-0 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto `}
+            >
               <SmallCalendarOverview
                 setPreviewEvents={setPreviewEvents}
                 setPopupPosition={setPopupPosition}
+                isDarkTheme={isDarkTheme}
               />
             </div>
             <div>
               <PreviewModal
                 previewEvents={previewEvents}
                 popupPosition={popupPosition}
+                isDarkTheme={isDarkTheme}
               />
             </div>
-            <div className="bg-slate-100 m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto">
+            <div
+              className={`${
+                isDarkTheme ? 'bg-neutral-900' : 'bg-slate-100'
+              } m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto overViewModal `}
+            >
               <UrgentTodoOverview
                 items={items}
                 userSettings={userSettings}
                 setItemsShowModal={setItemsShowModal}
                 setEvent={setEvent}
+                isDarkTheme={isDarkTheme}
               />
             </div>
-            <div className="bg-slate-100 m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto">
+            <div
+              className={`${
+                isDarkTheme ? 'bg-neutral-900' : 'bg-slate-100'
+              } m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto overViewModal `}
+            >
               <PriorityTodoOverview
                 items={items}
                 userSettings={userSettings}
                 setItemsShowModal={setItemsShowModal}
                 setEvent={setEvent}
+                isDarkTheme={isDarkTheme}
               />
             </div>
-            <div className="bg-slate-100 m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto">
+            <div
+              className={`${
+                isDarkTheme ? 'bg-neutral-900' : 'bg-slate-100'
+              } m-4 md:m-0 rounded-lg shadow-sm md:p-6 child w-auto md:w-auto overViewModal `}
+            >
               <PinnedOverview
                 items={items}
                 userSettings={userSettings}
                 setItemsShowModal={setItemsShowModal}
                 setEvent={setEvent}
+                isDarkTheme={isDarkTheme}
               />
             </div>
           </section>
@@ -126,6 +152,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
             setShowNotesModal={setShowNotesModal}
             showNotesModal={showNotesModal}
             event={event}
+            isDarkTheme={isDarkTheme}
           />
         )}
 
@@ -136,6 +163,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
             event={event}
             userSettings={userSettings}
             setUserSettings={setUserSettings}
+            isDarkTheme={isDarkTheme}
           />
         )}
 
@@ -144,6 +172,7 @@ const container = ({ userSettings, userContext, setUserSettings }) => {
             setShowCalModal={setShowCalModal}
             showCalModal={showCalModal}
             event={event}
+            isDarkTheme={isDarkTheme}
           />
         )}
       </section>

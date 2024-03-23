@@ -10,7 +10,7 @@ import { MdOutlineClose } from 'react-icons/md';
 
 const labelsClasses = ['indigo', 'gray', 'green', 'blue', 'red', 'purple'];
 
-const EventModal = ({ userContext }) => {
+const EventModal = ({ userContext, isDarkTheme }) => {
   const {
     setShowEventModal,
     showEventModal,
@@ -129,19 +129,27 @@ const EventModal = ({ userContext }) => {
   return (
     <section>
       <div className="fixed inset-0 bg-gray-500 bg-opacity-80 transition-opacity z-10"></div>
-      <div className="h-screen w-screen fixed left-0 top-0 flex justify-center items-center z-20 ">
+      <div className="h-screen w-screen fixed left-0 top-0 flex justify-center items-center z-20">
         <div
           ref={modalRef}
-          className="bg-white h-screen md:h-fit md:shadow-2xl w-full max-w-screen-md md:m-2"
+          className={`${
+            isDarkTheme ? 'bg-neutral-900' : 'bg-white'
+          }  shadow-2xl md:m-0 md:max-w-[38rem] w-max-h-full overflow-y-auto w-screen h-screen md:h-fit `}
         >
           <form
             onSubmit={handleSubmit}
             onKeyDown={(event) => {
               event.keyCode === 13 ? handleSubmit(event) : null;
             }}
-            className="bg-white rounded-lg md:shadow-2xl"
+            className={`${
+              isDarkTheme ? 'bg-neutral-900' : 'bg-white'
+            }  shadow-2xl md:m-0 md:max-w-[38rem] w-max-h-full overflow-y-auto w-screen h-screen md:h-fit `}
           >
-            <header className="bg-gray-100 px-2 py-2 flex justify-end items-center ">
+            <header
+              className={`${
+                isDarkTheme ? 'bg-gray-950' : 'bg-slate-100'
+              } px-4 py-2 flex justify-end items-center`}
+            >
               <div className="flex items-center">
                 {selectedEvent && (
                   <span
@@ -159,11 +167,18 @@ const EventModal = ({ userContext }) => {
                     }}
                     className="material-icons-outlined text-gray-400 cursor-pointer"
                   >
-                    <FaRegTrashAlt className="cursor-pointer text-2xl text-gray-950 " />
+                    <FaRegTrashAlt
+                      className={`${
+                        isDarkTheme ? 'text-gray-100' : 'text-gray-700'
+                      } cursor-pointer text-2xl `}
+                    />
                   </span>
                 )}
                 <button onClick={() => setShowEventModal(false)}>
-                  <MdOutlineClose className="cursor-pointer text-3xl text-gray-950 " />
+                  <MdOutlineClose
+                    className={`text-3xl
+                  ${isDarkTheme ? 'text-gray-100' : 'text-gray-700'} `}
+                  />
                 </button>
               </div>
             </header>
@@ -181,30 +196,36 @@ const EventModal = ({ userContext }) => {
                   placeholder="Add title"
                   value={title}
                   required
-                  className="text-gray-600 text-sm mb-4 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className={` ${
+                    isDarkTheme
+                      ? 'text-slate-50 border-none bg-neutral-700'
+                      : 'text-gray-600 border-gray-200'
+                  } pl-3 cursor-pointer rounded-sm w-full capitalize pt-2 text-sm font-semibold pb-2 border md:min-w-96 `}
                   onChange={(e) => setTitle(e.target.value)}
                 />
 
-                <div>
-                  <div
-                    htmlFor="title"
-                    className="text-sm font-bold text-gray-400"
-                  >
-                    Due Date
-                  </div>
-                  <DatePicker
-                    showTimeSelect
-                    selected={new Date(date)}
-                    onChange={(date) => setDate(date.toISOString())}
-                    dateFormat="MMMM d, yyyy h:mmaa"
-                    className="text-gray-600 cursor-pointer text-sm border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                    calendarContainer={({ className, children }) => (
-                      <div className={`custom-calendar-container ${className}`}>
-                        {children}
-                      </div>
-                    )}
-                  />
+                <div
+                  htmlFor="title"
+                  className="text-sm font-bold text-gray-400 mt-3"
+                >
+                  Due Date
                 </div>
+                <DatePicker
+                  showTimeSelect
+                  selected={new Date(date)}
+                  onChange={(date) => setDate(date.toISOString())}
+                  dateFormat="MMMM d, yyyy h:mmaa"
+                  className={`${
+                    isDarkTheme
+                      ? 'bg-neutral-700 text-slate-50'
+                      : 'text-gray-600 border-gray-200 border'
+                  } rounded-sm cursor-pointer text-sm font-semibold pb-3 pt-3 pl-3`}
+                  calendarContainer={({ className, children }) => (
+                    <div className={`custom-calendar-container ${className}`}>
+                      {children}
+                    </div>
+                  )}
+                />
 
                 <div
                   htmlFor="title"
@@ -217,7 +238,11 @@ const EventModal = ({ userContext }) => {
                   name="description"
                   placeholder="Add a description"
                   value={description}
-                  className="text-gray-600 w-full border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className={` ${
+                    isDarkTheme
+                      ? 'text-slate-50 border-none bg-neutral-700'
+                      : 'text-gray-600 border-gray-200'
+                  } pl-3 cursor-pointer rounded-sm w-full capitalize pt-2 mb-2 text-sm font-semibold pb-2 border md:min-w-96 `}
                   onChange={(e) => setDescription(e.target.value)}
                 />
                 <div className="flex gap-x-2 mb-3 mt-3">

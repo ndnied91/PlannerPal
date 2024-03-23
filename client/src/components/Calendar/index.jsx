@@ -8,7 +8,7 @@ import GlobalContext from './context/GlobalContext';
 import EventModal from './CalComponents/EventModal';
 import { isMobile } from 'react-device-detect';
 
-const container = ({ userContext }) => {
+const container = ({ userContext, isDarkTheme }) => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex, showEventModal } = useContext(GlobalContext);
 
@@ -18,13 +18,17 @@ const container = ({ userContext }) => {
 
   return (
     <div className="md:ml-32 h-[85vh] flex flex-col ml-5 mr-5 pt-5 ">
-      {showEventModal ? <EventModal userContext={userContext} /> : null}
+      {showEventModal ? (
+        <EventModal userContext={userContext} isDarkTheme={isDarkTheme} />
+      ) : null}
 
-      <CalendarHeader />
+      <CalendarHeader isDarkTheme={isDarkTheme} />
       <div className="flex flex-col md:flex-row flex-1">
-        <Sidebar />
+        <Sidebar isDarkTheme={isDarkTheme} />
 
-        {!isMobile ? <Month month={currentMonth} /> : null}
+        {!isMobile ? (
+          <Month month={currentMonth} isDarkTheme={isDarkTheme} />
+        ) : null}
       </div>
     </div>
   );

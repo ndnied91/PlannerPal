@@ -1,6 +1,6 @@
 import { Popover } from 'rsuite';
 
-const PreviewModal = ({ previewEvents, popupPosition }) => {
+const PreviewModal = ({ previewEvents, popupPosition, isDarkTheme }) => {
   let { upDown, leftRight } = popupPosition;
 
   return (
@@ -11,7 +11,9 @@ const PreviewModal = ({ previewEvents, popupPosition }) => {
             top: upDown + 80,
             left: leftRight + 20,
           }}
-          className={`capitalize w-fit rounded-md shadow-md bg-red-100 duration-300 absolute p-5 ${
+          className={`${
+            isDarkTheme ? 'bg-slate-50 text-gray-950' : 'bg-gray-950 text-white'
+          } capitalize w-fit rounded-md shadow-md  duration-300 absolute p-5 ${
             previewEvents.length > 0 ? 'opacity-100' : 'opacity-0 invisible'
           }`}
         >

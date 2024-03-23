@@ -5,7 +5,7 @@ import Labels from './Labels';
 import GlobalContext from '../context/GlobalContext';
 import { isMobile } from 'react-device-detect';
 
-const Sidebar = () => {
+const Sidebar = ({ isDarkTheme }) => {
   const { daySelected, savedEvents, setShowEventModal, setSelectedEvent } =
     useContext(GlobalContext);
 
@@ -47,10 +47,14 @@ const Sidebar = () => {
 
   return (
     <section>
-      <aside className="border p-5 w-full md:w-64 content-center">
-        <CreateEventButton />
-        <SmallCalendar />
-        {!isMobile ? <Labels /> : null}
+      <aside
+        className={` ${
+          isDarkTheme ? 'border-neutral-500 rounded-sm' : 'null'
+        } border p-5 w-full md:w-64 content-center md:mr-5`}
+      >
+        <CreateEventButton isDarkTheme={isDarkTheme} />
+        <SmallCalendar isDarkTheme={isDarkTheme} />
+        {!isMobile ? <Labels isDarkTheme={isDarkTheme} /> : null}
       </aside>
 
       {isMobile ? <div className="mt-2">{renderItems()}</div> : null}

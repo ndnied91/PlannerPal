@@ -14,8 +14,13 @@ import AppSettings from './components/Settings/AppSettings';
 import Global from './Global';
 
 const App = () => {
-  const { setContextUser, userSettings, userContext, setUserSettings } =
-    useGlobalContext();
+  const {
+    setContextUser,
+    userSettings,
+    userContext,
+    setUserSettings,
+    isDarkTheme,
+  } = useGlobalContext();
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [caughtComponent, setCaughtComponent] = useState(null);
 
@@ -43,6 +48,7 @@ const App = () => {
               userSettings={userSettings}
               setUserSettings={setUserSettings}
               userContext={userContext}
+              isDarkTheme={isDarkTheme}
             />
           </TodoAppProvider>
         );
@@ -51,7 +57,7 @@ const App = () => {
       case 'calendar':
         return (
           <ContextWrapper>
-            <Calendar userContext={userContext} />
+            <Calendar userContext={userContext} isDarkTheme={isDarkTheme} />
           </ContextWrapper>
         );
 
@@ -65,6 +71,7 @@ const App = () => {
                 userContext={userContext}
                 userSettings={userSettings}
                 setUserSettings={setUserSettings}
+                isDarkTheme={isDarkTheme}
               />
             </ContextWrapper>
           </TodoAppProvider>
@@ -73,9 +80,9 @@ const App = () => {
   };
 
   return (
-    <main>
+    <main className="min-h-screen flex w-full">
       <div
-        className={`${
+        className={` ${
           caughtComponent
             ? 'opacity-100 duration-500'
             : 'opacity-0 duration-500'
@@ -83,10 +90,13 @@ const App = () => {
       >
         <Global />
       </div>
-      <section className="relative">
+      <section className="relative flex flex-col">
         <div className="md:ml-[20px]">
           {userContext && (
-            <Sidebar setShowSettingsModal={setShowSettingsModal} />
+            <Sidebar
+              setShowSettingsModal={setShowSettingsModal}
+              isDarkTheme={isDarkTheme}
+            />
           )}
 
           {userSettings?.selectedPane !== undefined ? renderPane() : null}
@@ -99,6 +109,7 @@ const App = () => {
               setShowSettingsModal={setShowSettingsModal}
               userContext={userContext}
               userSettings={userSettings}
+              isDarkTheme={isDarkTheme}
             />
           </TodoAppProvider>
         ) : null}

@@ -4,7 +4,7 @@ import customFetch from '../../utils/customFetch';
 import { useGlobalContext } from './todoContext';
 import FormModal from './FormModal';
 
-const Form = ({ style, text, type, userSettings }) => {
+const Form = ({ style, text, type, userSettings, isDarkTheme }) => {
   const {
     showModal,
     setShowModal,
@@ -102,6 +102,7 @@ const Form = ({ style, text, type, userSettings }) => {
         setShowModal={setShowModal}
         type={type}
         userSettings={userSettings}
+        isDarkTheme={isDarkTheme}
       />
     </div>
   );

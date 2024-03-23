@@ -4,7 +4,12 @@ import { toast } from 'react-toastify';
 import '../Notes/RichMediaEditor/style.css';
 import customFetch from '../../utils/customFetch';
 
-const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
+const SingleNoteOverview = ({
+  setShowNotesModal,
+  showNotesModal,
+  item,
+  isDarkTheme,
+}) => {
   const [body, setBody] = useState(item.body);
   const [title, setTitle] = useState(item.title);
 
@@ -69,7 +74,7 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
 
   return (
     <div className="p-4 h-screen md:h-fit w-screen md:w-fit">
-      <div className="">
+      <div>
         <Editor
           apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
           value={title}
@@ -94,6 +99,7 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
           init={{
             height: editorHeight,
             menubar: false,
+            background: 'red',
             placeholder: 'Add text here..',
           }}
           onEditorChange={(e) => setBody(e)}
@@ -102,7 +108,11 @@ const SingleNoteOverview = ({ setShowNotesModal, showNotesModal, item }) => {
       <div className="float-right p-2 flex items-center w-full md:w-fit ">
         <div
           onClick={saveItem}
-          className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer"
+          className={`${
+            isDarkTheme
+              ? 'bg-neutral-400 text-slate-50'
+              : 'bg-gray-800 text-white'
+          }  hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer`}
         >
           Update
         </div>

@@ -3,9 +3,29 @@ import customFetch from './utils/customFetch';
 
 const AppContext = createContext();
 
+const getInitialDarkMode = () => {
+  const prefersDarkMode = window.matchMedia(
+    '(prefers-color-scheme:dark)'
+  ).matches;
+  const storedDarkMode = localStorage.getItem('darkTheme') === 'true';
+
+  return storedDarkMode || prefersDarkMode;
+};
+
 export const AppProvider = ({ children }) => {
   const [userContext, setContextUser] = useState(false);
   const [userSettings, setUserSettings] = useState();
+  const [isDarkTheme, setIsDarkTheme] = useState(getInitialDarkMode());
+
+  const toggleDarkTheme = () => {
+    const newDarkTheme = !isDarkTheme;
+    setIsDarkTheme(newDarkTheme);
+    localStorage.setItem('darkTheme', newDarkTheme);
+  };
+
+  useEffect(() => {
+    document.body.classList.toggle('dark-theme', isDarkTheme);
+  }, [isDarkTheme]);
 
   useEffect(() => {
     const getData = async () => {
@@ -29,6 +49,8 @@ export const AppProvider = ({ children }) => {
         setContextUser,
         userSettings,
         setUserSettings,
+        isDarkTheme,
+        toggleDarkTheme,
       }}
     >
       {children}

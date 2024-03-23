@@ -78,6 +78,7 @@ export const TodoAppProvider = ({ children }) => {
       console.log('data from updateContent');
       console.log(data);
       setItems(data.items);
+      toast.success('Item updated!');
     } catch (e) {
       toast.error(e.response.data.msg || 'Error occurred, please try again');
     }

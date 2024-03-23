@@ -15,6 +15,7 @@ export const SingleItemOverview = ({
   showItemsModal,
   userSettings,
   setUserSettings,
+  isDarkTheme,
 }) => {
   const { removeItem, updateStatus, updateContent } = useGlobalContext();
 
@@ -73,7 +74,11 @@ export const SingleItemOverview = ({
             </div>
             <div className="font-bold capitalize">
               <input
-                className="cursor-pointer w-full capitalize pt-3 text-gray-600 text-sm font-semibold pb-2 border border-gray-200 md:min-w-96 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className={` ${
+                  isDarkTheme
+                    ? 'text-slate-50 border-none bg-neutral-700'
+                    : 'text-gray-600 border-gray-200'
+                } pl-3 cursor-pointer rounded-sm w-full capitalize pt-2 text-sm font-semibold pb-2 border md:min-w-96 `}
                 name="title"
                 required
                 value={task.title}
@@ -83,7 +88,9 @@ export const SingleItemOverview = ({
 
             <div
               htmlFor="title"
-              className="text-sm font-bold mt-4 text-gray-400"
+              className={`${
+                isDarkTheme ? 'text-slate-200' : 'text-gray-400'
+              } text-sm font-bold mt-4 `}
             >
               Due Date
             </div>
@@ -94,7 +101,11 @@ export const SingleItemOverview = ({
               placeholderText="Due date.."
               onChange={(date) => setDate(date.toISOString())}
               dateFormat="MMMM d, yyyy h:mmaa"
-              className="text-gray-600 cursor-pointer text-sm font-semibold pb-3 pt-3 border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className={`${
+                isDarkTheme
+                  ? 'bg-neutral-700 text-slate-50'
+                  : 'text-gray-600 border-gray-200 border'
+              } rounded-sm cursor-pointer text-sm font-semibold pb-3 pt-3 pl-3`}
               calendarContainer={({ className, children }) => (
                 <div className={`custom-calendar-container ${className}`}>
                   {children}
@@ -105,12 +116,15 @@ export const SingleItemOverview = ({
             <div className="mt-12">
               <Select
                 textPrompt={'Select'}
-                className="relative p-3 text-sm font-semibold cursor-pointer bg-white border-solid border border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className={`${
+                  isDarkTheme ? 'bg-neutral-700' : 'border-gray-200 border'
+                } relative p-3 text-sm font-semibold cursor-pointer`}
                 userSettings={userSettings}
                 setUserSettings={setUserSettings}
                 updatable={false}
                 updateCategory={updateCategory}
                 category={category}
+                isDarkTheme={isDarkTheme}
               />
             </div>
 
@@ -120,9 +134,13 @@ export const SingleItemOverview = ({
             >
               Description
             </div>
-            <div className="font-light  capitalize text-xs text-gray-900">
+            <div className="font-light capitalize text-xs text-gray-900">
               <textarea
-                className="cursor-pointer pt-3 mb-2 text-gray-600 text-sm font-semibold pb-2  border border-gray-200 w-full focus:outline-none focus:ring-0 focus:border-blue-500"
+                className={` ${
+                  isDarkTheme
+                    ? 'text-slate-50 border-none bg-neutral-700'
+                    : 'text-gray-600 border-gray-200'
+                } pl-3 cursor-pointer rounded-sm w-full capitalize pt-3 mb-2 text-sm font-semibold pb-2 border md:min-w-96 `}
                 name="description"
                 required
                 value={task.description}
@@ -131,7 +149,11 @@ export const SingleItemOverview = ({
             </div>
             <button
               type="submit"
-              className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer"
+              className={` ${
+                isDarkTheme
+                  ? 'bg-neutral-400 text-slate-50'
+                  : 'bg-gray-800 text-white'
+              } hover:opacity-80 duration-200 px-6 py-2 rounded w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer`}
             >
               Update
             </button>
@@ -140,7 +162,11 @@ export const SingleItemOverview = ({
       </form>
 
       <div className="flex flex-col self-end gap-4 absolute right-4">
-        <Countdown date={item.dueDate} renderer={renderer} />
+        <Countdown
+          date={item.dueDate}
+          renderer={renderer}
+          isDarkTheme={isDarkTheme}
+        />
 
         <div className={`flex justify-end w-full items-center`}>
           <>
@@ -148,7 +174,13 @@ export const SingleItemOverview = ({
               className={`btn remove-btn }`}
               onClick={() => removeItem(item)}
             >
-              <FaTrashAlt className=" text-3xl text-gray-950 hover:text-4xl duration-300" />
+              <FaTrashAlt
+                className={`${
+                  isDarkTheme
+                    ? 'text-slate-100 bg-neutral-900'
+                    : 'text-gray-950 bg-white'
+                } text-3xl  hover:text-4xl duration-300 `}
+              />
             </button>
           </>
 

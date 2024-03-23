@@ -1,9 +1,16 @@
 import React from 'react';
 
-const renderer = ({ days, hours, minutes, seconds, completed }) => {
+const renderer = ({
+  days,
+  hours,
+  minutes,
+  seconds,
+  completed,
+  isDarkTheme,
+}) => {
   if (completed) {
     // Render a complete state
-    return <span className="text-xs text-gray-700"> Countdown Finished</span>;
+    return <span className="text-xs">Countdown Finished</span>;
   } else {
     // Render a countdown
     return (

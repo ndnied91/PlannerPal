@@ -4,13 +4,14 @@ import GlobalContext from '../context/GlobalContext';
 import { getMonth } from '../../../utils/util';
 import { LuDot } from 'react-icons/lu';
 
-export default function SmallCalendar() {
+export default function SmallCalendar({ isDarkTheme }) {
   const [currentMonthIdx, setCurrentMonthIdx] = useState(dayjs().month());
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   useEffect(() => {
     setCurrentMonth(getMonth(currentMonthIdx));
   }, [currentMonthIdx]);
 
+  console.log(isDarkTheme);
   const {
     monthIndex,
     setSmallCalendarMonth,
@@ -65,8 +66,12 @@ export default function SmallCalendar() {
 
   return (
     <div className="mt-9">
-      <header className="flex justify-between ">
-        <p className="text-gray-500 font-bold">
+      <header className="flex justify-between">
+        <p
+          className={`${
+            isDarkTheme ? 'text-gray-100' : 'text-gray-500'
+          } font-bold pb-2`}
+        >
           {dayjs(new Date(dayjs().year(), currentMonthIdx)).format('MMMM YYYY')}
         </p>
         <div>
@@ -76,7 +81,11 @@ export default function SmallCalendar() {
               setDaySelected(null);
             }}
           >
-            <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
+            <span
+              className={`${
+                isDarkTheme ? 'text-gray-100' : 'text-gray-600'
+              } material-icons-outlined cursor-pointer mx-2`}
+            >
               chevron_left
             </span>
           </button>
@@ -86,7 +95,11 @@ export default function SmallCalendar() {
               setDaySelected(null);
             }}
           >
-            <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
+            <span
+              className={`${
+                isDarkTheme ? 'text-gray-100' : 'text-gray-600'
+              } material-icons-outlined cursor-pointer mx-2`}
+            >
               chevron_right
             </span>
           </button>

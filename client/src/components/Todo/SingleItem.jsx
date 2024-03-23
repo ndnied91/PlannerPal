@@ -21,6 +21,7 @@ export const SingleItem = ({
   userSettings,
   setUserSettings,
   updateItemsAfterEditTodo,
+  isDarkTheme,
 }) => {
   const [readMore, setReadMore] = useState(false);
   const {
@@ -88,13 +89,11 @@ export const SingleItem = ({
 
   return (
     <div className={style} style={dynamicStyle}>
-      <section className="todoInfo text-gray-900">
+      <section className="todoInfo">
         <div>
           <div className="font-bold capitalize">
             <p className="">{item.title}</p>
-            <p className="text-sm capitalize text-gray-900 font-normal">
-              {item?.category}
-            </p>
+            <p className="text-sm capitalize font-normal">{item?.category}</p>
           </div>
 
           <p className="font-light text-sm tracking-wider">
@@ -108,7 +107,7 @@ export const SingleItem = ({
           </p>
 
           {!type === 'trash' ? null : (
-            <div className="font-light pt-4 capitalize text-xs text-gray-900 mb-3">
+            <div className="font-light pt-4 capitalize text-xs mb-3">
               {renderDescTrash(item.description)}
 
               <button
@@ -144,32 +143,46 @@ export const SingleItem = ({
             <>
               {item.isPinned ? (
                 <RiUnpinLine
-                  className="cursor-pointer scale-x-[-1] text-black w-5 h-5 mt-0.5 mr-2 hover:opacity-80 duration-300"
+                  className={` ${
+                    isDarkTheme ? 'text-gray-200' : 'text-black'
+                  } cursor-pointer scale-x-[-1]  w-5 h-5 mt-0.5 mr-2 hover:opacity-80 duration-300`}
                   onClick={() => setPinnedItem(item, userSettings.sortBy)}
                 />
               ) : (
                 <RiPushpinLine
-                  className="cursor-pointer scale-x-[-1] text-black w-5 h-5 mt-0.5 mr-2 hover:opacity-80 duration-300"
+                  className={` ${
+                    isDarkTheme ? 'text-gray-200' : 'text-black'
+                  } cursor-pointer scale-x-[-1]  w-5 h-5 mt-0.5 mr-2 hover:opacity-80 duration-300`}
                   onClick={() => setPinnedItem(item, userSettings.sortBy)}
                 />
               )}
 
               <FaPencilAlt
-                className="cursor-pointer text-blue-500 w-5 h-5 mt-0.5 mr-3 hover:opacity-80 duration-300"
+                className={`${
+                  isDarkTheme ? 'text-blue-900' : ' text-blue-500'
+                } cursor-pointer w-5 h-5 mt-0.5 mr-3 hover:opacity-80 duration-300`}
                 onClick={() => itemToUpdate(item, userSettings.sortBy)}
               />
 
               {!item.isCountDown ? (
                 <FaFlag
-                  className="cursor-pointer text-red-500 w-6 h-6 mr-2 hover:opacity-80 duration-300"
+                  className={`${
+                    isDarkTheme ? 'text-red-800' : 'text-red-500'
+                  } cursor-pointer  w-6 h-6 mr-2 hover:opacity-80 duration-300`}
                   onClick={() => addtoPriority(item, userSettings.sortBy)}
                 />
               ) : (
                 <button
-                  className={`btn remove-btn ${!archivedList ? 'block' : null}`}
+                  className={`bg-transparent btn remove-btn ${
+                    !archivedList ? 'block' : null
+                  }`}
                   onClick={() => removeItem(item, userSettings.sortBy)}
                 >
-                  <FaTrashAlt className=" text-xl hover:text-2xl duration-300" />
+                  <FaTrashAlt
+                    className={`${
+                      isDarkTheme ? 'bg-neutral-500' : 'bg-white'
+                    }  text-2xl hover:opacity-90 duration-300`}
+                  />
                 </button>
               )}
             </>
@@ -182,6 +195,7 @@ export const SingleItem = ({
               userSettings={userSettings}
               setUserSettings={setUserSettings}
               updateItemsAfterEditTodo={updateItemsAfterEditTodo}
+              isDarkTheme={isDarkTheme}
             />
           ) : null}
 

@@ -9,7 +9,7 @@ const arrayContainsObject = (array, object) => {
   );
 };
 
-const FilterPopover = ({ userSettings, setUserSettings }) => {
+const FilterPopover = ({ userSettings, setUserSettings, isDarkTheme }) => {
   const [filter, setFilter] = useState('');
 
   const { userContext, setAddNewFilter } = useGlobalContext();
@@ -44,9 +44,9 @@ const FilterPopover = ({ userSettings, setUserSettings }) => {
   };
 
   return (
-    <div className="text-xs font-normal flex flex-row justify-center mr-2">
+    <div className="text-xs font-normal flex flex-row justify-center mr-2 ">
       <input
-        className="rounded-sm w-40 !border-gray-300"
+        className="rounded-sm w-40 border-2 border-primary-content pl-2 bg-neutral-100"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         placeholder="Add new filter"

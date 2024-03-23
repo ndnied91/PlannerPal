@@ -53,7 +53,7 @@ const Day = ({ day, rowIdx }) => {
           return (
             <div
               key={id}
-              className={`bg-${evt.label}-200 p-1 m-2 text-gray-600 text-sm rounded mb-1 truncate `}
+              className={`bg-${evt.label}-200 p-1 m-1 text-gray-600 text-sm rounded mb-1 truncate`}
               onClick={() => setSelectedEvent(evt)}
             >
               {evt.title}
