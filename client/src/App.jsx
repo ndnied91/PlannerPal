@@ -62,7 +62,7 @@ const App = () => {
         );
 
       case 'notes':
-        return <Notes userContext={userContext} />;
+        return <Notes userContext={userContext} isDarkTheme={isDarkTheme} />;
       default:
         return (
           <TodoAppProvider userSettings={userSettings}>
@@ -90,7 +90,7 @@ const App = () => {
       >
         <Global />
       </div>
-      <section className="relative flex flex-col">
+      <section className="relative flex flex-col w-full">
         <div className="md:ml-[20px]">
           {userContext && (
             <Sidebar

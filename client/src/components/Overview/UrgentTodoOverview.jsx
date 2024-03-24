@@ -57,7 +57,7 @@ const UrgentTodoOverview = ({
   };
 
   return (
-    <section className="p-5 h-fit">
+    <section className="p-5 max-h-80 overflow-scroll">
       <div className="font-bold text-lg md:w-[30rem]">Urgent Tasks</div>
       <span className="text-sm">Tasks passed and ending in </span>
 

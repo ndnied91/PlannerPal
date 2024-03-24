@@ -4,14 +4,8 @@ import customFetch from './utils/customFetch';
 const AppContext = createContext();
 
 const getInitialDarkMode = () => {
-  const prefersDarkMode = window.matchMedia(
-    '(prefers-color-scheme:dark)'
-  ).matches;
-  const storedDarkMode = localStorage.getItem('darkTheme') === 'true';
-
-  return storedDarkMode || prefersDarkMode;
+  return localStorage.getItem('darkTheme') === 'true';
 };
-
 export const AppProvider = ({ children }) => {
   const [userContext, setContextUser] = useState(false);
   const [userSettings, setUserSettings] = useState();

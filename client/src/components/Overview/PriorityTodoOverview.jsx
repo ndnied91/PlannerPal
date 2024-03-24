@@ -29,7 +29,7 @@ const PriorityTodoOverview = ({ items, setItemsShowModal, setEvent }) => {
   };
 
   return (
-    <section className="p-5 h-96 ">
+    <section className="p-5 max-h-80 overflow-x-auto">
       <div className="font-bold text-lg md:w-[20rem]">
         Priority Items at a Glance
       </div>

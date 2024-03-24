@@ -5,7 +5,7 @@ import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
 
-const container = ({ userContext }) => {
+const container = ({ userContext, isDarkTheme }) => {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState();
   const [isDisabled, setIsDisabled] = useState(false); //plus button
@@ -75,6 +75,7 @@ const container = ({ userContext }) => {
               setIsDisabled={setIsDisabled}
               setContent={setContent}
               setNoteTitle={setNoteTitle}
+              isDarkTheme={isDarkTheme}
             />
           </div>
         )}
@@ -89,6 +90,7 @@ const container = ({ userContext }) => {
             setNoteTitle={setNoteTitle}
             content={content}
             setContent={setContent}
+            isDarkTheme={isDarkTheme}
           />
         )}
 
@@ -105,6 +107,7 @@ const container = ({ userContext }) => {
             setIsDisabled={setIsDisabled}
             setContent={setContent}
             setNoteTitle={setNoteTitle}
+            isDarkTheme={isDarkTheme}
           />
         ) : null}
 
@@ -118,6 +121,7 @@ const container = ({ userContext }) => {
             setNoteTitle={setNoteTitle}
             content={content}
             setContent={setContent}
+            isDarkTheme={isDarkTheme}
           />
         ) : null}
       </aside>

@@ -32,7 +32,9 @@ const Sidebar = ({ isDarkTheme }) => {
         return (
           <div
             key={i._id}
-            className="bg-slate-300 p-3 flex text-sm justify-between"
+            className={`${
+              isDarkTheme ? 'bg-neutral-700' : 'bg-slate-300'
+            }  p-3 flex text-sm justify-between rounded-md mb-1`}
             onClick={() => {
               setSelectedEvent(i);
               setShowEventModal(true);

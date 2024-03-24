@@ -122,7 +122,7 @@ export default function SmallCalendar({ isDarkTheme }) {
                 }}
                 className={`py-1 w-full self-start ${getDayClass(day)}`}
               >
-                <div className="text-sm flex flex-col">
+                <div className="text-sm flex flex-col min-h-10">
                   {day.format('D')}
 
                   {renderDot(day) ? (

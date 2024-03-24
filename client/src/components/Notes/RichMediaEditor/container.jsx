@@ -17,6 +17,7 @@ const container = ({
   content,
   setContent,
   setSelectedNote,
+  isDarkTheme,
 }) => {
   const [loading, setLoading] = useState(true);
   const [editorHeight, setEditorHeight] = useState('400px'); // Default height for desktop
@@ -84,10 +85,12 @@ const container = ({
 
       {isMobile && (
         <div
-          className="bg-slate-300 w-20 p-2 flex justify-center items-center rounded-md shadow-lg mb-4 ml-4"
+          className={` ${
+            isDarkTheme ? 'bg-neutral-600' : 'bg-slate-300'
+          } w-20 p-2 flex justify-center items-center rounded-md shadow-lg mb-4 ml-4`}
           onClick={() => setSelectedNote(undefined)}
         >
-          <LuArrowLeft /> Back
+          <LuArrowLeft /> <span className={``}> Back</span>
         </div>
       )}
 
@@ -142,7 +145,9 @@ const container = ({
 
         <div
           onClick={saveItem}
-          className={`cursor-pointer shadow-md hover:shadow-lg duration-300 bg-slate-300 rounded-md w-3/4 mt-5 flex justify-center p-4 tracking-wider font-bold md:w-min md:p-3 md:mt-1 ${
+          className={`${
+            isDarkTheme ? 'bg-neutral-600' : 'bg-slate-300'
+          } cursor-pointer shadow-md hover:shadow-lg duration-300  rounded-md w-3/4 mt-5 flex justify-center p-4 tracking-wider font-bold md:w-min md:p-3 md:mt-1 ${
             !loading ? 'block' : 'hidden'
           }`}
         >

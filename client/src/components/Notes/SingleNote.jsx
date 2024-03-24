@@ -4,6 +4,7 @@ import parse from 'html-react-parser';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
+import { isMobile } from 'react-device-detect';
 
 const SingleNote = ({
   _id,
@@ -16,6 +17,7 @@ const SingleNote = ({
   setIsDisabled,
   setContent,
   setNoteTitle,
+  isDarkTheme,
 }) => {
   const deleteItem = async (_id) => {
     try {
@@ -30,8 +32,8 @@ const SingleNote = ({
   };
 
   const shortenTitle = (title) => {
-    return title.props.children.length > 10
-      ? `${title.props.children.substring(0, 10)}...`
+    return title.props.children.length > (!isMobile ? 10 : 20)
+      ? `${title.props.children.substring(0, !isMobile ? 10 : 20)}...`
       : title.props.children;
   };
 
@@ -67,8 +69,12 @@ const SingleNote = ({
   return (
     <div
       className={` ${
-        selectedNote?._id === _id ? 'bg-slate-300' : ' bg-slate-200'
-      }   w-full p-5 pt-3 pb-3 border-b-2 border-slate-400 flex justify-center items-center cursor-pointer hover:bg-slate-300`}
+        selectedNote?._id === _id
+          ? `${isDarkTheme ? 'bg-neutral-700' : 'bg-slate-300'}`
+          : `${isDarkTheme ? 'bg-neutral-500' : 'bg-slate-200'}`
+      } ${
+        isDarkTheme ? 'hover:bg-neutral-700' : 'hover:bg-slate-300'
+      }   w-full p-5 pt-3 pb-3 mb-2 flex justify-center items-center cursor-pointer `}
       onClick={handleClick}
     >
       <div className="flex items-center w-full justify-between">
@@ -76,7 +82,13 @@ const SingleNote = ({
           <span className="capitalize text-sm font-bold tracking-wider">
             {renderTitle(title)}
           </span>
-          <div className="text-xs text-gray-700">{renderDate(createdAt)}</div>
+          <div
+            className={`${
+              isDarkTheme ? 'text-slate-300' : 'text-gray-700'
+            } text-xs`}
+          >
+            {renderDate(createdAt)}
+          </div>
         </div>
         {/* date */}
         <span>

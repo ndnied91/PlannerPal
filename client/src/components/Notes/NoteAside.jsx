@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import SingleNote from './SingleNote';
 import { FaPlus } from 'react-icons/fa';
 
@@ -11,14 +10,21 @@ const NoteAside = ({
   setIsDisabled,
   setContent,
   setNoteTitle,
+  isDarkTheme,
 }) => {
   return (
-    <div className="bg-slate-100 min-w-48 h-auto md:h-[85vh] overflow-scroll m-3 md:m-0">
+    <div
+      className={`${
+        isDarkTheme ? 'bg-neutral-800' : 'bg-slate-100'
+      }  min-w-48 h-auto md:h-[85vh] overflow-scroll m-3 md:m-0`}
+    >
       <button
-        className={`w-full bg-slate-400 p-5 border-b-2 border-slate-400 flex justify-center items-center cursor-pointer mb-3 ${
+        className={`${
+          isDarkTheme ? 'bg-neutral-400 rounded-t-md' : 'bg-slate-400 '
+        } w-full p-5 flex justify-center items-center cursor-pointer mb-3 ${
           isDisabled
             ? 'disabled:opacity-40 disabled:cursor-default'
-            : 'hover:bg-slate-500'
+            : `${isDarkTheme ? 'hover:bg-neutral-500' : 'hover:bg-slate-500'}`
         }`}
         disabled={isDisabled}
         onClick={() => {
@@ -59,6 +65,7 @@ const NoteAside = ({
               selectedNote={selectedNote}
               setContent={setContent}
               setNoteTitle={setNoteTitle}
+              isDarkTheme={isDarkTheme}
             />
           );
         }

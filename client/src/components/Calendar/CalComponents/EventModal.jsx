@@ -165,7 +165,7 @@ const EventModal = ({ userContext, isDarkTheme }) => {
                         toast.error('Error occurred, please try again');
                       }
                     }}
-                    className="material-icons-outlined text-gray-400 cursor-pointer"
+                    className="material-icons-outlined text-gray-400 cursor-pointer mr-2 md:mr-0"
                   >
                     <FaRegTrashAlt
                       className={`${

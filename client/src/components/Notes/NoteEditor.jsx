@@ -12,6 +12,7 @@ const NoteEditor = ({
   setNoteTitle,
   content,
   setContent,
+  isDarkTheme,
 }) => {
   const selectedNote = { body, _id, title };
 
@@ -26,6 +27,7 @@ const NoteEditor = ({
         setNoteTitle={setNoteTitle}
         content={content}
         setContent={setContent}
+        isDarkTheme={isDarkTheme}
       />
     </div>
   );
