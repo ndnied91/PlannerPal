@@ -47,7 +47,7 @@ const OverviewNotesModal = ({
             >
               <div
                 className={`${
-                  isDarkTheme ? 'bg-neutral-950' : 'bg-slate-100'
+                  isDarkTheme ? 'bg-neutral-900' : 'bg-white'
                 } px-4 py-3 flex justify-end !pb-2 `}
               >
                 <div className="flex items-center justify-center gap-2">

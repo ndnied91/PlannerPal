@@ -88,8 +88,16 @@ export const SingleItem = ({
     backgroundColor: item.isPinned ? userSettings?.pinnedColor : null,
   };
 
+  const dynamicStyleDark = {
+    color: item.isPriority ? '#ef4444' : null,
+    backgroundColor: item.isPinned ? userSettings?.pinnedColor : null,
+  };
+
   return (
-    <div className={style} style={dynamicStyle}>
+    <div
+      className={style}
+      style={isDarkTheme ? dynamicStyleDark : dynamicStyle}
+    >
       <section className="todoInfo">
         <div>
           <div className="font-bold capitalize">

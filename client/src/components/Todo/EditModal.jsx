@@ -82,16 +82,14 @@ const EditModal = ({
             } relative z-10 h-full md:h-fit w-full max-w-xl rounded-md shadow-lg`}
           >
             <div
-              className={`${
-                isDarkTheme ? 'bg-neutral-950' : 'bg-gray-200'
-              } font-bold text-4xl p-2 pt-0 pb-0 flex justify-between items-center `}
+              className={`font-bold text-4xl pl-4 pr-2 pt-0 flex justify-between items-center`}
             >
               <p
                 className={`${
                   isDarkTheme ? 'text-slate-50' : 'text-gray-600'
-                } text-sm ml-1 pt-1 tracking-widest`}
+                } ml-1 pt-1 tracking-widest text-base`}
               >
-                Edit
+                Edit item
               </p>
               <button
                 className="text-gray-400 max-w-fit py-2 text-sm font-semibold hover:scale-110 duration-300"
@@ -109,7 +107,7 @@ const EditModal = ({
                 <div className="mt-3 sm:mt-0 sm:text-left h-full">
                   <div className="mt-2">
                     <div className="align-center">
-                      <form onSubmit={handleSubmit} className="p-4">
+                      <form onSubmit={handleSubmit} className="p-4 pt-0">
                         {/* title */}
                         <div className="mb-4">
                           <label

@@ -125,7 +125,7 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
                   isDarkTheme
                     ? 'bg-gray-500 text-slate-100'
                     : 'bg-white text-gray-950'
-                }  flex items-center p-5 rounded-md shadow-2xl `}
+                } flex items-center p-5 rounded-md shadow-2xl`}
                 userSettings={userSettings}
                 setUserSettings={setUserSettings}
                 updateItemsAfterEditTodo={updateItemsAfterEditTodo}
@@ -151,7 +151,7 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
                   isDarkTheme
                     ? 'bg-gray-500 text-slate-100'
                     : 'bg-white text-gray-950'
-                }  flex items-center p-5 rounded-md shadow-2xl `}
+                } flex items-center p-5 rounded-md shadow-2xl`}
                 userSettings={userSettings}
                 updateItemsAfterEditTodo={updateItemsAfterEditTodo}
                 isDarkTheme={isDarkTheme}
@@ -177,7 +177,7 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
               isDarkTheme
                 ? 'bg-gray-500 text-slate-100'
                 : 'bg-white text-gray-950'
-            }  flex items-center p-5 rounded-md shadow-2xl `}
+            } flex items-center p-5 rounded-md shadow-2xl`}
             type={'countdown'}
             userSettings={userSettings}
             updateItemsAfterEditTodo={updateItemsAfterEditTodo}

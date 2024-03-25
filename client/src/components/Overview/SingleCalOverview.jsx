@@ -113,8 +113,8 @@ const SingleItemOverview = ({
           >
             <header
               className={`${
-                isDarkTheme ? 'bg-gray-950' : 'bg-slate-100'
-              } px-4 py-2 flex justify-end items-center`}
+                isDarkTheme ? 'bg-neutral-900' : 'bg-white'
+              } px-2 py-2 gap-2 flex justify-end items-center`}
             >
               <div
                 onClick={async () => {
@@ -234,7 +234,7 @@ const SingleItemOverview = ({
               <footer className="flex justify-center mt-10 md:mt-0 md:justify-end md:border-t md:pt-4">
                 <button
                   type="submit"
-                  className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white md:w-fit cursor-pointer"
+                  className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full md:w-fit cursor-pointer"
                 >
                   Update
                 </button>

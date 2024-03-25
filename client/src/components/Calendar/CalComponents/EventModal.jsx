@@ -145,11 +145,7 @@ const EventModal = ({ userContext, isDarkTheme }) => {
               isDarkTheme ? 'bg-neutral-900' : 'bg-white'
             }  shadow-2xl md:m-0 md:max-w-[38rem] w-max-h-full overflow-y-auto w-screen h-screen md:h-fit `}
           >
-            <header
-              className={`${
-                isDarkTheme ? 'bg-gray-950' : 'bg-slate-100'
-              } px-4 py-2 flex justify-end items-center`}
-            >
+            <header className={`px-2 pt-2 flex justify-end items-center`}>
               <div className="flex items-center">
                 {selectedEvent && (
                   <span
@@ -182,7 +178,7 @@ const EventModal = ({ userContext, isDarkTheme }) => {
                 </button>
               </div>
             </header>
-            <div className="p-3 mt-[10%] md:mt-0">
+            <div className="p-3 pt-0 md:mt-0">
               <div className="flex flex-col items-start">
                 <div
                   htmlFor="title"
@@ -285,7 +281,7 @@ const EventModal = ({ userContext, isDarkTheme }) => {
               <footer className="flex justify-end border-t pt-4">
                 <button
                   type="submit"
-                  className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white md:w-fit cursor-pointer"
+                  className="bg-gray-800 hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full md:w-fit cursor-pointer"
                 >
                   Save
                 </button>

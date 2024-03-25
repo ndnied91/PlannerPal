@@ -153,7 +153,7 @@ export const SingleItemOverview = ({
                 isDarkTheme
                   ? 'bg-neutral-400 text-slate-50'
                   : 'bg-gray-800 text-white'
-              } hover:opacity-80 duration-200 px-6 py-2 rounded w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer`}
+              } hover:opacity-80 duration-200 px-6 py-2 rounded w-full tracking-wider md:tracking-normal flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer`}
             >
               Update
             </button>
@@ -161,7 +161,7 @@ export const SingleItemOverview = ({
         </section>
       </form>
 
-      <div className="flex flex-col self-end gap-4 absolute right-4">
+      <div className="flex flex-col self-end gap-4 absolute right-4 pt-2">
         <Countdown
           date={item.dueDate}
           renderer={renderer}

@@ -105,18 +105,24 @@ const FormModal = ({
               isDarkTheme ? 'bg-neutral-900' : 'bg-white'
             } relative z-10 h-full md:h-fit w-full max-w-xl rounded-md shadow-lg `}
           >
+            {' '}
             <OutsideClickHandler
               onOutsideClick={() => (!isMobile ? setShowModal(false) : null)}
             >
               <div
-                className={`${
-                  isDarkTheme ? 'bg-gray-950' : 'bg-slate-200'
-                } flex justify-end h-12 pr-2`}
+                className={`font-bold flex justify-between pl-4 h-12 pt-2 pr-2`}
               >
+                <p
+                  className={`${
+                    isDarkTheme ? 'text-slate-50' : 'text-gray-600'
+                  } ml-1 pt-1 tracking-widest text-base`}
+                >
+                  Create Item
+                </p>
                 <button
                   onClick={() => setShowModal(false)}
                   type="button"
-                  className="text-gray-500 hover:text-gray-700 focus:outline-none "
+                  className="text-gray-500 hover:text-gray-700 flex"
                 >
                   <MdOutlineClose
                     className={`cursor-pointer text-3xl
@@ -124,8 +130,7 @@ const FormModal = ({
                   />
                 </button>
               </div>
-
-              <section className="flex m-4 gap-2 mt-[5%] md:mt-8">
+              <section className="flex mt-2 ml-4 mr-4 gap-2 ">
                 <div
                   onClick={() => setCurrentPane('todo')}
                   className={`${
@@ -165,7 +170,6 @@ const FormModal = ({
                   countdown
                 </div>
               </section>
-
               <div>
                 {/* Your modal content here */}
                 <form onSubmit={handleSubmit} className="p-4">

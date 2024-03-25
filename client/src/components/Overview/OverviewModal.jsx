@@ -25,7 +25,7 @@ const OverviewModal = ({
           >
             <div
               className={`px-4 py-3 flex justify-end !pb-2 ${
-                isDarkTheme ? 'bg-gray-950' : 'bg-slate-100'
+                isDarkTheme ? 'bg-neutral-900' : 'bg-white'
               }  `}
             >
               <button onClick={() => setItemsShowModal(false)} type="button">
