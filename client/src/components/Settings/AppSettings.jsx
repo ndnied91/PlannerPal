@@ -191,7 +191,7 @@ const AppSettings = ({
                 </div>
               </div>
               <div
-                className={`flex justify-center absolute bottom-0 w-full pb-5`}
+                className={`flex justify-center absolute bottom-0 w-full pb-[30%] md:pb-5`}
               >
                 <button
                   type="button"
