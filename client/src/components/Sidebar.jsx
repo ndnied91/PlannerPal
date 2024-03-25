@@ -84,6 +84,7 @@ const Options = ({ setShowSettingsModal, isDarkTheme }) => {
           links={links}
           userSettings={userSettings}
           updateSelectedPane={updateSelectedPane}
+          setShowSettingsModal={setShowSettingsModal}
         />
       </section>
 
@@ -105,7 +106,7 @@ const Options = ({ setShowSettingsModal, isDarkTheme }) => {
 
           <div className="flex justify-center">
             {' '}
-            <ThemeToggle />{' '}
+            <ThemeToggle style={'text-3xl text-yellow-300'} />
           </div>
           <ul
             className={`text-grey-600 links duration-200 w-[90px] p-3 ${

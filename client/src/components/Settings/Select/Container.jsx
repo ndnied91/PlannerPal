@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Container = ({ placeholderText, list, setValue, defaultValue }) => {
+const Container = ({
+  placeholderText,
+  list,
+  setValue,
+  defaultValue,
+  isDarkTheme,
+}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const dropdownRef = useRef(null);
@@ -26,9 +32,15 @@ const Container = ({ placeholderText, list, setValue, defaultValue }) => {
   }, []);
 
   return (
-    <div className="custom-dropdown-container tracking-normal w-48 text-xs text-gray-500 bg-white mt-2">
+    <div
+      className={`${
+        isDarkTheme ? 'bg-slate-200 text-gray-950' : 'bg-white'
+      } custom-dropdown-container tracking-normal w-24 text-xs`}
+    >
       <div
-        className="relative border p-2 cursor-pointer bg-white"
+        className={`${
+          isDarkTheme ? 'bg-slate-200' : 'bg-white'
+        } relative border p-2 cursor-pointer `}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         ref={dropdownRef}
       >
@@ -42,11 +54,17 @@ const Container = ({ placeholderText, list, setValue, defaultValue }) => {
         </div>
 
         {isDropdownOpen && (
-          <div className="absolute top-full left-0 w-full border bg-white shadow z-50">
+          <div
+            className={`${
+              isDarkTheme ? 'bg-slate-200' : 'bg-white'
+            } absolute top-full left-0 w-full border shadow z-50`}
+          >
             {list.map((option, idx) => (
               <div
                 key={idx}
-                className="p-2 flex justify-between items-center cursor-pointer hover:bg-gray-100 "
+                className={`${
+                  isDarkTheme ? 'hover:bg-white' : 'hover:bg-gray-100'
+                } p-2 flex justify-between items-center cursor-pointer duration-300`}
                 onClick={() => handleSelectOption(option)}
               >
                 {option}

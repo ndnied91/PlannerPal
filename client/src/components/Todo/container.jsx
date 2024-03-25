@@ -251,10 +251,12 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
           {showCompleted ? 'Archive' : ' Current'}
         </div>
 
-        <div className="flex md:items-end  items-center w-30">
+        <div className="">
           {!addNewFilter && (
             <FilterSelect
-              className="bg-gray-100 relative p-2 cursor-pointer border-solid rounded-t-md"
+              className={`${
+                isDarkTheme ? 'bg-slate-200' : 'bg-slate-100'
+              } relative h-10 pt-2 pb-2 cursor-pointer border-solid rounded-sm`}
               textPrompt={'Filter'}
               showFilterIcon={true}
               updatable={true}
@@ -288,10 +290,12 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
         </div>
 
         <div
-          className="bg-black text-white tracking-wider rounded-lg self-center p-3 cursor-pointer mr-4"
+          className={`${
+            isDarkTheme ? 'bg-slate-100 text-gray-800' : 'bg-black text-white'
+          } h-10 tracking-wider rounded-lg self-center p-3 cursor-pointer mr-4`}
           onClick={() => setShowCompleted(!showCompleted)}
         >
-          {showCompleted ? <LuListTodo /> : <FaArchive />}
+          {showCompleted ? <LuListTodo /> : <FaArchive className="" />}
         </div>
       </div>
 

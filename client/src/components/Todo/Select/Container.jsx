@@ -36,12 +36,12 @@ const Container = ({
   return (
     <div
       className={`${
-        isDarkTheme ? 'bg-gray-100 text-black font-normal' : 'bg-white'
-      } custom-dropdown-container tracking-normal w-24 text-xs mt-2 rounded-md `}
+        isDarkTheme ? 'bg-slate-200 text-black font-normal' : 'bg-white'
+      } custom-dropdown-container tracking-normal w-24 text-xs mt-2 rounded-sm`}
     >
       <OutsideClickHandler onOutsideClick={() => setShowSortModal(false)}>
         <div
-          className="relative  p-2 cursor-pointer "
+          className="relative p-2 cursor-pointer "
           onClick={() => setDropdownOpen(!isDropdownOpen)}
           ref={dropdownRef}
         >
@@ -57,7 +57,7 @@ const Container = ({
           {isDropdownOpen && (
             <div
               className={`${
-                isDarkTheme ? 'bg-slate-300 border-slate-300' : 'bg-white'
+                isDarkTheme ? 'bg-slate-200 border-slate-200' : 'bg-white'
               } absolute top-full left-0 w-full border shadow z-50`}
             >
               {list.map((option, idx) => (

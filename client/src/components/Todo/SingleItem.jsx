@@ -7,6 +7,7 @@ import {
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { useGlobalContext } from './todoContext';
 import { RiPushpinLine, RiUnpinLine } from 'react-icons/ri';
+import { FaRegTrashCan } from 'react-icons/fa6';
 
 import EditModal from './EditModal';
 import renderer from '../CountdownTimer';
@@ -173,15 +174,11 @@ export const SingleItem = ({
                 />
               ) : (
                 <button
-                  className={`bg-transparent btn remove-btn ${
-                    !archivedList ? 'block' : null
-                  }`}
+                  className={`${!archivedList ? 'block' : null}`}
                   onClick={() => removeItem(item, userSettings.sortBy)}
                 >
-                  <FaTrashAlt
-                    className={`${
-                      isDarkTheme ? 'bg-neutral-500' : 'bg-white'
-                    }  text-2xl hover:opacity-90 duration-300`}
+                  <FaRegTrashCan
+                    className={`text-xl hover:opacity-90 duration-300`}
                   />
                 </button>
               )}

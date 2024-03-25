@@ -94,18 +94,18 @@ const FilterSelect = ({
   };
 
   return (
-    <div className="custom-dropdown-container tracking-wider min-w-24 w-32 text-sm font-normal pr-2">
+    <div className="custom-dropdown-container tracking-wider min-w-24 w-36 text-sm font-normal pr-2">
       <div
         className={className}
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         ref={dropdownRef}
       >
         <div className="flex justify-between">
-          <p className="capitalize tracking-wider text-gray-700">
+          <p className="capitalize tracking-wider text-gray-700 ml-2 ">
             {currentFilterOption}
           </p>
           <span
-            className="arrow-icon text-gray-600 tracking-widest flex items-center "
+            className="arrow-icon text-gray-600 tracking-widest flex items-center mr-2"
             id="icon"
           >
             {renderIcon()}
@@ -115,9 +115,9 @@ const FilterSelect = ({
           <div
             className={` ${
               isDarkTheme
-                ? 'bg-gray-100 text-black border-gray-100'
+                ? 'bg-slate-200 text-black border-gray-100'
                 : 'bg-white border-white'
-            } text-xs absolute top-full rounded-b shadow z-30 w-max`}
+            } text-xs absolute top-full rounded-b shadow z-30 w-full`}
           >
             <div>
               {labelArr.map((option) => {
@@ -126,8 +126,8 @@ const FilterSelect = ({
                     <div
                       key={option}
                       className={`${
-                        isDarkTheme ? 'hover:bg-gray-400' : 'hover:bg-gray-100'
-                      } p-2 flex justify-between items-center cursor-pointer  ${
+                        isDarkTheme ? 'hover:bg-white' : 'hover:bg-gray-100'
+                      } duration-300  p-2 flex justify-between items-center cursor-pointer  ${
                         option === 'add +' ? 'font-bold' : 'font-normal'
                       }`}
                       onClick={() => handleSelectOption(option)}
@@ -150,8 +150,8 @@ const FilterSelect = ({
                     <div
                       key={option}
                       className={`  ${
-                        isDarkTheme ? 'hover:bg-gray-400' : 'hover:bg-gray-100'
-                      }    p-2 flex justify-between items-center cursor-pointer ${
+                        isDarkTheme ? 'hover:bg-white' : 'hover:bg-gray-100'
+                      } duration-300 p-2 flex justify-between items-center cursor-pointer ${
                         option === 'add +' ? 'font-bold' : 'font-normal'
                       }`}
                       onClick={() => handleSelectOption(option)}
