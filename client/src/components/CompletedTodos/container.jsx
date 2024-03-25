@@ -3,7 +3,7 @@ import SingleItem from '../Todo/SingleItem';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
 
-const container = ({ items, userSettings, setItems }) => {
+const container = ({ items, userSettings, setItems, isDarkTheme }) => {
   const deleteAll = async () => {
     const filter = items.filter((item) => item.isCompleted);
     updateDeleted(filter);
@@ -38,20 +38,24 @@ const container = ({ items, userSettings, setItems }) => {
   return (
     <section className="pr-2 pl-2">
       <div>
-        <p className="text-center w-full font-semibold text-lg text-gray-900">
+        <p
+          className={` ${
+            isDarkTheme ? 'text-gray-100' : 'text-gray-900'
+          } text-center w-full font-semibold text-lg `}
+        >
           Items will automatically delete in {userSettings.deleteTime / 24} days
         </p>
 
         <div className="flex justify-center gap-10 mt-6">
           <div
-            className="border-red-500 border-2 p-2 rounded-md text-red-500 tracking-wide cursor-pointer shadow-lg  hover:shadow-md hover:duration-300"
+            className="border-red-500 border-2 p-2 rounded-md text-red-500 tracking-wide cursor-pointer shadow-lg hover:shadow-md hover:duration-300"
             onClick={deleteAll}
           >
             {' '}
             Delete all
           </div>
           <div
-            className="border-red-500 border-2 p-2 rounded-md text-red-500 tracking-wide cursor-pointer shadow-lg  hover:shadow-md hover:duration-300"
+            className="border-red-500 border-2 p-2 rounded-md text-red-500 tracking-wide cursor-pointer shadow-lg hover:shadow-md hover:duration-300"
             onClick={deletePastDue}
           >
             {' '}
@@ -63,7 +67,7 @@ const container = ({ items, userSettings, setItems }) => {
         </p>
       </div>
 
-      <div className="flex gap-1 flex-wrap mt-5 md:mt-20 md:ml-32 md:mr-32">
+      <div className="flex justify-center gap-1 flex-wrap mt-5 md:mt-20 md:ml-32 md:mr-32">
         {items.map((item) => {
           if (item.isCompleted) {
             return (
@@ -74,9 +78,9 @@ const container = ({ items, userSettings, setItems }) => {
                 <SingleItem
                   item={item}
                   archivedList
-                  style={
-                    'p-5 bg-zinc-100 rounded-md shadow-2xl m-2 md:max-w-56 md:min-w-48 md:min-h-44 md:max-h-48 opacity-70 hover:opacity-100 duration-300'
-                  }
+                  style={`${
+                    isDarkTheme ? 'bg-neutral-600 text-slate-50' : ''
+                  } p-5 rounded-md shadow-2xl m-2 w-40 md:max-w-56 md:min-w-48 md:min-h-44 md:max-h-48 opacity-70 hover:opacity-100 duration-300`}
                   type={'trash'}
                 />
               </div>

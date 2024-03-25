@@ -68,7 +68,7 @@ export const SingleItem = ({
 
   const renderDescTrash = (desc) => {
     if (!readMore && desc.length > 25) {
-      return `${item.description.substring(0, 25)}...`;
+      return `${item.description.substring(0, 15)}...`;
     } else {
       return desc;
     }
@@ -222,7 +222,7 @@ export const SingleItem = ({
         </div>
 
         <button
-          className={`btn remove-btn ${!archivedList ? 'hidden' : null}`}
+          className={`${!archivedList ? 'hidden' : null}`}
           onClick={() => removeItem(item)}
         >
           <FaTrashAlt className=" text-xl hover:text-2xl duration-300" />
