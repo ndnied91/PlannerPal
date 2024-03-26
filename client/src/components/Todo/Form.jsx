@@ -75,8 +75,10 @@ const Form = ({ style, text, type, userSettings, isDarkTheme }) => {
 
         if (pane === 'countdown') {
           toast.success('Countdown Created!');
+          return true;
         } else {
           toast.success('Todo Created!');
+          return true;
         }
       } catch (error) {
         toast.error(error?.response?.data?.msg || 'error creating!');

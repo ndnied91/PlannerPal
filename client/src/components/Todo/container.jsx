@@ -251,7 +251,7 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
           {showCompleted ? 'Archive' : ' Current'}
         </div>
 
-        <div className="">
+        <div>
           {!addNewFilter && (
             <FilterSelect
               className={`${
@@ -348,7 +348,7 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
                   <div
                     className={`${
                       isDarkTheme ? 'bg-neutral-800' : 'bg-slate-100'
-                    } pb-5 pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl`}
+                    } md:pb-5 pl-1 md:pl-5 pr-1 md:pr-5 max-h-[660px] overflow-scroll rounded-xl`}
                   >
                     <div>{renderPinned('normal')}</div>
                     {sortOptions ? renderSortedArray('normal') : null}
@@ -371,7 +371,7 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
                   <div
                     className={` ${
                       isDarkTheme ? 'bg-neutral-800' : 'bg-slate-100'
-                    } pt-5 pb-5 lg:min-w-[28rem] pl-5 pr-5 max-h-[660px] overflow-scroll rounded-xl`}
+                    } md:pt-5 md:pb-5 pl-1 md:pl-5 pr-1 md:pr-5 lg:min-w-[28rem] max-h-[660px] overflow-scroll rounded-xl`}
                   >
                     <div>{renderPinned()}</div>
                     <div>{renderSortedArray()}</div>
@@ -395,7 +395,7 @@ const MainContainer = ({ userSettings, setUserSettings, isDarkTheme }) => {
                   <div
                     className={` ${
                       isDarkTheme ? 'bg-neutral-700' : 'bg-slate-200'
-                    } pt-8 pb-5 pl-5 pr-5 overflow-scroll rounded-xl`}
+                    } md:pt-8 pb-1 md:pb-5 pl-1 md:pl-5 pr-1 md:pr-5 overflow-scroll rounded-xl`}
                   >
                     <div>{renderPinned('countdown')}</div>
                     {renderCountdown()}

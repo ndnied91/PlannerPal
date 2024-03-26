@@ -35,7 +35,7 @@ export const SingleItem = ({
     setPinnedItem,
   } = useGlobalContext();
 
-  const itemToUpdate = (item, sortBy) => {
+  const itemToUpdate = (item) => {
     setUpdateItem(item);
     setShowEditModal(true);
   };

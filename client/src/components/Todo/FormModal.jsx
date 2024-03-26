@@ -19,7 +19,6 @@ const FormModal = ({
   showModal,
   isDarkTheme,
 }) => {
-  console.log(isDarkTheme);
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = 'hidden';
@@ -53,9 +52,20 @@ const FormModal = ({
         isPriority: false,
       });
     }
-  }, []);
+  }, [showModal]);
 
   const [currentPane, setCurrentPane] = useState('todo');
+
+  const clearState = () => {
+    setDate('');
+    setCurrentItem({
+      currentTitle: '',
+      description: '',
+      isAddedToCal: userSettings?.isAddToCal,
+      isPriority: false,
+    });
+    //clear state after success item creation
+  };
 
   const handleChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value });
@@ -65,7 +75,7 @@ const FormModal = ({
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.checked });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (currentItem.isAddedToCal) {
@@ -84,7 +94,8 @@ const FormModal = ({
     if (currentItem.isAddedToCal && date.length === 0) {
       toast.error('Date must be selected!');
     } else {
-      sendToServer(currentItem, currentPane);
+      const res = await sendToServer(currentItem, currentPane);
+      if (res) clearState();
     }
   };
 
@@ -107,7 +118,7 @@ const FormModal = ({
           >
             {' '}
             <OutsideClickHandler
-              onOutsideClick={() => (!isMobile ? setShowModal(false) : null)}
+              onOutsideClick={() => !isMobile && setShowModal(false)}
             >
               <div
                 className={`font-bold flex justify-between pl-4 h-12 pt-2 pr-2`}
