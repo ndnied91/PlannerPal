@@ -48,31 +48,37 @@ const SingleNoteOverview = ({
 
   const saveItem = async () => {
     console.log(title);
-    // if (title === undefined && body === undefined) {
-    //   toast.error('Title and body can not be empty');
-    // } else if (title === undefined) {
-    //   toast.error('Title can not be empty');
-    // } else if (body === undefined) {
-    //   toast.error('Body can not be empty');
-    // } else {
-    //   try {
-    //     await customFetch.post('/notes', {
-    //       createdBy: item.createdBy,
-    //       _id: item._id,
-    //       body, //update from modal
-    //       title, //update from modal
-    //     });
+    if (title === undefined && body === undefined) {
+      toast.error('Title and body can not be empty');
+    } else if (title === undefined) {
+      toast.error('Title can not be empty');
+    } else if (body === undefined) {
+      toast.error('Body can not be empty');
+    } else {
+      try {
+        await customFetch.post('/notes', {
+          createdBy: item.createdBy,
+          _id: item._id,
+          body, //update from modal
+          title, //update from modal
+        });
 
-    //     toast.success('Item updated successfully!');
-    //     setShowNotesModal(false);
-    //   } catch (e) {
-    //     toast.error(e.response.data.msg || 'Demo Only!');
-    //   }
-    // }
+        toast.success('Item updated successfully!');
+        setShowNotesModal(false);
+      } catch (e) {
+        toast.error(e.response.data.msg || 'Demo Only!');
+      }
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
   };
 
   return (
-    <div className="p-4 h-screen w-full md:h-fit">
+    <div className="p-4 pt-0 h-screen w-full md:h-fit">
       <div
         className={`${
           isDarkTheme
@@ -83,19 +89,20 @@ const SingleNoteOverview = ({
           marginBottom: '10px',
         }}
       >
-        <ReactQuill
-          theme="bubble"
-          value={title}
+        <input
+          onChange={(e) => setTitle(e.target.value)}
+          id="noteTitle"
+          name="noteTitle"
+          className={`${isDarkTheme ? 'bg-neutral-500' : 'bg-slate-100'} p-3 `}
+          type="text"
           placeholder={'Add title..'}
-          onChange={(e) => setTitle(e)}
-          toolbar={false}
-          style={{ width: '100%', height: '100%' }}
-          modules={{
-            toolbar: null, // Hide the toolbar
-            clipboard: {
-              matchVisual: false,
-            },
+          value={title || ''} // Ensure noteTitle is always defined
+          style={{
+            width: '100%',
+            height: '100%',
+            color: isDarkTheme ? 'white' : 'black',
           }}
+          onKeyDown={handleKeyDown}
         />
         <style>{`
           .ql-toolbar.ql-snow {
@@ -128,7 +135,7 @@ const SingleNoteOverview = ({
           }}
         />
       </div>
-      <div className="float-right md:p-2 flex items-center w-full md:w-fit ">
+      <div className="float-right md:p-2 flex items-center w-full md:w-fit md:pr-0">
         <div
           onClick={saveItem}
           className={`${

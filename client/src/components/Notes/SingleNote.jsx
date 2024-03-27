@@ -1,6 +1,5 @@
 import React from 'react';
 
-import parse from 'html-react-parser';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import customFetch from '../../utils/customFetch';
 import { toast } from 'react-toastify';
@@ -32,14 +31,14 @@ const SingleNote = ({
   };
 
   const shortenTitle = (title) => {
-    return title.props.children.length > (!isMobile ? 10 : 20)
-      ? `${title.props.children.substring(0, !isMobile ? 10 : 20)}...`
-      : title.props.children;
+    return title.length > (!isMobile ? 10 : 20)
+      ? `${title.substring(0, !isMobile ? 10 : 20)}...`
+      : title;
   };
 
   const renderTitle = (title) => {
-    // return parse(title);
-    return shortenTitle(parse(title));
+    // return title;
+    return shortenTitle(title);
   };
 
   const handleClick = () => {

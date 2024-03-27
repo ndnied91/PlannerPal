@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-
 import dayjs from 'dayjs';
 import GlobalContext from '../context/GlobalContext';
-
+import { isMobile } from 'react-device-detect';
 const Day = ({ day, rowIdx }) => {
   const [dayEvents, setDayEvents] = useState([]);
 
@@ -27,6 +26,16 @@ const Day = ({ day, rowIdx }) => {
       : null;
   };
 
+  const renderTime = (day) => {
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const formattedTime = new Date(day).toLocaleString('en-US', options);
+    return formattedTime;
+  };
+
+  const shortenTitle = (title) => {
+    return title.length > 10 ? `${title.substring(0, 10)}...` : title;
+  };
+
   return (
     <div className="border border-gray-200 flex flex-col max-h-40 overflow-scroll">
       <header className="flex flex-col items-center">
@@ -44,7 +53,6 @@ const Day = ({ day, rowIdx }) => {
       <div
         className="flex-1 cursor-pointer text-sm font-thinner tracking-tight"
         onClick={() => {
-          console.log(day);
           setDaySelected(day); //responsible for showing the modal when day is clicked
           setShowEventModal(true);
         }}
@@ -53,10 +61,15 @@ const Day = ({ day, rowIdx }) => {
           return (
             <div
               key={id}
-              className={`bg-${evt.label}-200 p-1 m-1 text-gray-600 text-sm rounded mb-1 truncate`}
+              className={`bg-${evt.label}-200 p-1 m-1 text-gray-600 text-xs rounded mb-1 truncate`}
               onClick={() => setSelectedEvent(evt)}
             >
-              {evt.title}
+              <div className="flex justify-between ">
+                <span>{shortenTitle(evt.title)}</span>
+                <span className="md:invisible lg:visible">
+                  {renderTime(evt.day)}
+                </span>
+              </div>
             </div>
           );
         })}

@@ -56,8 +56,6 @@ const container = ({ userContext, isDarkTheme }) => {
     setSelectedNote('');
   };
 
-  console.log(noteTitle);
-
   return (
     <div className="md:pl-32 pt-5">
       <aside className="md:flex">
@@ -93,8 +91,6 @@ const container = ({ userContext, isDarkTheme }) => {
             isDarkTheme={isDarkTheme}
           />
         )}
-
-        {console.log(notes)}
 
         {isMobile && selectedNote === undefined ? (
           <NoteAside
