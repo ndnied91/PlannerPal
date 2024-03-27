@@ -56,7 +56,7 @@ const container = ({ userContext, isDarkTheme }) => {
     setSelectedNote('');
   };
 
-  console.log(selectedNote);
+  console.log(noteTitle);
 
   return (
     <div className="md:pl-32 pt-5">

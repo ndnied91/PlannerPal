@@ -27,3 +27,16 @@ form > div.block > div:nth-child(2){
   .tox-tinymce{
   border: none !important;  
   }
+
+  .ql-container.ql-snow {
+    border: none !important;
+  }
+
+
+  .ql-editor {
+    height: 90%
+  }
+
+  .ql-toolbar.ql-snow{
+    border: none !important;
+  }

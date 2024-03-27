@@ -5,6 +5,10 @@ import './style.css';
 import { Spinner } from '../../../utils/Spinner';
 import { isMobile } from 'react-device-detect';
 import { LuArrowLeft } from 'react-icons/lu';
+import parse from 'html-react-parser';
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Add Quill's snow theme CSS
 
 const container = ({
   _id,
@@ -19,9 +23,12 @@ const container = ({
   setSelectedNote,
   isDarkTheme,
 }) => {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [editorHeight, setEditorHeight] = useState('400px'); // Default height for desktop
   const isMobile = window.innerWidth < 768; // Assuming 768px is the breakpoint for mobile devices
+
+  const [componentTitle, setComponentTitle] = useState(noteTitle);
+  // const [value, setValue] = useState('');
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,17 +43,21 @@ const container = ({
       window.removeEventListener('resize', handleResize);
     };
   }, [isMobile]);
+  //might be able to remove ^^
 
   useEffect(() => {
     setContent(body);
     setNoteTitle(title);
   }, [body]);
+  //not sure why I need this
 
   const handleChange = (content) => {
     setContent(content);
   };
 
   const saveItem = () => {
+    // setNoteTitle(`<p>${noteTitle}</p>`);
+
     if (noteTitle === undefined && content === undefined) {
       toast.error('Title and body can not be empty');
     } else if (noteTitle === undefined) {
@@ -73,16 +84,17 @@ const container = ({
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleTitleChange = (event) => {
+    setNoteTitle(event.target.value);
+  };
+
+  const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
     }
   };
-
   return (
-    <section className="">
-      {loading && <Spinner />}
-
+    <section className="flex flex-col">
       {isMobile && (
         <div
           className={` ${
@@ -95,65 +107,90 @@ const container = ({
       )}
 
       <form
-        className={`flex justify-center flex-col items-center md:block ${
-          setLoading ? 'opacity-100 duration-300' : 'opacity-0'
-        }`}
+        className={`flex justify-center flex-col items-center md:block pb-12`}
       >
         {/* title */}
-        <div className={`mx-4 md:m-0 ${!loading ? 'block' : 'hidden'}`}>
-          <Editor
-            apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
+        <div
+          className={`${
+            isDarkTheme
+              ? 'bg-neutral-500 border-2 border-neutral-600 text-slate-50'
+              : 'bg-slate-100 border-2 border-slate-200'
+          } `}
+          style={{
+            width: isMobile ? '95%' : 'calc(80vw - 100px)',
+            marginBottom: '10px',
+          }}
+        >
+          {/* <ReactQuill
+            theme="bubble"
             value={noteTitle}
-            id="title"
-            init={{
-              selector: 'textarea',
-              inline_boundaries: false,
-              required: true,
-              toolbar: false,
-              width: 'fit',
-              menubar: false,
-              inline_boundaries_selector: 'span',
-              height: 500,
-              placeholder: 'Add title..',
-              resize: false,
-              content_style: 'body { overflow: hidden; }',
+            placeholder={'Add one line title..'}
+            onChange={(noteTitle) => setNoteTitle(noteTitle)}
+            toolbar={false}
+            style={{ width: '100%', height: '100%' }}
+            onKeyDown={handleKeyDown}
+            modules={{
+              toolbar: null, // Hide the toolbar
+              clipboard: {
+                matchVisual: false,
+              },
             }}
-            onEditorChange={(newText) => setNoteTitle(newText)}
-            onKeyDown={handleKeyPress}
+          /> */}
+          <input
+            onChange={(e) => setNoteTitle(e.target.value)}
+            name="noteTitle"
+            type="text"
+            placeholder={'Add one line title..'}
+            value={noteTitle}
+            style={{ width: '100%', height: '100%' }}
+            onKeyDown={handleKeyDown}
           />
-          {/* title */}
 
-          <Editor
-            apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
-            value={content}
-            className="w-min"
-            init={{
-              height: editorHeight,
-              width: !isMobile ? 1200 : undefined,
-              resize: 'both',
-              autoresize: true,
-              autoresize_margin: 50,
-              menubar: false,
-              placeholder: 'Add text here..',
-            }}
-            onInit={() => {
-              setLoading(false);
-            }}
-            onEditorChange={handleChange}
-          />
+          <style>{`
+          .ql-toolbar.ql-snow {
+            background-color: ${isDarkTheme ? 'rgb(229 231 235)' : 'white'}
+          }
+          .ql-editor.ql-blank::before {
+          color: ${isDarkTheme ? 'lightgrey' : 'black'} !important;
+        }
+      `}</style>
         </div>
 
+        <div
+          className={`${
+            isDarkTheme
+              ? 'bg-neutral-500 border-2 border-neutral-600 text-slate-50'
+              : 'bg-slate-100 border-2 border-slate-200'
+          } `}
+          style={{
+            width: isMobile ? '95%' : 'calc(80vw - 100px)',
+            height: '400px',
+            paddingBottom: '45px',
+          }}
+        >
+          <ReactQuill
+            theme="snow"
+            value={content}
+            placeholder={'Add text here..'}
+            onChange={handleChange}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </div>
+      </form>
+      <div className="w-full flex justify-center md:justify-start">
         <div
           onClick={saveItem}
           className={`${
             isDarkTheme ? 'bg-neutral-600' : 'bg-slate-300'
-          } cursor-pointer shadow-md hover:shadow-lg duration-300  rounded-md w-3/4 mt-5 flex justify-center p-4 tracking-wider font-bold md:w-min md:p-3 md:mt-1 ${
-            !loading ? 'block' : 'hidden'
+          } text-center cursor-pointer shadow-md hover:shadow-lg duration-300 rounded-md w-3/4 mt-5 flex justify-center p-4 tracking-wider font-bold md:w-min md:p-3 md:mt-1 $
           }`}
         >
           Submit
         </div>
-      </form>
+      </div>
     </section>
   );
 };

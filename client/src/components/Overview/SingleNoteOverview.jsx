@@ -4,6 +4,10 @@ import { toast } from 'react-toastify';
 import '../Notes/RichMediaEditor/style.css';
 import customFetch from '../../utils/customFetch';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Add Quill's snow theme CSS
+import 'react-quill/dist/quill.bubble.css'; // Add Quill's bubble theme CSS
+
 const SingleNoteOverview = ({
   setShowNotesModal,
   showNotesModal,
@@ -30,7 +34,7 @@ const SingleNoteOverview = ({
 
   useEffect(() => {
     const handleResize = () => {
-      const newHeight = isMobile ? 400 : 200; // Adjust the heights as needed
+      const newHeight = isMobile ? 400 : 300; // Adjust the heights as needed
       setEditorHeight(newHeight);
     };
 
@@ -43,76 +47,95 @@ const SingleNoteOverview = ({
   }, [isMobile]);
 
   const saveItem = async () => {
-    if (title === undefined && body === undefined) {
-      toast.error('Title and body can not be empty');
-    } else if (title === undefined) {
-      toast.error('Title can not be empty');
-    } else if (body === undefined) {
-      toast.error('Body can not be empty');
-    } else {
-      try {
-        await customFetch.post('/notes', {
-          createdBy: item.createdBy,
-          _id: item._id,
-          body, //update from modal
-          title, //update from modal
-        });
+    console.log(title);
+    // if (title === undefined && body === undefined) {
+    //   toast.error('Title and body can not be empty');
+    // } else if (title === undefined) {
+    //   toast.error('Title can not be empty');
+    // } else if (body === undefined) {
+    //   toast.error('Body can not be empty');
+    // } else {
+    //   try {
+    //     await customFetch.post('/notes', {
+    //       createdBy: item.createdBy,
+    //       _id: item._id,
+    //       body, //update from modal
+    //       title, //update from modal
+    //     });
 
-        toast.success('Item updated successfully!');
-        setShowNotesModal(false);
-      } catch (e) {
-        toast.error(e.response.data.msg || 'Demo Only!');
-      }
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
+    //     toast.success('Item updated successfully!');
+    //     setShowNotesModal(false);
+    //   } catch (e) {
+    //     toast.error(e.response.data.msg || 'Demo Only!');
+    //   }
+    // }
   };
 
   return (
-    <div className="p-4 h-screen md:h-fit w-screen md:w-fit">
-      <div>
-        <Editor
-          apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
+    <div className="p-4 h-screen w-full md:h-fit">
+      <div
+        className={`${
+          isDarkTheme
+            ? 'bg-neutral-500 border-2 border-neutral-600 text-slate-50'
+            : 'bg-slate-100 border-2 border-slate-200'
+        } `}
+        style={{
+          marginBottom: '10px',
+        }}
+      >
+        <ReactQuill
+          theme="bubble"
           value={title}
-          id="title"
-          init={{
-            selector: 'textarea',
-            inline_boundaries: false,
-            required: true,
-            height: 50,
-            toolbar: false,
-            menubar: false,
-            inline_boundaries_selector: 'span',
-            resize: false,
-            content_style: 'body { overflow: hidden; }',
+          placeholder={'Add title..'}
+          onChange={(e) => setTitle(e)}
+          toolbar={false}
+          style={{ width: '100%', height: '100%' }}
+          modules={{
+            toolbar: null, // Hide the toolbar
+            clipboard: {
+              matchVisual: false,
+            },
           }}
-          onEditorChange={(e) => setTitle(e)}
-          onKeyDown={handleKeyPress}
         />
-        <Editor
-          apiKey="l2ud205bb4bd74c618458n58240pxs53x3rp5by3320bh1qz"
+        <style>{`
+          .ql-toolbar.ql-snow {
+            background-color: ${isDarkTheme ? 'rgb(229 231 235)' : 'white'}
+          }
+          .ql-editor.ql-blank::before {
+          color: ${isDarkTheme ? 'lightgrey' : 'black'} !important;
+        }
+      `}</style>
+      </div>
+      <div
+        className={`${
+          isDarkTheme
+            ? 'bg-neutral-500 border-2 border-neutral-600 text-slate-50'
+            : 'bg-slate-100 border-2 border-slate-200'
+        } `}
+        style={{
+          width: '100%',
+          height: editorHeight,
+          paddingBottom: '45px',
+        }}
+      >
+        <ReactQuill
+          theme="snow"
           value={body}
-          init={{
-            height: editorHeight,
-            menubar: false,
-            background: 'red',
-            placeholder: 'Add text here..',
+          placeholder={'Add text here..'}
+          onChange={(e) => setBody(e)}
+          style={{
+            width: '100%',
           }}
-          onEditorChange={(e) => setBody(e)}
         />
       </div>
-      <div className="float-right p-2 flex items-center w-full md:w-fit ">
+      <div className="float-right md:p-2 flex items-center w-full md:w-fit ">
         <div
           onClick={saveItem}
           className={`${
             isDarkTheme
-              ? 'bg-neutral-400 text-slate-50'
+              ? 'bg-neutral-600 text-slate-50'
               : 'bg-gray-800 text-white'
-          }  hover:opacity-80 duration-200 px-6 py-2 rounded text-white w-full tracking-wider md:tracking-normal ml-2 mr-2 flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer`}
+          } md:p-2 mt-4 md:mt-0 hover:opacity-80 duration-200 py-2 rounded w-full tracking-wider md:tracking-normal flex justify-center md:ml-0 md:mr-0 md:w-fit cursor-pointer`}
         >
           Update
         </div>

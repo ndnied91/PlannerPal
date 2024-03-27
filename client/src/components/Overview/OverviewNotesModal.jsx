@@ -6,8 +6,6 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import customFetch from '../../utils/customFetch';
 import { MdOutlineClose } from 'react-icons/md';
-{
-}
 
 const OverviewNotesModal = ({
   setShowNotesModal,
@@ -30,7 +28,7 @@ const OverviewNotesModal = ({
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10"></div>
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto ">
-        <div className="flex min-h-full items-center justify-center text-center sm:items-center sm:p-0 ">
+        <div className="flex min-h-full items-center justify-center text-center sm:items-center sm:p-0">
           <div
             className={`transition ease-in ${
               setShowNotesModal
@@ -38,7 +36,7 @@ const OverviewNotesModal = ({
                 : 'opacity-0 translate-y-[-5rem]'
             } relative transform overflow-hidden ${
               isDarkTheme ? 'bg-neutral-900' : 'bg-white'
-            } text-left shadow-xl sm:my-8 h-screen md:h-fit md:w-[38rem] self-center`}
+            } text-left shadow-xl w-screen sm:my-8 h-screen md:h-fit md:w-[38rem] self-center`}
           >
             <OutsideClickHandler
               onOutsideClick={() => {
