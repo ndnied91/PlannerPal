@@ -20,14 +20,11 @@ const Sidebar = ({ isDarkTheme }) => {
 
     return savedEvents.map((i) => {
       let eventDate = new Date(i.day).toString();
-      console.log(eventDate);
 
       if (eventDate.includes(formattedDate)) {
         const dateObj = new Date(i.day);
         const options = { hour: 'numeric', minute: 'numeric', hour12: true };
         const formattedTime = dateObj.toLocaleString('en-US', options);
-
-        console.log(formattedTime);
 
         return (
           <div

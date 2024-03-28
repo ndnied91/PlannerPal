@@ -68,13 +68,11 @@ const SingleItemOverview = ({
 
     if (selectedEvent.calCode) {
       try {
-        const response = await customFetch.patch(
+        await customFetch.patch(
           `items/update/${selectedEvent.calCode}`,
           calendarEvent
         );
-        console.log(response);
       } catch (e) {
-        console.log(e);
         toast.error('Error occurred with updating event, please try again');
       }
 

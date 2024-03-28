@@ -47,7 +47,6 @@ const SingleNoteOverview = ({
   }, [isMobile]);
 
   const saveItem = async () => {
-    console.log(title);
     if (title === undefined && body === undefined) {
       toast.error('Title and body can not be empty');
     } else if (title === undefined) {

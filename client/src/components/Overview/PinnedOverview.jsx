@@ -15,7 +15,6 @@ const PinnedOverview = ({ items, setItemsShowModal, setEvent }) => {
       return 'No priority tasks exist at the minute';
     } else {
       return priority.map((i) => {
-        console.log(i);
         return (
           <div
             className="capitalize border-b-gray-300 border-b mt-5 text-sm cursor-pointer"

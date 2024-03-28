@@ -8,8 +8,8 @@ import OutsideClickHandler from 'react-outside-click-handler';
 const Modal = ({ setShowLoginModal, renderRegister, showLoginModal }) => {
   const { setContextUser } = useGlobalContext();
   const [user, setUser] = useState({
-    email: 'testing@test.com',
-    password: '12345678',
+    email: '',
+    password: '',
   });
 
   const handleChange = (e) => {

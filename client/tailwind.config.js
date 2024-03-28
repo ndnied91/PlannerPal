@@ -8,6 +8,7 @@ module.exports = {
     safelist: [
       ...labelsClasses.map((lbl) => `bg-${lbl}-500`),
       ...labelsClasses.map((lbl) => `bg-${lbl}-200`),
+      ...labelsClasses.map((lbl) => `bg-${lbl}-300`),
       ...labelsClasses.map((lbl) => `text-${lbl}-400`),
     ],
   },

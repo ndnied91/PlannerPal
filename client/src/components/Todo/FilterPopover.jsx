@@ -37,7 +37,6 @@ const FilterPopover = ({ userSettings, setUserSettings, isDarkTheme }) => {
         setAddNewFilter(false);
         setFilter('');
       } catch (e) {
-        console.log(e);
         toast.error('Error occurred, please try again');
       }
     }

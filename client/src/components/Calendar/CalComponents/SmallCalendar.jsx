@@ -11,7 +11,6 @@ export default function SmallCalendar({ isDarkTheme }) {
     setCurrentMonth(getMonth(currentMonthIdx));
   }, [currentMonthIdx]);
 
-  console.log(isDarkTheme);
   const {
     monthIndex,
     setSmallCalendarMonth,

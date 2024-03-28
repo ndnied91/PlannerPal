@@ -36,7 +36,7 @@ export const LandingPage = ({ setShowLoginModal, setShowRegModal }) => {
         </div>
       </section>
 
-      <div className="flex h-12 mt-10 w-5/6 absolute justify-between ">
+      <div className="flex h-12 mt-10 w-5/6 absolute justify-between items-center">
         <a href="http://www.danielniedzwiedzki.com" target="_blank">
           {' '}
           PlannerPal{' '}
@@ -44,7 +44,7 @@ export const LandingPage = ({ setShowLoginModal, setShowRegModal }) => {
 
         <span
           onClick={() => setShowLoginModal(true)}
-          className="bg-gray-800 text-white relative flex items-center justify-center rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-200"
+          className="bg-gray-800 text-white relative flex items-center h-12 justify-center rounded-md shadow-md tracking-wide w-32 text-center font-bold cursor-pointer hover:scale-105 duration-200"
         >
           Sign in
         </span>

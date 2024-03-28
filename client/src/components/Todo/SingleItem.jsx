@@ -84,7 +84,7 @@ export const SingleItem = ({
   };
 
   const dynamicStyle = {
-    color: item.isPriority ? 'maroon' : null,
+    color: item.isPriority ? '#743432' : null,
     backgroundColor: item.isPinned ? userSettings?.pinnedColor : null,
   };
 

@@ -62,8 +62,6 @@ export const SingleItemOverview = ({
     setItemsShowModal(false);
   };
 
-  console.log(date);
-
   return (
     <div className={style}>
       <form onSubmit={handleSubmit} className="mt-[10%] md:mt-0">
